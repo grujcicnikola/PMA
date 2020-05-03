@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_item"
+            android:checked="true"
+            android:icon="@drawable/report"
+            android:title="@string/nav_item_report" />
+        <item
+            android:id="@+id/navigation_item_qr_code"
+            android:icon="@drawable/qr_code"
+            android:title="@string/nav_item_qr_code" />
+        <item
+            android:id="@+id/navigation_item_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/nav_item_settings" />
+        <item
+            android:id="@+id/navigation_item_logout"
+            android:icon="@drawable/logout"
+            android:title="@string/nav_item_logout" />
+    </group>
+
+
+</menu>

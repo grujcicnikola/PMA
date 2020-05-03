@@ -6,4 +6,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_header_text">Drawer Header</string>
+    <string name="nav_item_report">Report missing pet</string>
+    <string name="nav_item_qr_code">Scan QR code</string>
+    <string name="nav_item_settings">Settings</string>
+    <string name="nav_item_logout">Logout</string>
+    <string name="qr_code_text">Add content</string>
 </resources>

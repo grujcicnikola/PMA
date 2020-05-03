@@ -5,6 +5,9 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="tabBackground">#efbb40</color>
     <color name="tabSelected">#0d47a1</color>
-    <color name="white">#FFF</color>
-
+    <color name="white">#FFFFFF</color>
+    <color name="yellow">#efbb40</color>
+    <color name="black">#efbb40</color>
+    <color name="grey">#212121</color>
+    212121
 </resources>
