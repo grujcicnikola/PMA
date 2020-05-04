@@ -22,6 +22,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         //ne treba preko konstruktora Milos rekao - Ivana izmeni (ovako lik u videu radio purger)
         NearYouFragment nearYouFragment = new NearYouFragment();
+        //MissingFragment missingFragment = new MissingFragment();
 
         Fragment fragment = new Fragment();
 
@@ -34,8 +35,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 nearYouFragment = new NearYouFragment();
                 break;
             case 1:
+                //fragment = new MissingFragment();
                 fragment.setArguments(bundle);
                 return fragment;
+               // missingFragment = new MissingFragment();
+                //break;
             case 2:
                 fragment.setArguments(bundle);
                 return fragment;

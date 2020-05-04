@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pawfinder">
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
@@ -15,6 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.PetListActivity"
+            android:label="@string/title_pet_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.PetDetailActivity"
+            android:label="@string/title_pet_detail"
+            android:parentActivityName=".activity.PetListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pawfinder.activity.PetListActivity" />
+        </activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.CreateAccountActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

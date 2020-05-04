@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <!--    <color name="colorPrimary">#6200EE</color> -->
+    <color name="colorPrimary">#26A69A</color>
+    <color name="colorPrimaryDark">#00695C</color>
+    <!--    <color name="colorPrimaryDark">#3700B3</color> -->
     <color name="colorAccent">#03DAC5</color>
     <color name="tabBackground">#efbb40</color>
     <color name="tabSelected">#0d47a1</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow">#efbb40</color>
-    <color name="black">#efbb40</color>
+    <color name="black">#000000</color>
     <color name="grey">#212121</color>
-    212121
+    <color name="colorGrey">#929292</color>
+    <color name="colorBluePrimary">#0d47a1</color>
 </resources>

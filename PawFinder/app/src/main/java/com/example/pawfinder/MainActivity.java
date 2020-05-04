@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pawfinder.activity.BarCodeActivity;
+import com.example.pawfinder.activity.CreateAccountActivity;
+import com.example.pawfinder.activity.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -46,11 +51,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 // set item as selected to persist highlight
+                Intent i;
                 switch(menuItem.getItemId()) {
                     case R.id.navigation_item_qr_code:
-                        Intent i = new Intent(getApplicationContext(), BarCodeActivity.class);
+                        i = new Intent(getApplicationContext(), BarCodeActivity.class);
                         startActivity(i);
                         break;
+
+                    case R.id.navigation_item_login:
+                        i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
+                        break;
+
                 }
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
@@ -85,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

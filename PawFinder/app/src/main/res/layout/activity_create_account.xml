@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="5">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Sign up"
+        android:textSize="30dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Email"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/yellow"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:inputType="textWebEmailAddress"/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Password"
+        android:textColor="@color/yellow"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:inputType="textPassword"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:buttonTint="@color/yellow"
+            android:text="I agree to the "
+            android:textSize="20dp"
+            android:textColor="@color/colorGrey"/>
+        <TextView
+            android:id="@+id/termsOfService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/TermsOfServices"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColorLink="@color/yellow"
+            android:clickable="true"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_yellow_button"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="@string/btn_signUp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
+
+</LinearLayout>
