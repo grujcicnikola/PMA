@@ -18,7 +18,7 @@
 
         <item
             android:id="@+id/navigation_item_login"
-            android:icon="@drawable/login"
+            android:icon="@drawable/avatar"
             android:title="Login"/>
 
         <item

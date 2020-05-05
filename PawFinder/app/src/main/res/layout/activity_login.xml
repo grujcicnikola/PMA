@@ -5,8 +5,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainActivity"
+        tools:context=".activity.LoginActivity"
         android:weightSum="5">
+
 
         <ImageView
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Hi, please login to report pet missing or found﻿."
+            android:text="Hi, please login to report pet missing or found."
             android:textSize="16dp"
             android:textStyle="bold"
             android:textColor="@color/colorGrey"/>
@@ -36,7 +37,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Email"
+            android:text="@string/email"
             android:textSize="25dp"
             android:textStyle="bold"
             android:textColor="@color/yellow"/>
@@ -51,7 +52,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="@color/yellow"
             android:textSize="25dp"
             android:textStyle="bold" />
@@ -97,4 +98,3 @@
 
 
     </LinearLayout>
-

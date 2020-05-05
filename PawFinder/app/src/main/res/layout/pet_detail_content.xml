@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="5"
+    tools:context=".activity.PetDetailActivity"
+    tools:showIn="@layout/activity_pet_detail">
+
+    <ImageView
+        android:id="@+id/pet_details_image"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/bView_on_map"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_blue_button"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="View on map"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/bView_on_map"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@id/bView_on_map"
+            android:layout_weight="1"
+            android:background="@drawable/comments_pic"/>
+
+        <TextView
+            android:id="@+id/pet_details_text"
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/bView_on_map"
+            android:layout_alignLeft="@id/bView_on_map"
+            android:layout_alignRight="@id/imageButton"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

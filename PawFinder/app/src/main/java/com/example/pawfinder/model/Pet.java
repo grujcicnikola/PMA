@@ -1,5 +1,9 @@
 package com.example.pawfinder.model;
 
+import androidx.annotation.NonNull;
+
+import com.example.pawfinder.R;
+
 import java.util.Date;
 
 public class Pet {
@@ -9,14 +13,14 @@ public class Pet {
     private String name;
     private PetGender gender;
     private String description;
-    private byte[] image;
-    private Date dateOfLost;
+    private int image;
+    private String dateOfLost;
     private String contact;
     private boolean isFound;
 
     public Pet() {}
 
-    public Pet(Long id, PetType type, String name, PetGender gender, String description, byte[] image, Date dateOfLost, String contact, boolean isFound) {
+    public Pet(Long id, PetType type, String name, PetGender gender, String description, int image, String dateOfLost, String contact, boolean isFound) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -48,11 +52,11 @@ public class Pet {
         return description;
     }
 
-    public byte[] getImage() {
+    public int getImage() {
         return image;
     }
 
-    public Date getDateOfLost() {
+    public String getDateOfLost() {
         return dateOfLost;
     }
 
@@ -63,5 +67,18 @@ public class Pet {
     public boolean isFound() {
         return isFound;
     }
-    
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Name: "  + this.getName() + "\n"+
+                "Type: " + this.getType() + "\n"+
+                "Gender: " + this.getGender() + "\n" +
+                "Missing since: " + this.getDateOfLost() + "\n"+
+                "Last seen: " + "\n"+
+                "Owners email: " + "pera@gmail.com" + "\n" +
+                "Owners phone: "  + this.getContact() + "\n" +
+                "Additional information: " + ": " + this.getDescription();
+    }
 }

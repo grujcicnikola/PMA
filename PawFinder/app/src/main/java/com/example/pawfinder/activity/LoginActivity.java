@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         TextView createAccountView = (TextView) findViewById(R.id.lCreateAccount);
         createAccountView.setOnClickListener(this);
+
     }
 
     @Override

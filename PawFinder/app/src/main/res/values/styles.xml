@@ -1,16 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="titleTextColor">@color/grey</item>
+        <item name="titleTextColor">@color/black</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
-        <item name="colorControlNormal">@color/grey</item>
+        <item name="colorControlNormal">@color/colorBluePrimary</item>
         <item name="actionMenuTextColor">@color/grey</item>
+    </style>
 
+
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/colorBluePrimary</item>
     </style>
 
 
