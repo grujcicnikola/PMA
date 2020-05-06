@@ -1,4 +1,4 @@
-package com.example.pawfinder;
+package com.example.pawfinder.adapters;
 
 import android.os.Bundle;
 

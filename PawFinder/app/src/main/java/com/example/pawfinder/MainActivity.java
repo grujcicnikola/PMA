@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +13,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pawfinder.activity.BarCodeActivity;
-import com.example.pawfinder.activity.CreateAccountActivity;
 import com.example.pawfinder.activity.LoginActivity;
+import com.example.pawfinder.activity.MissingReportFirstPage;
+import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -44,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(1).select();         //da selektovan bude Missing
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -57,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
                         i = new Intent(getApplicationContext(), BarCodeActivity.class);
                         startActivity(i);
                         break;
-
                     case R.id.navigation_item_login:
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         break;
-
+                    case R.id.navigation_item_item:
+                        Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
+                        startActivity(missingReport);
+                        break;
                 }
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
