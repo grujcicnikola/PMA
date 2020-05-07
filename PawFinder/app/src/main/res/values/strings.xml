@@ -26,7 +26,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
 
-    <!-- labele za podatke o zivotinji -->
+     <!-- labele za podatke o zivotinji -->
     <string name="label_name">Name</string>
     <string name="label_type">Type</string>
     <string name="label_gender">Gender</string>
@@ -49,5 +49,9 @@
     <string name="title_missing_second">Where the pet disappeared? 2/3</string>
     <string name="title_missing_third">Valuable information</string>
 
+
+    <!-- Login activity -->
+    <string name="message_label">Hi, please login to report pet missing or found.</string>
+    <string name="or_text">OR</string>
 
 </resources>
