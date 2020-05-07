@@ -13,4 +13,6 @@
     <color name="grey">#212121</color>
     <color name="colorGrey">#929292</color>
     <color name="colorBluePrimary">#0d47a1</color>
+    <color name="colorBlueLight">#e6e6e6</color>
+
 </resources>

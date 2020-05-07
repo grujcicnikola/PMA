@@ -23,6 +23,7 @@
     <string name="btn_login">Login</string>
     <string name="title_pet_list">MissingPets</string>
     <string name="title_pet_detail">Pet Detail</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
 
@@ -35,6 +36,7 @@
     <string name="label_owners_email">Owners email</string>
     <string name="label_owners_phone">Owners_phone</string>
     <string name="label_additional">Additional information</string>
+
 
     <string name="input_text">Input text</string>
     <string name="btn_date">Choose date</string>
@@ -53,5 +55,21 @@
     <!-- Login activity -->
     <string name="message_label">Hi, please login to report pet missing or found.</string>
     <string name="or_text">OR</string>
+
+    <!--podesavanja-->
+    <string name="general_settings">General</string>
+    <string name="pref_theme">Theme</string>
+    <string name="pref_theme_sum">Description</string>
+    <string name="account_settings">Account</string>
+    <string name="pref_change_passoword">Change password</string>
+    <string name="comments">Comments</string>
+    <string name="pref_default_current_password">Current password</string>
+    <string name="pref_default_new_password">New password</string>
+    <string name="pref_default_repeat_password">Repeat password</string>
+
+    <!--komentari-->
+    <string name="label_name_comment">Name:</string>
+    <string name="label_additional_comment">Additional info:</string>
+
 
 </resources>

@@ -22,8 +22,6 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.LoginActivity"/>
 
-
-
         <activity android:name=".activity.CreateAccountActivity" />
 
         <!--
@@ -66,8 +64,23 @@
         </activity>
         <activity
             android:name=".activity.BarCodeActivity"
-            android:label="Bar code"
-            android:parentActivityName=".activity.MapsActivity" />
+            android:label="QR code"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ViewCommentsActivity"
+            android:label="Comments"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PreferenceActivity"
+            android:label="@string/nav_item_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
+
 
 </manifest>

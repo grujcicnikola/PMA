@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="@string/general_settings"
+        android:key="@string/general_settings">
+
+        <ListPreference
+
+            android:key="@string/pref_theme"
+            android:summary="@string/pref_theme_sum"
+            android:title="@string/pref_theme"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:dialogTitle="@string/pref_theme"
+            android:defaultValue="1"
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/account_settings"
+        android:key="@string/account_settings">
+
+        <EditTextPreference
+
+            android:key="@string/pref_change_passoword"
+            android:title="@string/pref_change_passoword"
+            android:dialogTitle="@string/pref_change_passoword"
+            android:inputType="textPassword"
+            />
+
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

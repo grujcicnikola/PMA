@@ -11,11 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
-
 import com.example.pawfinder.activity.BarCodeActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
 import com.example.pawfinder.adapters.ViewPagerAdapter;
+import com.example.pawfinder.activity.PreferenceActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
     private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +52,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 // set item as selected to persist highlight
                 Intent i;
-                switch(menuItem.getItemId()) {
+                switch (menuItem.getItemId()) {
                     case R.id.navigation_item_qr_code:
                         i = new Intent(getApplicationContext(), BarCodeActivity.class);
                         startActivity(i);
                         break;
+
                     case R.id.navigation_item_login:
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         break;
+
                     case R.id.navigation_item_item:
                         Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
                         startActivity(missingReport);
                         break;
+
+                    case R.id.navigation_item_settings:
+                        i = new Intent(getApplicationContext(), PreferenceActivity.class);
+                        startActivity(i);
+                        break;
+
                 }
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -94,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.action_settings:
+                Intent i = new Intent(getApplicationContext(), PreferenceActivity.class);
+                startActivity(i);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
