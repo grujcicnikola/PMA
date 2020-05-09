@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ReportDetailActivity"></activity>
+        <activity
+            android:name=".activity.ReportDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PetDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -62,12 +64,12 @@
         </activity>
         <activity
             android:name=".activity.BarCodeActivity"
-            android:label="QR code"
+            android:label="@string/nav_item_qr_code"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ViewCommentsActivity"
-            android:label="Comments"
+            android:label="@string/comments"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -78,6 +80,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.ScannedDataActivity"
+            android:label="@string/scanned_data" />
     </application>
 
 </manifest>

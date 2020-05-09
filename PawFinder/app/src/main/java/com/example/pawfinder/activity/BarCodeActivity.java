@@ -1,11 +1,13 @@
 package com.example.pawfinder.activity;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,18 +53,16 @@ public class BarCodeActivity  extends AppCompatActivity {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnAction);
-        /*btnAction.setOnClickListener(new View.OnClickListener() {
-            /@Override
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 if (intentData.length() > 0) {
-                    if (isEmail)
-                        startActivity(new Intent(ScannedBarcodeActivity.this, EmailActivity.class).putExtra("email_address", intentData));
-                    else {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-                    }
+                    Intent intent = new Intent(getApplicationContext(), ScannedDataActivity.class);
+                    intent.putExtra("scanned_data",intentData);
+                    startActivity(intent);
                 }
             }
-        });*/
+        });
     }
 
     private void initialiseDetectorsAndSources() {

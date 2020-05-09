@@ -11,6 +11,16 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="pref_language_entries">
+        <item>English</item>
+        <item>Serbian</item>
+    </string-array>
+
+    <string-array name="pref_language_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 
 
 </resources>
