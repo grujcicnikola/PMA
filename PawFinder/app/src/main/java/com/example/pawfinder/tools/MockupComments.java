@@ -7,6 +7,7 @@ import com.example.pawfinder.model.PetGender;
 import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.model.User;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,18 +37,30 @@ public class MockupComments {
 
     public static List<Pet> getPets() {
         ArrayList<Pet> pets = new ArrayList<Pet>();
-        Date date = Calendar.getInstance().getTime();
 
-        // Display a date in day, month, year format
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String today = formatter.format(date);
+        User user1 = new User();
+        user1.setId(new Long(4));
+        user1.setEmail("pera@gmail.com");
+        user1.setPassword("123");
 
-        pets.add(new Pet((long) 1, PetType.DOG, "Dzeki", PetGender.MALE, "Pas ima zelenu ogrlicu", R.drawable.puppydog, today, "021/1234", false));
-        pets.add(new Pet((long) 2, PetType.CAT, "Djura", PetGender.MALE, "Ne prilazi nepoznatima", R.drawable.cat, today, "021/1234", false));
-        pets.add(new Pet((long) 3, PetType.DOG, "Lara", PetGender.FEMALE, "Druzeljubiva, ima cip", R.drawable.dog2, today, "021/1234", false));
-        pets.add(new Pet((long) 4, PetType.CAT, "Kiki", PetGender.FEMALE, "Ruska plava macka", R.drawable.russiancat, today, "021/1234", false));
-        pets.add(new Pet((long) 5, PetType.DOG, "Aleks", PetGender.FEMALE, "opis 1", R.drawable.labrador, today, "021/1234", false));
-        pets.add(new Pet((long) 6, PetType.DOG, "Bobi", PetGender.MALE, "opis 2", R.drawable.samojedjpg, today, "021/1234", false));
+        User user2 = new User();
+        user2.setId(new Long(5));
+        user2.setEmail("jova@gmail.com");
+        user2.setPassword("123");
+
+        Pet p1 = new Pet((long) 1, PetType.DOG, "Dzeki", PetGender.MALE, "Pas ima zelenu ogrlicu", R.drawable.puppydog, "23/04/2020", "021/1234", false, user1);
+        Pet p2 = new Pet((long) 2, PetType.CAT, "Djura", PetGender.MALE, "Ne prilazi nepoznatima", R.drawable.cat, "01/05/2020", "021/1234", false, user2);
+        Pet p3 = new Pet((long) 3, PetType.DOG, "Lara", PetGender.FEMALE, "Druzeljubiva, ima cip", R.drawable.dog2, "01/05/2020", "021/1234", false, user2);
+        Pet p4 = new Pet((long) 4, PetType.CAT, "Kiki", PetGender.FEMALE, "Ruska plava macka", R.drawable.russiancat, "01/05/2020", "021/1234", false, user2);
+        Pet p5 = new Pet((long) 5, PetType.DOG, "Aleks", PetGender.FEMALE, "opis 1", R.drawable.labrador, "01/05/2020", "021/1234", false, user2);
+        Pet p6 = new Pet((long) 6, PetType.DOG, "Bobi", PetGender.MALE, "opis 2", R.drawable.samojedjpg, "23/04/2020", "021/1234", false, user1);
+
+        pets.add(p1);
+        pets.add(p2);
+        pets.add(p3);
+        pets.add(p4);
+        pets.add(p5);
+        pets.add(p6);
 
         return pets;
     }
@@ -76,5 +89,23 @@ public class MockupComments {
             }
         }
         return comments;
+    }
+
+    public static ArrayList<Pet> getReports() {
+
+        ArrayList<Pet> reports = new ArrayList<Pet>();
+
+        User user1 = new User();
+        user1.setId(new Long(1));
+        user1.setEmail("pera@gmail.com");
+        user1.setPassword("123");
+
+        Pet p1 = new Pet((long) 1, PetType.DOG, "Dzeki", PetGender.MALE, "Pas ima zelenu ogrlicu", R.drawable.puppydog, "23/04/2020", "021/1234", false, user1);
+        Pet p6 = new Pet((long) 6, PetType.DOG, "Bobi", PetGender.MALE, "opis 2", R.drawable.samojedjpg, "23/04/2020", "021/1234", false, user1);
+
+        reports.add(p1);
+        reports.add(p6);
+
+        return reports;
     }
 }

@@ -13,6 +13,8 @@ import android.widget.ListView;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.activity.PetDetailActivity;
+import com.example.pawfinder.activity.ReportDetailActivity;
+import com.example.pawfinder.adapters.MyReportsListAdapter;
 import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.model.PetGender;
@@ -23,17 +25,15 @@ import com.example.pawfinder.tools.MockupComments;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MissingFragment extends Fragment {
+public class MyReportsFragment extends Fragment {
 
     private ListView list;
 
-    public MissingFragment() {
+    public MyReportsFragment() {
         // Required empty public constructor
     }
 
@@ -43,24 +43,24 @@ public class MissingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_missing, container, false);
-        PetsListAdapter adapter = new PetsListAdapter(getContext(), MockupComments.getPets());
+        View view = inflater.inflate(R.layout.fragment_my_reports, container, false);
+        MyReportsListAdapter adapter = new MyReportsListAdapter(getContext(), MockupComments.getReports());
 
-        list = (ListView) view.findViewById(R.id.pets_list);
+        list = (ListView) view.findViewById(R.id.reports_list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getContext(), PetDetailActivity.class);
-                intent.putExtra("pets_position",position);
+                Intent intent = new Intent(getContext(), ReportDetailActivity.class);
+                intent.putExtra("reports_position",position);
                 startActivity(intent);
             }
         });
 
         return view;
     }
-    
+
 
 }

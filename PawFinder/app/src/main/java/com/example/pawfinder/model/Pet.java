@@ -17,6 +17,7 @@ public class Pet {
     private String dateOfLost;
     private String contact;
     private boolean isFound;
+    private User user;
 
     public Pet() {}
 
@@ -30,6 +31,20 @@ public class Pet {
         this.dateOfLost = dateOfLost;
         this.contact = contact;
         this.isFound = isFound;
+    }
+
+
+    public Pet(Long id, PetType type, String name, PetGender gender, String description, int image, String dateOfLost, String contact, boolean isFound, User user) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.gender = gender;
+        this.description = description;
+        this.image = image;
+        this.dateOfLost = dateOfLost;
+        this.contact = contact;
+        this.isFound = isFound;
+        this.user = user;
     }
 
     public Long getId() {
@@ -68,6 +83,49 @@ public class Pet {
         return isFound;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setType(PetType type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(PetGender gender) {
+        this.gender = gender;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setDateOfLost(String dateOfLost) {
+        this.dateOfLost = dateOfLost;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setFound(boolean found) {
+        isFound = found;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @NonNull
     @Override

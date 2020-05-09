@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.pawfinder.fragments.MissingFragment;
+import com.example.pawfinder.fragments.MyReportsFragment;
 import com.example.pawfinder.fragments.NearYouFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -42,6 +43,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                // missingFragment = new MissingFragment();
                 //break;
             case 2:
+                fragment = new MyReportsFragment();
                 fragment.setArguments(bundle);
                 return fragment;
 

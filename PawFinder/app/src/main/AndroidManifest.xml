@@ -17,13 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.PetDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.LoginActivity"/>
-
+        <activity android:name=".activity.ReportDetailActivity"></activity>
+        <activity
+            android:name=".activity.PetDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.CreateAccountActivity" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,19 +35,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.MissingReportFirstPage"
+        <activity
+            android:name=".activity.MissingReportFirstPage"
             android:label="@string/title_missing_first"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_missing_second"
-            android:parentActivityName=".activity.MissingReportFirstPage"/>
-
-        <activity android:name=".activity.MissingReportThirdPage"
+            android:parentActivityName=".activity.MissingReportFirstPage" />
+        <activity
+            android:name=".activity.MissingReportThirdPage"
             android:label="@string/title_missing_third"
-            android:parentActivityName=".activity.MapsActivity"></activity>
-
+            android:parentActivityName=".activity.MapsActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -81,6 +79,5 @@
                 android:value=".MainActivity" />
         </activity>
     </application>
-
 
 </manifest>

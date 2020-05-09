@@ -27,15 +27,15 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
 
-     <!-- labele za podatke o zivotinji -->
-    <string name="label_name">Name</string>
-    <string name="label_type">Type</string>
-    <string name="label_gender">Gender</string>
-    <string name="label_missing">Missing since</string>
-    <string name="label_last_seen">Last seen</string>
-    <string name="label_owners_email">Owners email</string>
-    <string name="label_owners_phone">Owners_phone</string>
-    <string name="label_additional">Additional information</string>
+    <!-- labele za podatke o zivotinji -->
+    <string name="label_name">Name:</string>
+    <string name="label_type">Type:</string>
+    <string name="label_gender">Gender:</string>
+    <string name="label_missing">Missing since:</string>
+    <string name="label_last_seen">Last seen:</string>
+    <string name="label_owners_email">Owners email:</string>
+    <string name="label_owners_phone">Owners_phone:</string>
+    <string name="label_additional">Additional information:</string>
 
 
     <string name="input_text">Input text</string>

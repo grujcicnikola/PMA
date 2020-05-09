@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_yellow_button"
             android:layout_marginTop="5dp"
-            android:layout_gravity="center"
             android:text="@string/btn_login"
             android:textColor="@color/white"
             android:textAlignment="center"

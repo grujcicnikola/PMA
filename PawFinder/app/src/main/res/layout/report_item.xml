@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/report_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
 
@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignTop="@id/imageView"
-        android:layout_toEndOf="@id/imageView"
+        android:layout_alignTop="@id/report_image"
+        android:layout_toEndOf="@id/report_image"
         android:layout_marginLeft="10dp">
 
         <LinearLayout
@@ -26,48 +26,24 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:id="@+id/name_label"
+                android:id="@+id/report_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_name"
                 android:textSize="16dp"
                 android:textColor="@color/yellow"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
 
             <TextView
-                android:id="@+id/pet_name"
+                android:id="@+id/report_pet_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
                 android:textSize="16dp"
                 android:textColor="@color/colorGrey"
                 android:text="Dzeki"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/label_dateOfLost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_missing"
-                android:textSize="16dp"
-                android:textColor="@color/yellow"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/pet_dateOfLost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="16dp"
-                android:textColor="@color/colorGrey"
-                android:text="26/03/2020"/>
 
         </LinearLayout>
 
