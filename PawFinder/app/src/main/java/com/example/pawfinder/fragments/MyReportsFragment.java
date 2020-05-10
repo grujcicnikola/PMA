@@ -33,9 +33,12 @@ public class MyReportsFragment extends Fragment {
 
     private ListView list;
 
-    public MyReportsFragment() {
-        // Required empty public constructor
+    public static  MyReportsFragment newInstance(Bundle bundle){
+        MyReportsFragment fragment = new MyReportsFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
+
 
 
     @Override

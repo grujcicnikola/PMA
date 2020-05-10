@@ -106,39 +106,54 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
-                android:layout_below="@id/type"
+                android:orientation="vertical"
                 android:minWidth="300dp"
                 android:layout_width="wrap_content"
                 android:minHeight="50dp"
-                android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                >
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
                 <TextView
-                    android:id="@+id/text_view_date"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:textSize="25dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/format_date"
-                     />
+                    android:text="@string/label_missing_since"
+                    android:textColor="@color/yellow"/>
 
-                <Button
-                    android:id="@+id/btn_get_date"
+                <LinearLayout
+                    android:minWidth="300dp"
                     android:layout_width="wrap_content"
+                    android:minHeight="50dp"
                     android:layout_height="wrap_content"
-                    android:minWidth="40dp"
-                    android:layout_gravity="right"
-                    android:background="@color/yellow"
-                    android:text="@string/btn_date"
-                    android:textColor="@color/white" />
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/text_view_date"
+                        android:layout_width="200dp"
+                        android:textSize="25dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/format_date"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_get_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="40dp"
+                        android:layout_gravity="right"
+                        android:background="@color/yellow"
+                        android:text="@string/btn_date"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

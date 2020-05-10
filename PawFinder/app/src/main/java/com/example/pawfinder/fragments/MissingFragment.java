@@ -33,8 +33,10 @@ public class MissingFragment extends Fragment {
 
     private ListView list;
 
-    public MissingFragment() {
-        // Required empty public constructor
+    public static  MissingFragment newInstance(Bundle bundle){
+        MissingFragment fragment = new MissingFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
 

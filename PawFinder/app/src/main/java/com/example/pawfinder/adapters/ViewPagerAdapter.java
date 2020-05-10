@@ -22,30 +22,24 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        //ne treba preko konstruktora Milos rekao - Ivana izmeni (ovako lik u videu radio purger)
-        NearYouFragment nearYouFragment = new NearYouFragment();
-        //MissingFragment missingFragment = new MissingFragment();
+        NearYouFragment nearYouFragment = null;
+        MissingFragment missingFragment = null;
+        MyReportsFragment reportsFragment = null;
 
-        Fragment fragment = new Fragment();
-
-        //
         Bundle bundle = new Bundle();
         bundle.putString("message", "Fragment :" + position);
 
         switch (position) {
             case 0:
-                nearYouFragment = new NearYouFragment();
-                break;
+                nearYouFragment = new NearYouFragment().newInstance();
+                return nearYouFragment;
             case 1:
-                fragment = new MissingFragment();
-                fragment.setArguments(bundle);
-                return fragment;
-               // missingFragment = new MissingFragment();
+                missingFragment = new MissingFragment().newInstance(bundle);
+                return missingFragment;
                 //break;
             case 2:
-                fragment = new MyReportsFragment();
-                fragment.setArguments(bundle);
-                return fragment;
+                reportsFragment = new MyReportsFragment().newInstance(bundle);
+                return reportsFragment;
 
             default:
                 break;

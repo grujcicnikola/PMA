@@ -26,9 +26,9 @@ public class NearYouFragment extends SupportMapFragment implements OnMapReadyCal
     private TextView textView;
     private GoogleMap mMap;
 
-    public  NearYouFragment(){
-
-    }
+   public static  NearYouFragment newInstance(){
+       return new NearYouFragment();
+   }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
