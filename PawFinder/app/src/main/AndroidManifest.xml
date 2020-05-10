@@ -93,9 +93,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity
-            android:name=".activity.ScannedDataActivity"
-            android:label="@string/scanned_data" />
     </application>
 
 </manifest>
