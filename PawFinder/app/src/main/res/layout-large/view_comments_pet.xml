@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_name_comment"
                     android:textColor="@color/white"
-                    android:textSize="21dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_additional_comment"
                     android:textColor="@color/white"
-                    android:textSize="21dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="21dp" />
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -130,7 +130,8 @@
             android:layout_marginBottom="16dp"
             android:layout_weight="8"
             android:hint="Type your comment"
-            android:inputType="textMultiLine"></EditText>
+            android:inputType="textMultiLine"
+            android:textSize="25dp"></EditText>
 
         <Button
             android:id="@+id/shop_comment_button"
