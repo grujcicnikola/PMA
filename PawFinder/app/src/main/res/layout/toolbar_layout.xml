@@ -7,6 +7,7 @@
     android:accessibilityPaneTitle="@string/app_name"
     app:titleTextColor="@color/black"
     android:id="@+id/toolBar"
+    app:titleTextAppearance="@style/ToolBarLarge"
     android:elevation="4dp"
     app:layout_scrollFlags="scroll|enterAlways">
 

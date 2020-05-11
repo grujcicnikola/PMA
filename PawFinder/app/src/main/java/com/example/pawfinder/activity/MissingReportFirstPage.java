@@ -31,16 +31,16 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
 
         Spinner spinnerGender = findViewById(R.id.gender);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<PetGender> adapterGender = new ArrayAdapter<PetGender>(this, android.R.layout.simple_spinner_item, PetGender.values());
+        ArrayAdapter<PetGender> adapterGender = new ArrayAdapter<PetGender>(this, R.layout.spinner_item, PetGender.values());
         // Specify the layout to use when the list of choices appears
-        adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterGender.setDropDownViewResource(R.layout.spinner_item);
         // Apply the adapter to the spinner
         spinnerGender.setAdapter(adapterGender);
 
 
         Spinner spinnerType = findViewById(R.id.type);
-        ArrayAdapter<PetType> adapterType = new ArrayAdapter<PetType>(this, android.R.layout.simple_spinner_item, PetType.values());
-        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<PetType> adapterType = new ArrayAdapter<PetType>(this, R.layout.spinner_item, PetType.values());
+        adapterType.setDropDownViewResource(R.layout.spinner_item);
         spinnerType.setAdapter(adapterType);
 
 

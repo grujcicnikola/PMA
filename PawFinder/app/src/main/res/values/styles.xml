@@ -45,4 +45,11 @@
         <item name="android:textColor">@color/tabSelected</item>
         <item name="android:textSize">30dp</item>
     </style>
+
+    <style name="MineCustomTabTextLarge" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20dp</item>
+    </style>
+    <style name="ToolBarLarge" parent="ToolbarTheme">
+        <item name="android:textSize">22dp</item>
+    </style>
 </resources>

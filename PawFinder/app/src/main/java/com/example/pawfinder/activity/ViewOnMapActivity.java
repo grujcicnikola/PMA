@@ -41,9 +41,8 @@ public class ViewOnMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng nn = new LatLng(45.26, 19.81);
+        mMap.addMarker(new MarkerOptions().position(nn).title("Marker in Novi Sad"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(nn));
     }
 }

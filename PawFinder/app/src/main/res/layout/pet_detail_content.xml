@@ -27,7 +27,7 @@
         <Button
             android:id="@+id/bView_on_map"
             android:layout_width="230dp"
-            android:layout_height="50dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
             android:background="@drawable/rounded_blue_button"
             android:text="View on map"

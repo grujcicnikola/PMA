@@ -4,6 +4,7 @@
     tools:context=".activity.MissingReportFirstPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:titleTextAppearance = "@style/ToolBarLarge"
     android:orientation="vertical" >
 <ScrollView
     android:layout_width="match_parent"
@@ -13,12 +14,13 @@
     android:fillViewport="true">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/linear_main"
+            android:minWidth="375dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
@@ -29,9 +31,9 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:minWidth="300dp"
-            android:layout_width="wrap_content"
+            android:minWidth="375dp"
             android:minHeight="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
@@ -40,13 +42,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pet_name"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:textColor="@color/yellow"/>
 
             <EditText
                 android:id="@+id/enter_pet_name"
                 android:layout_width="match_parent"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:layout_height="wrap_content"
                 android:importantForAutofill="no"
                 android:inputType="text" />
@@ -54,9 +56,8 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:minWidth="300dp"
+                android:minWidth="375dp"
                 android:layout_width="wrap_content"
-                android:minHeight="50dp"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -66,22 +67,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_gender"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="@color/yellow"/>
 
                 <Spinner
                     android:id="@+id/gender"
                     android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:minHeight="30dp"
-                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:layout_height="35dp"
                     android:text="@string/label_gender"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
-                android:minWidth="300dp"
+                android:minWidth="375dp"
                 android:layout_width="wrap_content"
                 android:minHeight="50dp"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
@@ -90,7 +90,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:layout_height="wrap_content"
                     android:text="@string/label_type"
                     android:textColor="@color/yellow"/>
@@ -98,9 +98,8 @@
                 <Spinner
                     android:id="@+id/type"
                     android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:minHeight="30dp"
-                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:layout_height="35dp"
                     android:text="@string/label_type"
                     />
 
@@ -108,7 +107,7 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:minWidth="300dp"
+                android:minWidth="375dp"
                 android:layout_width="wrap_content"
                 android:minHeight="50dp"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
@@ -116,15 +115,14 @@
                 android:layout_gravity="center">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:textSize="20dp"
+                    android:layout_width="wrap_content"
+                    android:textSize="25dp"
                     android:layout_height="wrap_content"
                     android:text="@string/label_missing_since"
                     android:textColor="@color/yellow"/>
 
                 <LinearLayout
-                    android:minWidth="300dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:minHeight="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/activity_vertical_margin"
@@ -135,7 +133,7 @@
                     <TextView
                         android:id="@+id/text_view_date"
                         android:layout_width="200dp"
-                        android:textSize="20dp"
+                        android:textSize="25dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/format_date"
                         />
@@ -144,7 +142,7 @@
                         android:id="@+id/btn_get_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minWidth="40dp"
+                        android:textSize="25dp"
                         android:layout_gravity="right"
                         android:background="@drawable/rounded_yellow_button"
                         android:text="@string/btn_date"
@@ -167,7 +165,7 @@
         android:id="@+id/btn_missing_report_first"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:layout_alignParentBottom="true"
         android:background="@color/yellow"
         android:text="@string/next"

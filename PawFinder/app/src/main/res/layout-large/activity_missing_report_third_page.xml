@@ -28,7 +28,7 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:minWidth="300dp"
+                android:minWidth="375dp"
                 android:layout_width="wrap_content"
                 android:minHeight="50dp"
                 android:layout_height="wrap_content"
@@ -39,13 +39,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_number"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="@color/yellow"/>
 
                 <EditText
                     android:id="@+id/enter_phone_number"
                     android:layout_width="match_parent"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:importantForAutofill="no"
@@ -54,7 +54,7 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:minWidth="300dp"
+                android:minWidth="375dp"
                 android:layout_width="wrap_content"
                 android:minHeight="50dp"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
@@ -63,15 +63,15 @@
 
                 <TextView
                     android:id="@+id/label_add_info"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_info"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textColor="@color/yellow"/>
 
                 <EditText
                     android:id="@+id/enter_add_info"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:textSize="25dp"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
@@ -89,14 +89,17 @@
             android:layout_below="@id/linear"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="3dp"
+            android:minWidth="50dp"
             android:background="@drawable/rounded_yellow_button"
             android:layout_gravity="center"
             android:text="@string/upload_image"
+            android:textSize="25dp"
             android:textColor="@color/white" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="50dp"
             android:adjustViewBounds="true"
             android:layout_below="@id/choose_pet_image"
             android:layout_marginTop="3dp"
@@ -114,9 +117,9 @@
         android:id="@+id/btn_missing_report_third"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/yellow"
+        android:textSize="25dp"
+        android:background="@drawable/rounded_yellow_button"
         android:text="@string/finish"
         android:textColor="@color/white"/>
 </LinearLayout>

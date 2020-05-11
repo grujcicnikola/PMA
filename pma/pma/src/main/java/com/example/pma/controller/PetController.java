@@ -28,6 +28,7 @@ public class PetController {
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAll(){
+		System.out.println("Stigao");
 		List<Pet> pets = petService.findAll();
 		List<PetDTO> petsDTO = converter.convertToPetDTO(pets);
 		
