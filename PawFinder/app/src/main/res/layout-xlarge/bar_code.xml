@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:text="No Barcode Detected"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:layout_above="@id/btnAction"/>
 
 
