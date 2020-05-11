@@ -3,26 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/fab_margin"
-    android:layout_marginBottom="3dp"
+    android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
 
-        <ImageView
+    <ImageView
             android:id="@+id/l_image_view"
-            android:maxHeight="320dp"
-            android:adjustViewBounds="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            android:layout_centerHorizontal="true"/>
+            android:layout_width="450dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/l_login_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/btn_login"
-            android:textSize="35dp"
+            android:textSize="40dp"
             android:textColor="@color/black"
             android:layout_below="@id/l_image_view"
             android:layout_alignRight="@id/l_image_view"
@@ -32,9 +28,9 @@
             android:id="@+id/l_message_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:text="@string/message_label"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/colorGrey"
             android:layout_below="@id/l_login_label"
@@ -45,6 +41,7 @@
             android:id="@+id/l_email_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="@string/email"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -56,17 +53,18 @@
         <EditText
             android:id="@+id/l_edit_email"
             android:layout_width="0dp"
-            android:textSize="25dp"
             android:layout_height="wrap_content"
             android:inputType="textWebEmailAddress"
             android:layout_below="@id/l_email_label"
             android:layout_alignRight="@id/l_image_view"
             android:layout_alignLeft="@id/l_image_view"/>
 
+
         <TextView
             android:id="@+id/l_password_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="@string/password"
             android:textColor="@color/yellow"
             android:textSize="25dp"
@@ -80,7 +78,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textSize="25dp"
             android:layout_below="@id/l_password_label"
             android:layout_alignRight="@id/l_image_view"
             android:layout_alignLeft="@id/l_image_view"/>
@@ -88,14 +85,13 @@
         <Button
             android:id="@+id/bLogin"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/rounded_yellow_button"
             android:layout_marginTop="5dp"
-            android:layout_gravity="center"
             android:text="@string/btn_login"
             android:textColor="@color/white"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:layout_below="@id/l_edit_password"
             android:layout_alignRight="@id/l_image_view"
             android:layout_alignLeft="@id/l_image_view"/>
@@ -104,8 +100,9 @@
             android:id="@+id/l_or_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="@string/or_text"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textColor="@color/black"
             android:layout_below="@id/bLogin"
             android:layout_centerHorizontal="true"/>
@@ -117,10 +114,9 @@
             android:layout_gravity="center"
             android:text="@string/createAccount"
             android:textColorLink="@color/yellow"
-            android:textSize="35dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             android:clickable="true"
-            android:layout_marginBottom="3dp"
             android:layout_below="@id/l_or_text"
             android:layout_centerHorizontal="true"/>
 

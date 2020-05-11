@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/report_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
 
@@ -29,18 +29,18 @@
                 android:id="@+id/report_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="@string/label_name"
                 android:textSize="16dp"
                 android:textColor="@color/yellow"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/report_pet_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:textSize="16dp"
                 android:textColor="@color/colorGrey"
                 android:text="Dzeki"/>
