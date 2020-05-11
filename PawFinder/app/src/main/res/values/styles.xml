@@ -32,4 +32,17 @@
     <style name="AppTheme.DrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@android:color/black</item>
     </style>
+
+    <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+    <style name="NavDrawerTextStyleLarge" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+    <style name="NavDrawerTextStyleXLarge" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textSize">30dp</item>
+    </style>
 </resources>
