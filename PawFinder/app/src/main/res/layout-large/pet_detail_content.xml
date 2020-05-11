@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PetDetailActivity"
+    tools:showIn="@layout/activity_pet_detail">
+
+    <ImageView
+        android:id="@+id/pet_details_image"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/pd_lin_lay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pet_details_image"
+        android:layout_alignLeft="@id/pet_details_image"
+        android:layout_alignRight="@id/pet_details_image"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bView_on_map"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_blue_button"
+            android:text="View on map"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <ImageButton
+            android:id="@+id/buttonViewComments"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/comments_pic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/pd_lin_lay"
+        android:layout_alignLeft="@id/pet_details_image"
+        android:layout_alignRight="@id/pet_details_image"
+        android:background="@color/yellow"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/pet_details_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_alignLeft="@id/pet_details_image"
+            android:layout_alignRight="@id/pet_details_image"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
