@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MissingReportFirstPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+<ScrollView
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="0dip"
+    android:layout_weight="1"
+    android:fillViewport="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/linear_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="450dp"
+            android:layout_width="wrap_content"
+            android:minHeight="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/label_pet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_name"
+                android:textSize="30dp"
+                android:textColor="@color/yellow"/>
+
+            <EditText
+                android:id="@+id/enter_pet_name"
+                android:layout_width="match_parent"
+                android:textSize="30dp"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+        </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="450dp"
+                android:layout_width="wrap_content"
+                android:minHeight="50dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_gender"
+                    android:textSize="30dp"
+                    android:textColor="@color/yellow"/>
+
+                <Spinner
+                    android:id="@+id/gender"
+                    android:layout_width="match_parent"
+                    android:textSize="30dp"
+                    android:minHeight="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_gender"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="450dp"
+                android:layout_width="wrap_content"
+                android:minHeight="50dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_type"
+                    android:textColor="@color/yellow"/>
+
+                <Spinner
+                    android:id="@+id/type"
+                    android:layout_width="match_parent"
+                    android:textSize="30dp"
+                    android:minHeight="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_type"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="450dp"
+                android:layout_width="wrap_content"
+                android:minHeight="50dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_missing_since"
+                    android:textColor="@color/yellow"/>
+
+                <LinearLayout
+                    android:minWidth="300dp"
+                    android:layout_width="match_parent"
+                    android:minHeight="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/text_view_date"
+                        android:minWidth="250dp"
+                        android:layout_width="wrap_content"
+                        android:textSize="30dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/format_date"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_get_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:minWidth="60dp"
+                        android:textSize="25dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/rounded_yellow_button"
+                        android:text="@string/btn_date"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+</ScrollView>
+
+    <Button
+        android:id="@+id/btn_missing_report_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/yellow"
+        android:text="@string/next"
+        android:textColor="@color/white" />
+</LinearLayout>

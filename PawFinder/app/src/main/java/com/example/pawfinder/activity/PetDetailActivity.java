@@ -31,7 +31,6 @@ import java.util.Date;
 
 public class PetDetailActivity extends AppCompatActivity {
 
-
     private ArrayList<Pet> pets = new ArrayList<Pet>();
     private int position_of_pet;
     private Button petsLocation;

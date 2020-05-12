@@ -25,10 +25,13 @@
         android:background="@color/tabBackground"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        app:tabGravity="fill"
         app:tabIndicatorColor="@color/tabSelected"
         app:tabMode="fixed"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabTextAppearance="@style/MineCustomTabTextXLarge"
         app:tabSelectedTextColor="@color/tabSelected"
+        android:textAlignment="center"
         app:tabTextColor="@color/white"/>
 
     <androidx.viewpager.widget.ViewPager

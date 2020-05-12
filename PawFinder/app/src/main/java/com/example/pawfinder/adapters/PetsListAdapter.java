@@ -25,6 +25,7 @@ public class PetsListAdapter extends BaseAdapter {
     public PetsListAdapter(Context mContext, List<Pet> missingPets) {
         this.mContext = mContext;
         this.missingPets = missingPets;
+
     }
 
     @Override

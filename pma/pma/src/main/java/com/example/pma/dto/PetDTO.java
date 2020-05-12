@@ -17,10 +17,12 @@ public class PetDTO {
     private Date dateOfLost;
     private String contact;
     private boolean isFound;
+    
+    private UserDTO owner;
 
     public PetDTO() {}
 
-    public PetDTO(Long id, PetType type, String name, PetGender gender, String description, byte[] image, Date dateOfLost, String contact, boolean isFound) {
+    public PetDTO(Long id, PetType type, String name, PetGender gender, String description, byte[] image, Date dateOfLost, String contact, boolean isFound, UserDTO owner) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -30,6 +32,7 @@ public class PetDTO {
         this.dateOfLost = dateOfLost;
         this.contact = contact;
         this.isFound = isFound;
+        this.owner = owner;
     }
     
     public PetDTO(Pet pet) {
@@ -42,6 +45,7 @@ public class PetDTO {
         this.dateOfLost = pet.getDateOfLost();
         this.contact = pet.getContact();
         this.isFound = pet.isFound();
+        this.owner = new UserDTO(pet.getOwner());
     }
 
     public Long getId() {
@@ -114,6 +118,14 @@ public class PetDTO {
 
 	public void setFound(boolean isFound) {
 		this.isFound = isFound;
+	}
+
+	public UserDTO getOwner() {
+		return owner;
+	}
+
+	public void setOwner(UserDTO owner) {
+		this.owner = owner;
 	}
     
     

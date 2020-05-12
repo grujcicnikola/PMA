@@ -3,20 +3,32 @@ package com.example.pawfinder.model;
 import androidx.annotation.NonNull;
 
 import com.example.pawfinder.R;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
 public class Pet {
 
+    @SerializedName("id")
     private Long id;
+    @SerializedName("type")
     private PetType type;
+    @SerializedName("name")
     private String name;
+    @SerializedName("gender")
     private PetGender gender;
+    @SerializedName("description")
     private String description;
+
     private int image;
+    @SerializedName("dateOfLost")
     private String dateOfLost;
+    @SerializedName("contact")
     private String contact;
+    @SerializedName("found")
     private boolean isFound;
+
+    @SerializedName("owner")
     private User user;
 
     public Pet() {}
