@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">PawFinder</string>
+    <string name="splash_screen">Uvodni ekran</string>
+    <string name="next">Dalje</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Zdravo prazni fragmente</string>
+    <string name="drawer_header_text">Zaglavlje drawer-a</string>
+    <string name="nav_item_report">Prijavi nestalog ljubimca</string>
+    <string name="nav_item_qr_code">Skeniraj QR kod</string>
+    <string name="nav_item_settings">Podešavanja</string>
+    <string name="nav_item_login">Prijava</string>
+    <string name="nav_item_logout">Odjava</string>
+    <string name="qr_code_text">Dodaj sadržaj</string>
+    <string name="createAccount">
+        <a href="#">Kreiraj nalog</a>
+    </string>
+    <string name="TermsOfServices">
+        <a href="#">Terms of Services</a>
+    </string>
+    <string name="btn_signUp">Kreiraj nalog</string>
+    <string name="btn_login">Prijava</string>
+    <string name="title_pet_list">Nestali ljubimci</string>
+    <string name="title_pet_detail">Detalji o ljubimcu</string>
+
+    <string name="email">Mejl</string>
+    <string name="password">Šifra</string>
+
+    <!-- labele za podatke o zivotinji -->
+    <string name="label_name">Ime:</string>
+    <string name="label_type">Tip:</string>
+    <string name="label_gender">Pol:</string>
+    <string name="label_missing">Datum nestanka:</string>
+    <string name="label_last_seen">Poslednji put viđen:</string>
+    <string name="label_owners_email">Vlasnikov mejl:</string>
+    <string name="label_owners_phone">Vlasnikov kontakt:</string>
+    <string name="label_additional">Dodatne informacije:</string>
+
+
+    <string name="input_text">Upiši tekst</string>
+    <string name="btn_date">Odaberi datum</string>
+    <string name="format_date">mm/dd/yy</string>
+    <string name="label_missing_since">Datum nestanka</string>
+    <string name="upload_image">Ubaci sliku</string>
+    <string name="pet_name">Ime ljubimca</string>
+    <string name="pet_image">Slika ljubimca</string>
+    <string name="phone_number">Telefon</string>
+    <string name="add_info">Dodatne informacije</string>
+    <string name="finish">Kraj</string>
+    <string name="title_missing_first">O ljubimcu 1/3</string>
+    <string name="title_missing_second">Gde je nestao? 2/3</string>
+    <string name="title_missing_third">Važne informacije</string>
+    <string name="title_activity_view_on_map">Lokacija ljubimca</string>
+
+
+    <!-- Login activity -->
+    <string name="message_label">Zdravo, prijavite se da biste prijavili nestanak ili pronalazak ljubimca.</string>
+    <string name="or_text">ILI</string>
+
+    <!--podesavanja-->
+
+    <string name="general_settings">Opšte</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_theme_sum">Opis</string>
+    <string name="account_settings">Nalog</string>
+    <string name="pref_change_passoword">Promeni šifru</string>
+    <string name="comments">Komentari</string>
+    <string name="pref_default_current_password">Trenutna šifra</string>
+    <string name="pref_default_new_password">Nova šifra</string>
+    <string name="pref_default_repeat_password">Ponovi šifru</string>
+    <string name="pref_language">Jezik</string>
+    <string name="pref_language_sum">Izaberi jezik</string>
+
+    <!--komentari-->
+    <string name="label_name_comment">Ime:</string>
+    <string name="label_additional_comment">Dodatne informacije:</string>
+    <string name="send">Pošalji</string>
+    <string name="text_send">Upišite komentar</string>
+    <!--skenirani podaci-->
+    <string name="scanned_data">Skenirani podaci</string>
+
+    <!--report missing-->
+    <string name="button_found">Pronađen</string>
+
+    <!--tabovi-->
+    <string name="tab_near">U blizini</string>
+    <string name="tab_missing">Nestali</string>
+    <string name="tab_reports">Moje prijave</string>
+    <string name="tab_fragment">Fragment</string>
+
+    <!--qr code-->
+    <string name="qr_explain">Dozvola za kameru je potrebna radi skeniranja QR koda!</string>
+    <string name="qr_stop">Kako bismo sprečili curenje memorije, barkod skener je zaustavljen!</string>
+    <string name="qr_add">DODAJ SADRŽAJ</string>
+    <string name="qr_launch">OTVORI URL</string>
+    <string name="qr_barcode">Nije detektovan barkod</string>
+
+</resources>

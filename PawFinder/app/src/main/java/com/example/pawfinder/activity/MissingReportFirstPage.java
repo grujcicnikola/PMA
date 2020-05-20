@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.model.PetGender;
@@ -27,8 +28,11 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.activity_missing_report_first_page);
-
+        setTitle(R.string.title_missing_first);
         Spinner spinnerGender = findViewById(R.id.gender);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<PetGender> adapterGender = new ArrayAdapter<PetGender>(this, R.layout.spinner_item, PetGender.values());

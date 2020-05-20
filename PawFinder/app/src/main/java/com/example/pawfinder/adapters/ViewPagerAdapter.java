@@ -1,5 +1,6 @@
 package com.example.pawfinder.adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.pawfinder.fragments.MissingFragment;
 import com.example.pawfinder.fragments.MyReportsFragment;
 import com.example.pawfinder.fragments.NearYouFragment;
-
+import com.example.pawfinder.R;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-
-    public ViewPagerAdapter(@NonNull FragmentManager fm) {
+    private Context context;
+    public ViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
+        this.context=context;
     }
 
     @NonNull
@@ -59,15 +61,15 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Near you";
+                return context.getResources().getString(R.string.tab_near);
             case 1:
-                return "Missing";
+                return context.getResources().getString(R.string.tab_missing);
             case 2:
-                return "My reports";
+                return context.getResources().getString(R.string.tab_reports);
             default:
                 break;
         }
 
-        return "Fragment";
+        return context.getResources().getString(R.string.tab_fragment);
     }
 }

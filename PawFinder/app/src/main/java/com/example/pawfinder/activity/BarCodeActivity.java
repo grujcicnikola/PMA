@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
@@ -36,13 +37,16 @@ public class BarCodeActivity  extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
     String intentData = "";
-    boolean isEmail = false;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.bar_code);
+        setTitle(R.string.nav_item_qr_code);
         initViews();
     }
 
@@ -64,6 +68,14 @@ public class BarCodeActivity  extends AppCompatActivity {
                     Uri uri = Uri.parse(intentData); // missing 'http://' will cause crashed
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
+                    /*komentar sa stackoverflow-a
+                     If there are no apps on the device that can receive the implicit intent,
+                     your app will crash when it calls startActivity(). To first verify that an app
+                     exists to receive the intent, call resolveActivity() on your Intent object.
+                     If the result is non-null, there is at least one app that can handle the intent
+                      and it's safe to call startActivity(). If the result is null, you should not use the intent and,
+                     if possible, you should disable the feature that invokes the inten
+                    * */
                 }
             }
         });
@@ -89,7 +101,7 @@ public class BarCodeActivity  extends AppCompatActivity {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
                         if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                            Toast.makeText(getApplicationContext(), "Camera permission is needed to scan QR code!",
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.qr_explain),
                                     Toast.LENGTH_SHORT).show();
                         }
                         ActivityCompat.requestPermissions(BarCodeActivity.this, new
@@ -118,7 +130,7 @@ public class BarCodeActivity  extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.qr_stop), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -129,18 +141,10 @@ public class BarCodeActivity  extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if (barcodes.valueAt(0).email != null) {
-                                txtBarcodeValue.removeCallbacks(null);
-                                intentData = barcodes.valueAt(0).email.address;
-                                txtBarcodeValue.setText(intentData);
-                                isEmail = true;
-                                btnAction.setText("ADD CONTENT TO THE MAIL");
-                            } else {
-                                isEmail = false;
-                                btnAction.setText("LAUNCH URL");
-                                intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText(intentData);
-                            }
+                            btnAction.setText(getResources().getString(R.string.qr_launch));
+                            intentData = barcodes.valueAt(0).displayValue;
+                            txtBarcodeValue.setText(intentData);
+
                         }
                     });
                 }
@@ -172,7 +176,7 @@ public class BarCodeActivity  extends AppCompatActivity {
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(getApplicationContext(), "Camera permission is needed to scan QR code!",
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.qr_explain),
                             Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -193,7 +197,7 @@ public class BarCodeActivity  extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.qr_stop), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -204,18 +208,10 @@ public class BarCodeActivity  extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if (barcodes.valueAt(0).email != null) {
-                                txtBarcodeValue.removeCallbacks(null);
-                                intentData = barcodes.valueAt(0).email.address;
-                                txtBarcodeValue.setText(intentData);
-                                isEmail = true;
-                                btnAction.setText("ADD CONTENT TO THE MAIL");
-                            } else {
-                                isEmail = false;
-                                btnAction.setText("LAUNCH URL");
-                                intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText(intentData);
-                            }
+                            btnAction.setText(getResources().getString(R.string.qr_launch));
+                            intentData = barcodes.valueAt(0).displayValue;
+                            txtBarcodeValue.setText(intentData);
+
                         }
                     });
                 }

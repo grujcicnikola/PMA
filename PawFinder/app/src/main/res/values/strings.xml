@@ -74,9 +74,25 @@
     <!--komentari-->
     <string name="label_name_comment">Name:</string>
     <string name="label_additional_comment">Additional info:</string>
+    <string name="send">Send</string>
+    <string name="text_send">Type your comment</string>
 
     <!--skenirani podaci-->
     <string name="scanned_data">Scanned data</string>
 
+    <!--report missing-->
+    <string name="button_found">Found</string>
+    <!--tabovi-->
+    <string name="tab_near">Near you</string>
+    <string name="tab_missing">Missing</string>
+    <string name="tab_reports">My reports</string>
+    <string name="tab_fragment">Fragment</string>
+
+    <!--qr code-->
+    <string name="qr_explain">Camera permission is needed to scan QR code!</string>
+    <string name="qr_stop">To prevent memory leaks barcode scanner has been stopped!</string>
+    <string name="qr_add">ADD CONTENT</string>
+    <string name="qr_launch">LAUNCH URL</string>
+    <string name="qr_barcode">No Barcode Detected</string>
 
 </resources>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
 
@@ -16,7 +18,11 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.splash);
+        setTitle(R.string.app_name);
         int SPLASH_TIME_OUT = 1000;
         new Timer().schedule(new TimerTask() {
             @Override

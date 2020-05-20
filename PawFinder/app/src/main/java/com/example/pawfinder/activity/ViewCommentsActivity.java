@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.adapters.CommentAdapter;
@@ -30,6 +31,10 @@ public class ViewCommentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
+        setTitle(R.string.comments);
         setContentView(R.layout.view_comments_pet);
 
 

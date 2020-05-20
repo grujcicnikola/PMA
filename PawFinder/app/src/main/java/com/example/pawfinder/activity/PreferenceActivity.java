@@ -6,6 +6,7 @@ import com.example.pawfinder.R;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 import androidx.preference.PreferenceFragmentCompat;
 import com.example.pawfinder.tools.FragmentTransition;
@@ -15,7 +16,11 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.settings_layout);
+        setTitle(R.string.nav_item_settings);
         FragmentTransition.to(PrefsFragment.newInstance(), this);
     }
 

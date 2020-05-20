@@ -1,6 +1,7 @@
 package com.example.pawfinder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -25,6 +26,9 @@ public class ReportDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.activity_report_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.report_toolbar);
@@ -44,10 +48,10 @@ public class ReportDetailActivity extends AppCompatActivity {
             toolbar.setTitle(pet.getName());
             imgView.setImageResource(pet.getImage());
 
-            String text = "Name: " + pet.getName() + "\n"+
-                    "Type: " + pet.getType() + "\n" +
-                    "Missing since: " + pet.getDateOfLost() + "\n" +
-                    "Last seen: ";
+            String text = getResources().getString(R.string.label_name) + pet.getName() + "\n"+
+                    getResources().getString(R.string.label_type) + pet.getType() + "\n" +
+                    getResources().getString(R.string.label_missing) + pet.getDateOfLost() + "\n" +
+                    getResources().getString(R.string.label_last_seen);
 
             txtView.setText(text);
 

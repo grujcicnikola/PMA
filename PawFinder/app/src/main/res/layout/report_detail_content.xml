@@ -45,7 +45,7 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_blue_button"
-                android:text="Found"
+                android:text="@string/button_found"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:textSize="20dp"/>

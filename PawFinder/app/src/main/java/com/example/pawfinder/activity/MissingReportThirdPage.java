@@ -2,6 +2,7 @@ package com.example.pawfinder.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,8 +31,11 @@ public class MissingReportThirdPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.darktheme);
+        }
         setContentView(R.layout.activity_missing_report_third_page);
-
+        setTitle(R.string.title_missing_third);
         imageView = findViewById(R.id.upload_image_view);
         uploadImage = findViewById(R.id.choose_pet_image);
 
