@@ -2,14 +2,14 @@ spring:
   application:
     name: pma
   datasource:
-    url: jdbc:mysql://localhost:3306/pma?useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/pma?useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
     username: root
     password: sifra
     driverClassName : com.mysql.jdbc.Driver
     initialization-mode: always
   jpa:
     hibernate:
-        ddl-auto: update
+        ddl-auto: create-drop
     database-platform : org.hibernate.dialect.MySQL5Dialect 
 
 server:

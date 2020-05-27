@@ -55,20 +55,24 @@ public class MissingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_missing, container, false);
         list = (ListView) view.findViewById(R.id.pets_list);
 
-        Call<List<Pet>> call = ServiceUtils.petService.getAll();
+        final Call<List<Pet>> call = ServiceUtils.petService.getAll();
         call.enqueue(new Callback<List<Pet>>() {
             @Override
             public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+
+               // Log.d("Dobijeno", response.body().toString());
                 Log.d("BROJ","ima ih" + response.body().size());
                 /*for (Pet pet : response.body()) {
                     pets.add(pet);
                 }*/
                 //view[0] = generateDataList(response.body(), view[0]);
+                pets = response.body();
                 PetsListAdapter adapter = new PetsListAdapter(getContext(), response.body());
                 list.setAdapter(adapter);
                 Log.d("POSLEFORA"," - " + pets);
                 if (response.code() == 200){
                     Log.d("REZ","Meesage recieved");
+
                 }else{
                     Log.d("REZ","Meesage recieved: "+response.code());
                 }
@@ -76,14 +80,16 @@ public class MissingFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Pet>> call, Throwable t) {
+
                 Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+
             }
         });
 
 
 
         //PetsListAdapter adapter = new PetsListAdapter(getContext(), MockupComments.getPets());
-        Log.d("PREADAPTERA"," - " + pets);
+        Log.d("PREADAPTERA"," - " + pets.size());
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -91,7 +97,14 @@ public class MissingFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(getContext(), PetDetailActivity.class);
-                intent.putExtra("pets_position",position);
+                intent.putExtra("petsName", pets.get(position).getName());
+                intent.putExtra("petsType", pets.get(position).getType().toString());
+                intent.putExtra("petsGender", pets.get(position).getGender().toString());
+                intent.putExtra("ownersEmail", pets.get(position).getUser().getEmail());
+                intent.putExtra("ownersPhone", pets.get(position).getOwnersPhone());
+                intent.putExtra("additionalInfo", pets.get(position).getAdditionalInfo());
+                intent.putExtra("image", pets.get(position).getImage());
+                intent.putExtra("date", pets.get(position).getMissingSince());
                 startActivity(intent);
             }
         });
@@ -100,11 +113,5 @@ public class MissingFragment extends Fragment {
         return view;
     }
 
-    private View generateDataList(List<Pet> petList, View view) {
-
-
-
-       return view;
-    }
 
 }

@@ -29,4 +29,9 @@ public class PetService {
 		return petRepo.findAllByOwnerId(ownerId);
 	}
 	
+	public Pet addNewPet(Pet pet) {
+		
+		return petRepo.save(pet);
+	}
+	
 }

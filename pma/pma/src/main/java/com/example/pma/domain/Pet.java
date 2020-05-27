@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -30,114 +31,136 @@ public class Pet {
 	@Column
     private PetGender gender;
 	@Column
-    private String description;
+    private String additionalInfo;
 
-	private byte[] image;
+	@Column
+	private String image;
 	
 	@Column
-    private Date dateOfLost;
+    private Date missingSince;
 	@Column
-    private String contact;
+    private String ownersPhone;
 	@Column
     private boolean isFound;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	private User owner;
 
     public Pet() {}
 
-    public Pet(PetType type, String name, PetGender gender, String description, byte[] image, Date dateOfLost, String contact, boolean isFound, User owner) {
-        this.type = type;
-        this.name = name;
-        this.gender = gender;
-        this.description = description;
-        this.image = image;
-        this.dateOfLost = dateOfLost;
-        this.contact = contact;
-        this.isFound = isFound;
-        this.owner = owner;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public PetType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public PetGender getGender() {
-        return gender;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public Date getDateOfLost() {
-        return dateOfLost;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public boolean isFound() {
-        return isFound;
-    }
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
+    
+    public Pet(PetType type, String name, PetGender gender, String additionalInfo, String image,
+			Date missingSince, String ownersPhone, boolean isFound, User owner) {
+		super();
+		this.type = type;
+		this.name = name;
+		this.gender = gender;
+		this.additionalInfo = additionalInfo;
+		this.image = image;
+		this.missingSince = missingSince;
+		this.ownersPhone = ownersPhone;
+		this.isFound = isFound;
 		this.owner = owner;
 	}
+
+
+	public Long getId() {
+		return id;
+	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+
+	public PetType getType() {
+		return type;
+	}
+
+
 	public void setType(PetType type) {
 		this.type = type;
 	}
+
+
+	public String getName() {
+		return name;
+	}
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
+	public PetGender getGender() {
+		return gender;
+	}
+
+
 	public void setGender(PetGender gender) {
 		this.gender = gender;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+
+	public String getAdditionalInfo() {
+		return additionalInfo;
 	}
 
-	public void setImage(byte[] image) {
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
 		this.image = image;
 	}
 
-	public void setDateOfLost(Date dateOfLost) {
-		this.dateOfLost = dateOfLost;
+
+	public Date getMissingSince() {
+		return missingSince;
 	}
 
-	public void setContact(String contact) {
-		this.contact = contact;
+
+	public void setMissingSince(Date missingSince) {
+		this.missingSince = missingSince;
 	}
+
+
+	public String getOwnersPhone() {
+		return ownersPhone;
+	}
+
+
+	public void setOwnersPhone(String ownersPhone) {
+		this.ownersPhone = ownersPhone;
+	}
+
+
+	public boolean isFound() {
+		return isFound;
+	}
+
 
 	public void setFound(boolean isFound) {
 		this.isFound = isFound;
 	}
-    
-    
+
+
+	public User getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
     
 }

@@ -3,7 +3,10 @@ package com.example.pawfinder.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,11 +58,18 @@ public class ViewCommentsActivity extends AppCompatActivity {
 
         TextView pet_dateOfLost_text = (TextView) findViewById(R.id.pet_additional);
         //MockupComments.getPets().get(Integer.parseInt(position))
-        pet_dateOfLost_text.setText(pet.getDescription());
+        pet_dateOfLost_text.setText(pet.getAdditionalInfo());
 
         ImageView image = (ImageView) findViewById(R.id.imageView);
-        image.setImageResource(pet.getImage());
 
+        if(pet.getImage() == null)
+        {
+            image.setImageResource(R.drawable.avatar);
+        }else
+        {
+            //Bitmap bitmap = BitmapFactory.decodeByteArray(pet.getImage(), 0, pet.getImage().length);
+            image.setImageBitmap(stringToBitMap(pet.getImage()));
+        }
         //dodavanje komentara
         //pribaljanje za kog ljubmica se uzimaju komentari
 //        Pet pet = MockupComments.getPets().get(Integer.parseInt(position));
@@ -70,5 +80,14 @@ public class ViewCommentsActivity extends AppCompatActivity {
 
     }
 
-
+    public Bitmap stringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
 }

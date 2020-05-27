@@ -43,7 +43,8 @@
         android:inputType="textWebEmailAddress"
         android:layout_below="@id/c_email_label"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/c_password_label"
@@ -64,7 +65,8 @@
         android:inputType="textPassword"
         android:layout_below="@id/c_password_label"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:textSize="25dp"/>
 
     <LinearLayout
         android:id="@+id/c_lin_lay"
@@ -98,6 +100,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/c_signup_btn"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/rounded_yellow_button"

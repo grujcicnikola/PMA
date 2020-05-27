@@ -16,9 +16,9 @@
         android:layout_alignParentRight="true"
         />
     <TextView
+        android:id="@+id/drawer_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/drawer_header_text"
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="20dp"

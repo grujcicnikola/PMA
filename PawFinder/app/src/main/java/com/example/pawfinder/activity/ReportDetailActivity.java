@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +19,12 @@ import android.widget.TextView;
 import com.example.pawfinder.R;
 import com.example.pawfinder.adapters.MyReportsListAdapter;
 import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.MockupComments;
+import com.squareup.picasso.Picasso;
 
 public class ReportDetailActivity extends AppCompatActivity {
 
-    private Pet pet;
-    private int reports_position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class ReportDetailActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.report_toolbar);
         ImageView imgView = (ImageView) findViewById(R.id.pet_report_details_image);
-        TextView txtView = (TextView) findViewById(R.id.report_text_view);
         Button buttonFound = (Button) findViewById(R.id.found_btn);
         ImageButton commentsButton= (ImageButton) findViewById(R.id.report_comments);
 
@@ -43,34 +45,31 @@ public class ReportDetailActivity extends AppCompatActivity {
         if (bundle != null)
         {
 
-            reports_position = bundle.getInt("reports_position");
-            pet = (Pet) adapter.getItem(reports_position);
-            toolbar.setTitle(pet.getName());
-            imgView.setImageResource(pet.getImage());
+            String name = bundle.getString("report_pet_name");
+            String type = bundle.getString("report_pet_type");
+            String date = bundle.getString("report_pet_date");
+            String image = bundle.getString("report_pet_image");
 
-            String text = getResources().getString(R.string.label_name) + pet.getName() + "\n"+
-                    getResources().getString(R.string.label_type) + pet.getType() + "\n" +
-                    getResources().getString(R.string.label_missing) + pet.getDateOfLost() + "\n" +
-                    getResources().getString(R.string.label_last_seen);
+            toolbar.setTitle(name);
+            TextView name_txt = (TextView) findViewById(R.id.report_text_view_name);
+            name_txt.setText(name);
+            TextView type_txt = (TextView) findViewById(R.id.report_text_view_type);
+            type_txt.setText(type);
+            TextView date_txt = (TextView) findViewById(R.id.report_text_view_date);
+            date_txt.setText(date);
 
-            txtView.setText(text);
+            Picasso.get().load(ServiceUtils.IMAGES_URL + image).into(imgView);
 
-            buttonFound.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Log.d("tagg", "Pronadjen je  " + pet.getName());
-                }
-            });
 
             commentsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getApplicationContext(), ViewCommentsActivity.class);
-                    i.putExtra("position_of_pet_report",String.valueOf(reports_position));
+                    i.putExtra("position_of_pet_report",String.valueOf(1));
                     startActivity(i);
                 }
             });
         }
     }
+
 }

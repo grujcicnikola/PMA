@@ -1,28 +1,30 @@
 package com.example.pawfinder.service;
 
-import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.model.User;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Path;
+import retrofit2.http.POST;
 
-public interface PetService {
-
-    @Headers({
-            "User-Agent: Mobile-Android",
-            "Content-Type:application/json"
-    })
-    @GET(ServiceUtils.GET_ALL_PETS)
-    Call<List<Pet>> getAll();
+public interface UserService {
 
     @Headers({
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @GET("pet/getByOwner/{email}")
-    Call<List<Pet>> getPetsByUser(@Path("email") String email);
+    @POST("user/register")
+    Call<ResponseBody> register(@Body User user);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @POST("user/login")
+    Call<ResponseBody> login(@Body User user);
+
 }

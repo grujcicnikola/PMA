@@ -1,5 +1,8 @@
 package com.example.pma.dto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.example.pma.domain.Pet;
@@ -12,42 +15,60 @@ public class PetDTO {
     private PetType type;
     private String name;
     private PetGender gender;
-    private String description;
-    private byte[] image;
-    private Date dateOfLost;
-    private String contact;
+    private String additionalInfo;
+    private String image;
+    private String missingSince;
+    private String ownersPhone;
     private boolean isFound;
     
     private UserDTO owner;
 
     public PetDTO() {}
 
-    public PetDTO(Long id, PetType type, String name, PetGender gender, String description, byte[] image, Date dateOfLost, String contact, boolean isFound, UserDTO owner) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.gender = gender;
-        this.description = description;
-        this.image = image;
-        this.dateOfLost = dateOfLost;
-        this.contact = contact;
-        this.isFound = isFound;
-        this.owner = owner;
-    }
-    
-    public PetDTO(Pet pet) {
+    public PetDTO(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image,
+			String missingSince, String ownersPhone, boolean isFound, UserDTO owner) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.gender = gender;
+		this.additionalInfo = additionalInfo;
+		this.image = image;
+		this.missingSince = missingSince;
+		this.ownersPhone = ownersPhone;
+		this.isFound = isFound;
+		this.owner = owner;
+	}
+
+    public PetDTO(PetType type, String name, PetGender gender, String additionalInfo, String image,
+			String missingSince, String ownersPhone, boolean isFound, UserDTO owner) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.gender = gender;
+		this.additionalInfo = additionalInfo;
+		this.image = image;
+		this.missingSince = missingSince;
+		this.ownersPhone = ownersPhone;
+		this.isFound = isFound;
+		this.owner = owner;
+	}
+
+
+	public PetDTO(Pet pet) {
     	this.id = pet.getId();
         this.type = pet.getType();
         this.name = pet.getName();
         this.gender = pet.getGender();
-        this.description = pet.getDescription();
+        this.additionalInfo = pet.getAdditionalInfo();
         this.image = pet.getImage();
-        this.dateOfLost = pet.getDateOfLost();
-        this.contact = pet.getContact();
+        this.missingSince = convertDate(pet.getMissingSince());
+        this.ownersPhone = pet.getOwnersPhone();
         this.isFound = pet.isFound();
         this.owner = new UserDTO(pet.getOwner());
     }
-
+	
     public Long getId() {
         return id;
     }
@@ -64,23 +85,35 @@ public class PetDTO {
         return gender;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getAdditionalInfo() {
+		return additionalInfo;
+	}
 
-    public byte[] getImage() {
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
+	}
+
+	public String getImage() {
         return image;
     }
 
-    public Date getDateOfLost() {
-        return dateOfLost;
-    }
+    public String getMissingSince() {
+		return missingSince;
+	}
 
-    public String getContact() {
-        return contact;
-    }
+	public void setMissingSince(String missingSince) {
+		this.missingSince = missingSince;
+	}
 
-    public boolean isFound() {
+    public String getOwnersPhone() {
+		return ownersPhone;
+	}
+
+	public void setOwnersPhone(String ownersPhone) {
+		this.ownersPhone = ownersPhone;
+	}
+
+	public boolean isFound() {
         return isFound;
     }
 
@@ -100,20 +133,8 @@ public class PetDTO {
 		this.gender = gender;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
-	}
-
-	public void setDateOfLost(Date dateOfLost) {
-		this.dateOfLost = dateOfLost;
-	}
-
-	public void setContact(String contact) {
-		this.contact = contact;
 	}
 
 	public void setFound(boolean isFound) {
@@ -128,7 +149,14 @@ public class PetDTO {
 		this.owner = owner;
 	}
     
-    
-    
+
+	public String convertDate(Date date) {
+		
+		String pattern = "dd/MM/yyyy";
+		
+		DateFormat df = new SimpleDateFormat(pattern);
+		
+		return df.format(date);
+	}
 }
 

@@ -1,6 +1,9 @@
 package com.example.pawfinder.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +16,20 @@ import android.widget.TextView;
 import com.example.pawfinder.R;
 import com.example.pawfinder.fragments.MissingFragment;
 import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.service.ServiceUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class PetsListAdapter extends BaseAdapter {
 
     Context mContext;
     List<Pet> missingPets;
+    TextView pet_name_text;
+
 
     public PetsListAdapter(Context mContext, List<Pet> missingPets) {
         this.mContext = mContext;
@@ -55,16 +64,18 @@ public class PetsListAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        final TextView pet_name_text = (TextView) view.findViewById(R.id.pet_name);
+        pet_name_text = (TextView) view.findViewById(R.id.pet_name);
         pet_name_text.setText(missingPets.get(position).getName());
 
         TextView pet_dateOfLost_text = (TextView) view.findViewById(R.id.pet_dateOfLost);
-        pet_dateOfLost_text.setText(missingPets.get(position).getDateOfLost().toString());
+        pet_dateOfLost_text.setText(missingPets.get(position).getMissingSince());
 
         ImageView image = (ImageView) view.findViewById(R.id.imageView);
-        image.setImageResource(missingPets.get(position).getImage());
-
+        Pet pet = missingPets.get(position);
+        image.setImageResource(R.drawable.avatar);
+        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
 
         return view;
     }
+
 }

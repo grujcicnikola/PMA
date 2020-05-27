@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,7 @@ import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.example.pawfinder.activity.PreferenceActivity;
 import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.ThemeUtils;
+import com.example.pawfinder.tools.PrefConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
     private SharedPreferences sharedPreferences;
     private LocaleUtils localeUtils;
     private ThemeUtils themeUtils;
+    private static PrefConfig prefConfig;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,10 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.darktheme);
         }
+
+        setContentView(R.layout.activity_main);
+        prefConfig = new PrefConfig(this);
+
 
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
@@ -63,6 +73,7 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
         tabLayout.getTabAt(1).select();         //da selektovan bude Missing
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,11 +83,6 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_item_qr_code:
                         i = new Intent(getApplicationContext(), BarCodeActivity.class);
-                        startActivity(i);
-                        break;
-
-                    case R.id.navigation_item_login:
-                        i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         break;
 
@@ -90,6 +96,13 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
                         startActivity(i);
                         break;
 
+                    case R.id.navigation_item_logout:
+                        prefConfig.logout();
+                        Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
+                        i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
+                        break;
+
                 }
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
@@ -97,7 +110,20 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
                 return true;
             }
         });
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name){
+            //setovanje email-a ulogovanog korisnika
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                TextView user_drawer = (TextView) findViewById(R.id.drawer_user);
+                if(prefConfig.readLoginStatus())
+                {
+                    user_drawer.setText(prefConfig.readUserEmail());
+                }
+
+                invalidateOptionsMenu();
+            }
+
+        };
         mDrawerLayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();

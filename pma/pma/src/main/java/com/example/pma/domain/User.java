@@ -1,10 +1,14 @@
 package com.example.pma.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -18,10 +22,19 @@ public class User {
 	@Column
     private String password;
 	
+	@OneToMany
+	private List<Pet> pets = new ArrayList<Pet>();
+	
 	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
 	}
 	
 	public User(Long id, String email, String password) {
@@ -50,6 +63,14 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Pet> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<Pet> pets) {
+		this.pets = pets;
 	}
 	
 	

@@ -1,6 +1,9 @@
 package com.example.pawfinder.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +13,19 @@ import android.widget.TextView;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.service.ServiceUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyReportsListAdapter extends BaseAdapter {
 
     Context mContext;
-    ArrayList<Pet> missingPets;
+    List<Pet> missingPets;
+    Pet pet;
 
-    public MyReportsListAdapter(Context mContext, ArrayList<Pet> missingPets) {
+    public MyReportsListAdapter(Context mContext, List<Pet> missingPets) {
         this.mContext = mContext;
         this.missingPets = missingPets;
     }
@@ -51,12 +58,15 @@ public class MyReportsListAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        ImageView image = (ImageView) view.findViewById(R.id.report_image);
-        image.setImageResource(missingPets.get(position).getImage());
+        pet = missingPets.get(position);
 
         TextView pet_name_text = (TextView) view.findViewById(R.id.report_pet_name);
-        pet_name_text.setText(missingPets.get(position).getName());
+        pet_name_text.setText(pet.getName());
+
+        ImageView image = (ImageView) view.findViewById(R.id.report_image);
+        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
 
         return view;
     }
+
 }

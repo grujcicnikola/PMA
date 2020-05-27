@@ -17,14 +17,15 @@ public class Pet {
     private String name;
     @SerializedName("gender")
     private PetGender gender;
-    @SerializedName("description")
-    private String description;
+    @SerializedName("additionalInfo")
+    private String additionalInfo;
 
-    private int image;
-    @SerializedName("dateOfLost")
-    private String dateOfLost;
-    @SerializedName("contact")
-    private String contact;
+    @SerializedName("image")
+    private String image;
+    @SerializedName("missingSince")
+    private String missingSince;
+    @SerializedName("ownersPhone")
+    private String ownersPhone;
     @SerializedName("found")
     private boolean isFound;
 
@@ -33,28 +34,28 @@ public class Pet {
 
     public Pet() {}
 
-    public Pet(Long id, PetType type, String name, PetGender gender, String description, int image, String dateOfLost, String contact, boolean isFound) {
+    public Pet(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.gender = gender;
-        this.description = description;
+        this.additionalInfo = additionalInfo;
         this.image = image;
-        this.dateOfLost = dateOfLost;
-        this.contact = contact;
+        this.missingSince = missingSince;
+        this.ownersPhone = ownersPhone;
         this.isFound = isFound;
+        this.user = user;
     }
 
-
-    public Pet(Long id, PetType type, String name, PetGender gender, String description, int image, String dateOfLost, String contact, boolean isFound, User user) {
+    public Pet(PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.gender = gender;
-        this.description = description;
+        this.additionalInfo = additionalInfo;
         this.image = image;
-        this.dateOfLost = dateOfLost;
-        this.contact = contact;
+        this.missingSince = missingSince;
+        this.ownersPhone = ownersPhone;
         this.isFound = isFound;
         this.user = user;
     }
@@ -75,21 +76,15 @@ public class Pet {
         return gender;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public String getDateOfLost() {
-        return dateOfLost;
-    }
+    public String getAdditionalInfo() { return additionalInfo; }
 
-    public String getContact() {
-        return contact;
-    }
+    public String getMissingSince() { return missingSince; }
+
+    public String getOwnersPhone() { return ownersPhone; }
 
     public boolean isFound() {
         return isFound;
@@ -115,21 +110,15 @@ public class Pet {
         this.gender = gender;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setAdditionalInfo(String additionalInfo) { this.additionalInfo = additionalInfo; }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public void setDateOfLost(String dateOfLost) {
-        this.dateOfLost = dateOfLost;
-    }
+    public void setMissingSince(String missingSince) { this.missingSince = missingSince; }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+    public void setOwnersPhone(String ownersPhone) { this.ownersPhone = ownersPhone; }
 
     public void setFound(boolean found) {
         isFound = found;
@@ -145,10 +134,10 @@ public class Pet {
         return "Name: "  + this.getName() + "\n"+
                 "Type: " + this.getType() + "\n"+
                 "Gender: " + this.getGender() + "\n" +
-                "Missing since: " + this.getDateOfLost() + "\n"+
+                "Missing since: " + this.getMissingSince() + "\n"+
                 "Last seen: " + "\n"+
                 "Owners email: " + "pera@gmail.com" + "\n" +
-                "Owners phone: "  + this.getContact() + "\n" +
-                "Additional information: " + ": " + this.getDescription();
+                "Owners phone: "  + this.getOwnersPhone() + "\n" +
+                "Additional information: " + ": " + this.getAdditionalInfo();
     }
 }

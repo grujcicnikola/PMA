@@ -52,6 +52,7 @@
     <string name="title_missing_second">Where the pet disappeared? 2/3</string>
     <string name="title_missing_third">Valuable information</string>
     <string name="title_activity_view_on_map">Pet\'s location</string>
+    <string name="reports_label">You don\'t have any missing report</string>
 
 
     <!-- Login activity -->
@@ -71,6 +72,9 @@
     <string name="pref_default_repeat_password">Repeat password</string>
     <string name="pref_language">Language</string>
     <string name="pref_language_sum">Choose language</string>
+    <string name="pref_file">com.abc.preference_file</string>
+    <string name="pref_login_status">com.abc.preference_login_status</string>
+    <string name="pref_user_email">com.abc.preference_user_email</string>
     <!--komentari-->
     <string name="label_name_comment">Name:</string>
     <string name="label_additional_comment">Additional info:</string>

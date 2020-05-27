@@ -13,5 +13,6 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 	List<Pet> findAllByIsFound(boolean b);
 
 	List<Pet> findAllByOwnerId(Long ownerId);
+	
 
 }

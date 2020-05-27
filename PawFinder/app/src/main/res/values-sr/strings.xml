@@ -52,7 +52,7 @@
     <string name="title_missing_second">Gde je nestao? 2/3</string>
     <string name="title_missing_third">Važne informacije</string>
     <string name="title_activity_view_on_map">Lokacija ljubimca</string>
-
+    <string name="reports_label">Nemate prijavljenih nestanaka</string>
 
     <!-- Login activity -->
     <string name="message_label">Zdravo, prijavite se da biste prijavili nestanak ili pronalazak ljubimca.</string>
@@ -71,7 +71,9 @@
     <string name="pref_default_repeat_password">Ponovi šifru</string>
     <string name="pref_language">Jezik</string>
     <string name="pref_language_sum">Izaberi jezik</string>
-
+    <string name="pref_file">com.abc.preference_file</string>
+    <string name="pref_login_status">com.abc.preference_login_status</string>
+    <string name="pref_user_email">com.abc.preference_user_email</string>
     <!--komentari-->
     <string name="label_name_comment">Ime:</string>
     <string name="label_additional_comment">Dodatne informacije:</string>
