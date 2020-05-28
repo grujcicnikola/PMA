@@ -1,3 +1,4 @@
+
 package com.example.pawfinder.fragments;
 
 import android.content.Intent;
@@ -105,6 +106,8 @@ public class MissingFragment extends Fragment {
                 intent.putExtra("additionalInfo", pets.get(position).getAdditionalInfo());
                 intent.putExtra("image", pets.get(position).getImage());
                 intent.putExtra("date", pets.get(position).getMissingSince());
+                intent.putExtra("lon_pets", pets.get(position).getAddress().getLon());
+                intent.putExtra("lat_pets", pets.get(position).getAddress().getLat());
                 startActivity(intent);
             }
         });

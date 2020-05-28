@@ -41,6 +41,9 @@ public class PetDetailActivity extends AppCompatActivity {
     private int position_of_pet;
     private Button petsLocation;
 
+    private Double lon;
+    private Double lat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,8 @@ public class PetDetailActivity extends AppCompatActivity {
             String info = bundle.getString("additionalInfo");
             String image = bundle.getString("image");
             String date = bundle.getString("date");
+            lon = bundle.getDouble("lon_pets");
+            lat = bundle.getDouble("lat_pets");
 
             TextView name_txt = (TextView) findViewById(R.id.pet_details_text_name);
             name_txt.setText(name);
@@ -95,16 +100,20 @@ public class PetDetailActivity extends AppCompatActivity {
                 }
             });
 
+            petsLocation = findViewById(R.id.bView_on_map);
+            petsLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
+                    intent.putExtra("lon_view",lon);
+                    intent.putExtra("lat_view",lat);
+                    startActivity(intent);
+                }
+            });
+
         }
 
-        petsLocation = findViewById(R.id.bView_on_map);
-        petsLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
 }

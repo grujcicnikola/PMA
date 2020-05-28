@@ -6,11 +6,11 @@
     tools:context=".fragments.NearYouFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id = "@+id/fragment_text"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:id="@+id/map_near_you" />
 
 
 </FrameLayout>

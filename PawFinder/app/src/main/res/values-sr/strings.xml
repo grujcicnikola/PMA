@@ -98,4 +98,28 @@
     <string name="qr_launch">OTVORI URL</string>
     <string name="qr_barcode">Nije detektovan barkod</string>
 
+
+    <!--mape pinovi-->
+    <string name="your_location">VASA LOKACIJA</string>
+    <string name="pet_lost_here">LJUBIMAC JE OVDE NESTAO</string>
+
+    <!-- dijalozi -->
+    <string name="oops">Ooops</string>
+    <string name="near_you_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Vasa lokacija nam je potrebna da bismo vam prikazali koji su ljubimci nestali u vasoj blizini.</string>
+    <string name="map_message">Your Lokacija vam je iskljucena, da li zelite da je ukljucite? Ukoliko dopustite da vas lociramo, lakse cete oznaciti gde vam je ljubimac nestao.</string>
+    <string name="sure">Naravno</string>
+    <string name="no">Ne</string>
+    <string name="location_alert_title">Dozvolite lociranje</string>
+    <string name="location_alert_message">Za koriscenje svih funkcija aplikacije potrebna je vasa lokacija.... Da li sada dopustate?</string>
+
+    <!--missing pet report-->
+    <string name="add_pet_success">Ljubimac je uspesno prijavljen!</string>
+    <string name="add_pet_failure">Prijava nestanka ljubimca nije uspela!</string>
+    <string name="name_blank">Unesite ime ljubimca</string>
+    <string name="date_blank">Unesite datum</string>
+    <string name="location_blank">Niste oznacili gde je ljubimac nestao</string>
+    <string name="phone_blank">Unesite vas broj telefona</string>
+
 </resources>
+
+

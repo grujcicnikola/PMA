@@ -2,17 +2,15 @@ package com.example.pma.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Pet {
@@ -45,6 +43,9 @@ public class Pet {
 	
 	@ManyToOne
 	private User owner;
+	
+	@OneToOne
+	private Address address;
 
     public Pet() {}
 
@@ -61,6 +62,20 @@ public class Pet {
 		this.ownersPhone = ownersPhone;
 		this.isFound = isFound;
 		this.owner = owner;
+	}
+    
+    public Pet(PetType type, String name, PetGender gender, String description, String image, Date dateOfLost,
+			String contact, boolean isFound, User owner, Address address) {
+		this.type = type;
+		this.name = name;
+		this.gender = gender;
+		this.additionalInfo = description;
+		this.image = image;
+		this.missingSince = dateOfLost;
+		this.ownersPhone = contact;
+		this.isFound = isFound;
+		this.owner = owner;
+		this.address = address;
 	}
 
 
@@ -162,5 +177,17 @@ public class Pet {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
     
 }
+
+
+	
+

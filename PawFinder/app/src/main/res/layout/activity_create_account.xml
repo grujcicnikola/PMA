@@ -116,5 +116,4 @@
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"/>
 
-
 </RelativeLayout>

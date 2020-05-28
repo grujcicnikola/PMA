@@ -2,7 +2,6 @@ package com.example.pma.dto;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import com.example.pma.domain.Pet;
@@ -22,6 +21,7 @@ public class PetDTO {
     private boolean isFound;
     
     private UserDTO owner;
+    private AddressDTO address;
 
     public PetDTO() {}
 
@@ -67,6 +67,7 @@ public class PetDTO {
         this.ownersPhone = pet.getOwnersPhone();
         this.isFound = pet.isFound();
         this.owner = new UserDTO(pet.getOwner());
+        this.address = new AddressDTO(pet.getAddress());
     }
 	
     public Long getId() {
@@ -148,7 +149,17 @@ public class PetDTO {
 	public void setOwner(UserDTO owner) {
 		this.owner = owner;
 	}
+	
+	
     
+
+	public AddressDTO getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressDTO address) {
+		this.address = address;
+	}
 
 	public String convertDate(Date date) {
 		
@@ -159,4 +170,3 @@ public class PetDTO {
 		return df.format(date);
 	}
 }
-

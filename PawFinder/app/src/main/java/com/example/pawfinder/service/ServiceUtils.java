@@ -14,6 +14,9 @@ public class ServiceUtils {
     public static final String GET_ALL_PETS = "pet/getAll";
     public static final String GET_ALL_USERS = "user/getAll";
     public static final String IMAGES_URL = SERVICE_API_PATH +"/images/";
+    public static final String POST_MISSING = "pet/postMissing";
+    public static final String GET_ALL_IN_RANGE = "pet/getAllInRange";
+    public static final String GET_MISSING = "pet/getMissing";
 
     public static OkHttpClient test(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -43,3 +46,4 @@ public class ServiceUtils {
 
     public static UserService userService = retrofit.create(UserService.class);
 }
+

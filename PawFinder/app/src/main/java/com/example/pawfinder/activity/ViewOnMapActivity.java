@@ -3,10 +3,14 @@ package com.example.pawfinder.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
 import com.example.pawfinder.R;
+import com.example.pawfinder.fragments.MapsFragment;
+import com.example.pawfinder.fragments.ViewOnMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,9 +18,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ViewOnMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ViewOnMapActivity extends AppCompatActivity {
 
-    private GoogleMap mMap;
+    public static FragmentManager fm;
+    public ViewOnMapFragment viewOnMapFragment;
+    private Double lon;
+    private Double lat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,28 +33,27 @@ public class ViewOnMapActivity extends AppCompatActivity implements OnMapReadyCa
         }
         setContentView(R.layout.activity_view_on_map);
         setTitle(R.string.title_activity_view_on_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.pet_location_map);
-        mapFragment.getMapAsync(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            lon = bundle.getDouble("lon_view");
+            lat = bundle.getDouble("lat_view");
+        }
+
+
+        fm = getSupportFragmentManager();
+        if (findViewById(R.id.pet_location_map)!=null) {
+            //fragment je vec dodat - activiy je resumed
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            viewOnMapFragment = ViewOnMapFragment.newInstance(lon, lat);
+
+            ft.add(R.id.pet_location_map, viewOnMapFragment, null);
+            ft.commit();
+        }
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        LatLng nn = new LatLng(45.26, 19.81);
-        mMap.addMarker(new MarkerOptions().position(nn).title("Marker in Novi Sad"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(nn));
-    }
 }

@@ -92,4 +92,67 @@ public class User {
 //            pet.clear();
 //    }
 
+
+
+    public java.util.Collection<Pet> pet;
+
+
+    public User(Long id, String email, String password, Collection<Pet> pet) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.pet = pet;
+    }
+
+
+
+
+
+    public java.util.Collection<Pet> getPet() {
+        if (pet == null)
+            pet = new java.util.HashSet<Pet>();
+        return pet;
+    }
+
+    public java.util.Iterator getIteratorPet() {
+        if (pet == null)
+            pet = new java.util.HashSet<Pet>();
+        return pet.iterator();
+    }
+
+    /** @pdGenerated default setter
+     * @param newPet */
+    public void setPet(java.util.Collection<Pet> newPet) {
+        removeAllPet();
+        for (java.util.Iterator iter = newPet.iterator(); iter.hasNext();)
+            addPet((Pet)iter.next());
+    }
+
+    /** @pdGenerated default add
+     * @param newPet */
+    public void addPet(Pet newPet) {
+        if (newPet == null)
+            return;
+        if (this.pet == null)
+            this.pet = new java.util.HashSet<Pet>();
+        if (!this.pet.contains(newPet))
+            this.pet.add(newPet);
+    }
+
+    /** @pdGenerated default remove
+     * @param oldPet */
+    public void removePet(Pet oldPet) {
+        if (oldPet == null)
+            return;
+        if (this.pet != null)
+            if (this.pet.contains(oldPet))
+                this.pet.remove(oldPet);
+    }
+
+    /** @pdGenerated default removeAll */
+    public void removeAllPet() {
+        if (pet != null)
+            pet.clear();
+    }
+
 }

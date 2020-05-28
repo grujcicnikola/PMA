@@ -1,7 +1,5 @@
 package com.example.pma.dto;
 
-import javax.persistence.Column;
-
 import com.example.pma.domain.User;
 
 public class UserDTO {

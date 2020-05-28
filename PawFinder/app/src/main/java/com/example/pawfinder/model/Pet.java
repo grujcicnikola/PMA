@@ -32,6 +32,9 @@ public class Pet {
     @SerializedName("owner")
     private User user;
 
+    @SerializedName("address")
+    private Address address;
+
     public Pet() {}
 
     public Pet(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
@@ -58,6 +61,18 @@ public class Pet {
         this.ownersPhone = ownersPhone;
         this.isFound = isFound;
         this.user = user;
+    }
+
+    public Pet(PetType type, String name, PetGender gender, String description, String dateOfLost, String contact, boolean isFound, User user, Address address) {
+        this.type = type;
+        this.name = name;
+        this.gender = gender;
+        this.additionalInfo = description;
+        this.missingSince = dateOfLost;
+        this.ownersPhone = contact;
+        this.isFound = isFound;
+        this.user = user;
+        this.address = address;
     }
 
     public Long getId() {
@@ -126,6 +141,14 @@ public class Pet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @NonNull

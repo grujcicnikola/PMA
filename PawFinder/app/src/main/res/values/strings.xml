@@ -99,4 +99,25 @@
     <string name="qr_launch">LAUNCH URL</string>
     <string name="qr_barcode">No Barcode Detected</string>
 
+    <!--mape pinovi-->
+    <string name="your_location">YOUR LOCATION</string>
+    <string name="pet_lost_here">PET LOST HERE</string>
+
+    <!--dijalozi-->
+    <string name="oops">Ooops</string>
+    <string name="near_you_message">Your Locations seems to be disabled, do you want to enable it? We need your location to show pets lost near you.</string>
+    <string name="map_message">Your Locations seems to be disabled, do you want to enable it? If you allow us to locate you, you will easier pin where your pet is lost.</string>
+    <string name="sure">Sure</string>
+    <string name="no">No</string>
+    <string name="location_alert_title">Allow user location</string>
+    <string name="location_alert_message">To continue working we need your locations....Allow now?</string>
+
+    <!--missing pet report-->
+    <string name="add_pet_success">Pet successfully reported!</string>
+    <string name="add_pet_failure">Adding pets missing report faild!!</string>
+    <string name="name_blank">Please write pets name</string>
+    <string name="date_blank">Please enter date</string>
+    <string name="location_blank">Please pin were pet is lost</string>
+    <string name="phone_blank">Please enter your phone number</string>
 </resources>
+

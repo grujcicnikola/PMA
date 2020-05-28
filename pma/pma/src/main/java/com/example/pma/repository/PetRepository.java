@@ -1,3 +1,4 @@
+
 package com.example.pma.repository;
 
 import java.util.List;
@@ -13,6 +14,5 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 	List<Pet> findAllByIsFound(boolean b);
 
 	List<Pet> findAllByOwnerId(Long ownerId);
-	
 
 }

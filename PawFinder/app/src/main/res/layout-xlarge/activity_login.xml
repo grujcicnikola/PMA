@@ -118,5 +118,4 @@
             android:clickable="true"
             android:layout_below="@id/l_or_text"
             android:layout_centerHorizontal="true"/>
-
 </RelativeLayout>
