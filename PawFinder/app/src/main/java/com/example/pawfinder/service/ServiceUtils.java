@@ -13,12 +13,13 @@ public class ServiceUtils {
     public static final String SERVICE_API_PATH = "http://adresa:8080/";
     public static final String GET_ALL_PETS = "pet/getAll";
     public static final String GET_ALL_USERS = "user/getAll";
-    public static final String IMAGES_URL = SERVICE_API_PATH +"/images/";
+    public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAll";
+    public static final String IMAGES_URL = SERVICE_API_PATH + "/images/";
     public static final String POST_MISSING = "pet/postMissing";
     public static final String GET_ALL_IN_RANGE = "pet/getAllInRange";
     public static final String GET_MISSING = "pet/getMissing";
 
-    public static OkHttpClient test(){
+    public static OkHttpClient test() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -45,5 +46,7 @@ public class ServiceUtils {
     public static PetService petService = retrofit.create(PetService.class);
 
     public static UserService userService = retrofit.create(UserService.class);
+
+    public static CommentService commentService = retrofit.create(CommentService.class);
 }
 

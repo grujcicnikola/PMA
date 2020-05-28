@@ -3,6 +3,7 @@ package com.example.pawfinder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,13 +35,18 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     private EditText email, password;
     private ProgressDialog progressDialog;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_create_account);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.btn_signUp);
 
         email = (EditText) findViewById(R.id.c_email_edit);
         password = (EditText) findViewById(R.id.c_password_edit);
@@ -53,30 +59,24 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
-        if(v == signUpButton)
-        {
+        if (v == signUpButton) {
             registerUser(v.getContext());
         }
 
     }
 
-    public void registerUser(final Context context){
+    public void registerUser(final Context context) {
 
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
 
-        if(TextUtils.isEmpty(emailText))
-        {
+        if (TextUtils.isEmpty(emailText)) {
             Toast.makeText(this, "You must enter email address", Toast.LENGTH_SHORT).show();
-        }else if(!this.validateEmail(emailText))
-        {
+        } else if (!this.validateEmail(emailText)) {
             Toast.makeText(this, "Email address not valid", Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(passwordText))
-        {
+        } else if (TextUtils.isEmpty(passwordText)) {
             Toast.makeText(this, "You must enter password", Toast.LENGTH_SHORT).show();
-        }else
-        {
+        } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Create account");
             progressDialog.setMessage("Checking information, please wait");
@@ -89,15 +89,14 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     progressDialog.dismiss();
-                    if(response.code() == 200){
+                    if (response.code() == 200) {
 
 
                         Toast.makeText(context, "User signed in! Please login", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context,LoginActivity.class);
+                        Intent intent = new Intent(context, LoginActivity.class);
                         startActivity(intent);
 
-                    }else if(response.code() == 400)
-                    {
+                    } else if (response.code() == 400) {
                         Toast.makeText(context, "Error. Account with email already exists.", Toast.LENGTH_LONG).show();
                     }
 
@@ -105,7 +104,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("REZ","Nije uspelo");
+                    Log.d("REZ", "Nije uspelo");
                 }
             });
 

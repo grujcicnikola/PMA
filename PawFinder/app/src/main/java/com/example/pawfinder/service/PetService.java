@@ -32,7 +32,7 @@ public interface PetService {
     Call<List<Pet>> getMissing();
 
     @GET(ServiceUtils.GET_ALL_IN_RANGE + "/{lon}/{lat}")
-    Call<List<Pet>> getAllInRange(@Path("lon") Double lon, @Path("lat")Double lat);
+    Call<List<Pet>> getAllInRange(@Path("lon") Double lon, @Path("lat") Double lat);
 
     @POST(ServiceUtils.POST_MISSING)
     Call<Pet> postMissing(@Body Pet pet);

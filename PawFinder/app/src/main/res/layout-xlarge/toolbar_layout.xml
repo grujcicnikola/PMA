@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:accessibilityPaneTitle="@string/app_name"
-    app:titleTextColor="@color/black"
-    android:id="@+id/toolBar"
-    app:titleTextAppearance="@style/ToolBarXLarge"
+    android:background="?attr/toolbarBackground"
     android:elevation="4dp"
-    app:layout_scrollFlags="scroll|enterAlways">
-
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:titleTextAppearance="@style/ToolBarXLarge"
+    app:titleTextColor="?attr/toolbarText">
 
 
 </androidx.appcompat.widget.Toolbar>

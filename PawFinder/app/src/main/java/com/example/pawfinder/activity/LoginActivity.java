@@ -3,6 +3,7 @@ package com.example.pawfinder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,17 +32,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent intent;
     private EditText emailEdit, passwordEdit;
     private static PrefConfig prefConfig;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_login);
@@ -51,6 +53,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBtn.setOnClickListener(this);
         emailEdit = (EditText) findViewById(R.id.l_edit_email);
         passwordEdit = (EditText) findViewById(R.id.l_edit_password);
+        setTitle(R.string.btn_login);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         TextView createAccountView = (TextView) findViewById(R.id.lCreateAccount);
         createAccountView.setOnClickListener(this);
     }
@@ -58,9 +63,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        switch(v.getId()){
+        switch (v.getId()) {
 
-            case  R.id.lCreateAccount:
+            case R.id.lCreateAccount:
                 intent = new Intent(this, CreateAccountActivity.class);
                 startActivity(intent);
                 break;
@@ -71,47 +76,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void login(final Context context)
-    {
+    public void login(final Context context) {
         final String emailTxt = emailEdit.getText().toString();
         String passwordTxt = passwordEdit.getText().toString();
 
-        if(TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt))
-        {
+        if (TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt)) {
             Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT);
-        }else
-        {
+        } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Login");
             progressDialog.setMessage("Checking information, please wait");
             progressDialog.setCancelable(false);
             progressDialog.show();
 
-            User user = new User(emailTxt,passwordTxt);
+            User user = new User(emailTxt, passwordTxt);
             Call<ResponseBody> call = ServiceUtils.userService.login(user);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     progressDialog.dismiss();
-                    if(response.code() == 200) //ok
+                    if (response.code() == 200) //ok
                     {
                         prefConfig.writeUserEmail(emailTxt);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
-                    }else if(response.code() == 403)
-                    {
+                    } else if (response.code() == 403) {
                         Toast.makeText(context, "Error. Please check your email", Toast.LENGTH_LONG).show();
-                    }else if(response.code() == 400)
-                    {
+                    } else if (response.code() == 400) {
                         Toast.makeText(context, "Error. Wrong password", Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("REZULTAT", t.getMessage() != null?t.getMessage():"error");
+                    Log.d("REZULTAT", t.getMessage() != null ? t.getMessage() : "error");
                 }
             });
         }

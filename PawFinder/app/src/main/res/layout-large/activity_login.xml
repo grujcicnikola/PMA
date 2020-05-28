@@ -1,125 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
 
+    <include layout="@layout/toolbar_layout"></include>
+
     <ImageView
-            android:id="@+id/l_image_view"
-            android:layout_width="450dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/logo" />
+        android:id="@+id/l_image_view"
+        android:layout_width="450dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/toolBar"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
 
-        <TextView
-            android:id="@+id/l_login_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_login"
-            android:textSize="40dp"
-            android:textColor="@color/black"
-            android:layout_below="@id/l_image_view"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <TextView
+        android:id="@+id/l_login_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_image_view"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:text="@string/btn_login"
+        android:textColor="?attr/blackText"
+        android:textSize="40dp" />
 
-        <TextView
-            android:id="@+id/l_message_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/message_label"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorGrey"
-            android:layout_below="@id/l_login_label"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <TextView
+        android:id="@+id/l_message_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_login_label"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_marginTop="5dp"
+        android:text="@string/message_label"
+        android:textColor="@color/colorGrey"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/l_email_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/email"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:textColor="@color/yellow"
-            android:layout_below="@id/l_message_text"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <TextView
+        android:id="@+id/l_email_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_message_text"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_marginTop="5dp"
+        android:text="@string/email"
+        android:textColor="?attr/yellow"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/l_edit_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:inputType="textWebEmailAddress"
-            android:layout_below="@id/l_email_label"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <EditText
+        android:id="@+id/l_edit_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_email_label"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:inputType="textWebEmailAddress"
+        android:textSize="25dp" />
 
 
-        <TextView
-            android:id="@+id/l_password_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/password"
-            android:textColor="@color/yellow"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_below="@id/l_edit_email"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <TextView
+        android:id="@+id/l_password_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_edit_email"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_marginTop="5dp"
+        android:text="@string/password"
+        android:textColor="?attr/yellow"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/l_edit_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:inputType="textPassword"
-            android:layout_below="@id/l_password_label"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <EditText
+        android:id="@+id/l_edit_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_password_label"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:inputType="textPassword"
+        android:textSize="25dp" />
 
-        <Button
-            android:id="@+id/bLogin"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_yellow_button"
-            android:layout_marginTop="5dp"
-            android:text="@string/btn_login"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:layout_below="@id/l_edit_password"
-            android:layout_alignRight="@id/l_image_view"
-            android:layout_alignLeft="@id/l_image_view"/>
+    <Button
+        android:id="@+id/bLogin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/l_edit_password"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_yellow_button"
+        android:text="@string/btn_login"
+        android:textAlignment="center"
+        android:textColor="?attr/buttonText"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/l_or_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/or_text"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_below="@id/bLogin"
-            android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/l_or_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/or_text"
+        android:textColor="?attr/blackText"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/lCreateAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/createAccount"
-            android:textColorLink="@color/yellow"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:layout_below="@id/l_or_text"
-            android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/lCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l_or_text"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:text="@string/createAccount"
+        android:textColorLink="?attr/yellow"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

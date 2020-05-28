@@ -28,21 +28,21 @@ public class ViewOnMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_view_on_map);
         setTitle(R.string.title_activity_view_on_map);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             lon = bundle.getDouble("lon_view");
             lat = bundle.getDouble("lat_view");
         }
 
 
         fm = getSupportFragmentManager();
-        if (findViewById(R.id.pet_location_map)!=null) {
+        if (findViewById(R.id.pet_location_map) != null) {
             //fragment je vec dodat - activiy je resumed
             if (savedInstanceState != null) {
                 return;
@@ -57,3 +57,4 @@ public class ViewOnMapActivity extends AppCompatActivity {
     }
 
 }
+

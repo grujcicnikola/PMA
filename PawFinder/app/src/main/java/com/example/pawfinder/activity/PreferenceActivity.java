@@ -2,6 +2,7 @@ package com.example.pawfinder.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import com.example.pawfinder.R;
 
 import androidx.activity.OnBackPressedCallback;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 import androidx.preference.PreferenceFragmentCompat;
+
 import com.example.pawfinder.tools.FragmentTransition;
 
 public class PreferenceActivity extends AppCompatActivity {
@@ -16,7 +18,7 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.settings_layout);

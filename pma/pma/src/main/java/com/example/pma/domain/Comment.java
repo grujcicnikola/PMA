@@ -34,9 +34,8 @@ public class Comment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comment(Long id, String message, Date date, User user, Pet pet) {
+	public Comment(String message, Date date, User user, Pet pet) {
 		super();
-		this.id = id;
 		this.message = message;
 		this.date = date;
 		this.user = user;

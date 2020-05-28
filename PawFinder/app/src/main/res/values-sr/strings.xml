@@ -62,7 +62,7 @@
 
     <string name="general_settings">Opšte</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_theme_sum">Opis</string>
+    <string name="pref_theme_sum">Promeni temu</string>
     <string name="account_settings">Nalog</string>
     <string name="pref_change_passoword">Promeni šifru</string>
     <string name="comments">Komentari</string>
@@ -84,7 +84,7 @@
 
     <!--report missing-->
     <string name="button_found">Pronađen</string>
-
+    <string name="button_view_on_map">Pogledaj na mapi</string>
     <!--tabovi-->
     <string name="tab_near">U blizini</string>
     <string name="tab_missing">Nestali</string>

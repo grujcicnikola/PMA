@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.pma.domain.Address;
+import com.example.pma.domain.Comment;
 import com.example.pma.domain.Pet;
 import com.example.pma.domain.PetGender;
 import com.example.pma.domain.PetType;
 import com.example.pma.domain.User;
 import com.example.pma.services.AddressService;
+
+import com.example.pma.services.CommentService;
 import com.example.pma.services.PetService;
 import com.example.pma.services.UserService;
 
@@ -32,6 +35,9 @@ public class FillData {
 	
 	@Autowired
 	AddressService addressService;
+
+	@Autowired
+	private CommentService commentService;
 
 	@PostConstruct
     public void init() throws URISyntaxException, IOException {
@@ -99,5 +105,22 @@ public class FillData {
 		Pet pet7 = new Pet(PetType.DOG,"Mona",PetGender.FEMALE, "Pas ima crvenu ogrlicu sa kodom", "dalmatian.jpg", new Date(), "123456789", false, user2, a8);
 		petService.addNewPet(pet7);
 		
+		
+		//COMMENTS
+		Comment com1 = new Comment("Video sam ga na uglu bulevara Lazara", new Date(), user, pet);
+		commentService.save(com1);
+		
+        Comment com2 = new Comment("Bas je lep!", new Date(), user1 ,pet );
+        commentService.save(com2);
+        
+        Comment com3 = new Comment("Nisam ga video. Primetio sam da ima mnogo lutalica u Novom Sadu.", new Date(), user2, pet);
+        commentService.save(com3);
+        
+        Comment com4 = new Comment("Lep je", new Date(),user3 ,pet1 );
+        commentService.save(com4);
+        
+        Comment com5 = new Comment("Nadam se da cete ga pronaci!", new Date(), user1,pet1 );
+        commentService.save(com5);
+        
 	}
 }

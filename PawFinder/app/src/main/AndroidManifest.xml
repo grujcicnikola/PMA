@@ -32,15 +32,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
         android:configChanges="layoutDirection|locale">
+
         <activity
             android:name=".activity.ReportDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PetDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.CreateAccountActivity" />
-
+        <activity android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.CreateAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -55,17 +57,21 @@
 
         <activity
             android:name=".activity.MissingReportFirstPage"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".activity.ViewOnMapActivity"></activity>
+            android:name=".activity.ViewOnMapActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".activity.MapsActivity"
-            android:parentActivityName=".activity.MissingReportFirstPage" />
+            android:parentActivityName=".activity.MissingReportFirstPage"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.MissingReportThirdPage"
-            android:parentActivityName=".activity.MapsActivity" />
+            android:parentActivityName=".activity.MapsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -93,5 +99,6 @@
                 android:value=".MainActivity" />
         </activity>
     </application>
+
 
 </manifest>

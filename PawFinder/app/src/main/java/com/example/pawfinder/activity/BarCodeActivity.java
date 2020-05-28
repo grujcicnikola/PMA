@@ -1,4 +1,5 @@
 package com.example.pawfinder.activity;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,7 +28,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-public class BarCodeActivity  extends AppCompatActivity {
+public class BarCodeActivity extends AppCompatActivity {
 
 
     SurfaceView surfaceView;
@@ -42,7 +43,7 @@ public class BarCodeActivity  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.bar_code);
@@ -105,7 +106,7 @@ public class BarCodeActivity  extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         ActivityCompat.requestPermissions(BarCodeActivity.this, new
-                                    String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
 
                     }
 
@@ -187,11 +188,10 @@ public class BarCodeActivity  extends AppCompatActivity {
         }
     }
 
-    public void initialiseBarcoder(){
+    public void initialiseBarcoder() {
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
-
 
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
@@ -227,6 +227,7 @@ public class BarCodeActivity  extends AppCompatActivity {
                 .build();
         cameraSource.start(surfaceView.getHolder());
     }
+
     @Override
     protected void onPause() {
         super.onPause();

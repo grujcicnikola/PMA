@@ -1,8 +1,10 @@
+
 package com.example.pawfinder.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -70,16 +72,19 @@ public class MissingReportThirdPage extends AppCompatActivity {
 
     private Pet pet;
     private static PrefConfig prefConfig;
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_missing_report_third_page);
         prefConfig = new PrefConfig(this);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.title_missing_third);
         setTitle(R.string.title_missing_third);
         imageView = findViewById(R.id.upload_image_view);
         uploadImage = findViewById(R.id.choose_pet_image);
@@ -96,8 +101,8 @@ public class MissingReportThirdPage extends AppCompatActivity {
         Log.d("LONt","Meesage recieved: "+help.getDoubleExtra("PET_LOST_LON",0));
         Log.d("LATT","Meesage recieved: "+help.getDoubleExtra("PET_LOST_LAT",0));*/
 
-        lat = help.getDoubleExtra("PET_LOST_LAT",0);
-        lon = help.getDoubleExtra("PET_LOST_LON",0);
+        lat = help.getDoubleExtra("PET_LOST_LAT", 0);
+        lon = help.getDoubleExtra("PET_LOST_LON", 0);
         name = help.getStringExtra("PET_NAME");
         gender = PetGender.valueOf(help.getStringExtra("PET_GENDER"));
         type = PetType.valueOf(help.getStringExtra("PET_TYPE"));
@@ -138,8 +143,9 @@ public class MissingReportThirdPage extends AppCompatActivity {
             public void onClick(View v) {
                 if (phoneNumberET.getText().toString().isEmpty() || phoneNumberET.getText().toString() == null) {
                     layoutPhone.setError((getText(R.string.phone_blank)));
-                }else {
-                    Address address = new Address(lon,lat);;
+                } else {
+                    Address address = new Address(lon, lat);
+                    ;
                     User user = new User();
                     Geocoder geocoder;
                     List<android.location.Address> fullAddressFromMap;
@@ -162,11 +168,10 @@ public class MissingReportThirdPage extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if(prefConfig.readLoginStatus())
-                    {
+                    if (prefConfig.readLoginStatus()) {
                         user.setEmail(prefConfig.readUserEmail());
                     }
-                    Log.d("DATUM","STRING " + date);
+                    Log.d("DATUM", "STRING " + date);
                     pet = new Pet(type, name, gender, infoET.getText().toString(), date, phoneNumberET.getText().toString(), false, user, address);
                     addPet(pet);
                     Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
@@ -183,7 +188,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 imageView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -193,25 +198,25 @@ public class MissingReportThirdPage extends AppCompatActivity {
         }
     }
 
-    public void addPet(Pet petAdd){
+    public void addPet(Pet petAdd) {
         Call<Pet> call = ServiceUtils.petService.postMissing(petAdd);
-        Log.d("PETS","usao");
+        Log.d("PETS", "usao");
         call.enqueue(new Callback<Pet>() {
             @Override
             public void onResponse(Call<Pet> call, Response<Pet> response) {
-                Log.d("PETADD","ima ih" + response.body());
-                if (response.code() == 200){
-                    Log.d("REZ","Meesage recieved");
+                Log.d("PETADD", "ima ih" + response.body());
+                if (response.code() == 200) {
+                    Log.d("REZ", "Meesage recieved");
                     Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d("REZ","Meesage recieved: "+response.code());
+                } else {
+                    Log.d("REZ", "Meesage recieved: " + response.code());
                     Toast.makeText(getApplicationContext(), R.string.add_pet_failure, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Pet> call, Throwable t) {
-                Log.d("PETADD", t.getMessage() != null?t.getMessage():"error");
+                Log.d("PETADD", t.getMessage() != null ? t.getMessage() : "error");
                 Toast.makeText(getApplicationContext(), R.string.add_pet_failure, Toast.LENGTH_SHORT).show();
             }
         });

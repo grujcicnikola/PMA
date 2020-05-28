@@ -28,6 +28,9 @@ public class CommentController {
 	
 	@RequestMapping(value = "/getAllByPet/{petId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAll(@PathVariable Long petId){
+		System.out.println("pogodio comments");
+		
+		
 		List<Comment> comments = commentService.findAllByPetId(petId);
 		List<CommentDTO> commentsDTO = converter.convertToCommentDTO(comments);
 		

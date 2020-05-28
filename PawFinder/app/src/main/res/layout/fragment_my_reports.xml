@@ -10,18 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/reports_label"
-        android:textSize="25dp"
         android:textColor="@color/colorGrey"
+        android:textSize="25dp"
         android:textStyle="italic"
-        android:visibility="invisible"
-        />
+        android:visibility="invisible" />
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@+id/reports_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:choiceMode="singleChoice">
-    </ListView>
+        android:choiceMode="singleChoice"></ListView>
 
 </FrameLayout>

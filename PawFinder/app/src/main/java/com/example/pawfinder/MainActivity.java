@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
+
 import com.example.pawfinder.activity.BarCodeActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
@@ -31,7 +32,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity  implements   SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private Toolbar toolbar;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupSharedPreferences();
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
 
@@ -110,13 +111,12 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
                 return true;
             }
         });
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name){
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             //setovanje email-a ulogovanog korisnika
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 TextView user_drawer = (TextView) findViewById(R.id.drawer_user);
-                if(prefConfig.readLoginStatus())
-                {
+                if (prefConfig.readLoginStatus()) {
                     user_drawer.setText(prefConfig.readUserEmail());
                 }
 
@@ -158,12 +158,10 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
     }
 
 
-
-
-    public void setupSharedPreferences(){
+    public void setupSharedPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        localeUtils = new LocaleUtils(sharedPreferences,this);
+        localeUtils = new LocaleUtils(sharedPreferences, this);
         localeUtils.setLocale();
         themeUtils = new ThemeUtils(sharedPreferences, this);
         themeUtils.setTheme();
@@ -178,14 +176,14 @@ public class MainActivity extends AppCompatActivity  implements   SharedPreferen
                 startActivity(getIntent());
                 break;
             }
-            case "theme":{
+            case "theme": {
                 themeUtils.setTheme();
                 //setTheme(R.style.darktheme);
                 finish();
                 startActivity(getIntent());
                 break;
-                }
             }
         }
     }
+}
 

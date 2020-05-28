@@ -69,9 +69,9 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     private List<PinData> petsMarkerPinData;
 
 
-   public static  NearYouFragment newInstance(){
-       return new NearYouFragment();
-   }
+    public static NearYouFragment newInstance() {
+        return new NearYouFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,8 +133,8 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     //Request location updates: - pokretanje procesa lociranja
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
                     Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
-                }else if(ContextCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                } else if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
@@ -143,7 +143,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             }
         }
 
-   }
+    }
 
     @Override
     public void onPause() {
@@ -198,8 +198,8 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-       //ovo je callback koji ce biti pozvan kada se proces trazenja permisija zavrsi
-       switch (requestCode) {
+        //ovo je callback koji ce biti pozvan kada se proces trazenja permisija zavrsi
+        switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -216,7 +216,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     }
 
                 } else if (grantResults.length > 0
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -237,7 +237,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       //callback koji poziva getMapAsync, kada je mapa spremna
+        //callback koji poziva getMapAsync, kada je mapa spremna
         // poziva se samo jednom, a lociranje n puta
         mMap = googleMap;
 
@@ -286,14 +286,13 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
                 //Request location updates:
                 location = locationManager.getLastKnownLocation(provider);
-            }else if(ContextCompat.checkSelfPermission(getContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            } else if (ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
                 location = locationManager.getLastKnownLocation(provider);
             }
         }
-
 
 
         //ako zelmo da reagujemo na klik markera koristimo marker click listener
@@ -306,7 +305,6 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         });
 
 
-
         if (location != null) {
             addMarker(location);
             callForPets(location);
@@ -316,8 +314,8 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
     @Override
     public void onLocationChanged(final Location location) {
-       //poziva se svaki put kada manager proracuna novu vrednost i vrati novu lokaciju
-       //imamo referencu na mapu, proveravamo da li je spremna i ako jeste iscrtamo marker
+        //poziva se svaki put kada manager proracuna novu vrednost i vrati novu lokaciju
+        //imamo referencu na mapu, proveravamo da li je spremna i ako jeste iscrtamo marker
         if (mMap != null) {
             //dodavanje kucica i macica
             addMarker(location);
@@ -359,7 +357,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             petsLocation.clear();
         }*/
 
-        if(petsLocation == null){
+        if (petsLocation == null) {
             petsLocation = new ArrayList<>();
             petsMarkerPinData = new ArrayList<>();
         }
@@ -392,32 +390,32 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         Toast.makeText(getContext(), R.string.near_you_message, Toast.LENGTH_SHORT).show();
     }
 
-    public void callForPets(final Location location){
+    public void callForPets(final Location location) {
         Call<List<Pet>> call = ServiceUtils.petService.getMissing();
-        Log.d("PETS","usao");
+        Log.d("PETS", "usao");
         call.enqueue(new Callback<List<Pet>>() {
             @Override
             public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
-                Log.d("NESTALI","ima ih" + response.body().size());
+                Log.d("NESTALI", "ima ih" + response.body().size());
                 for (Pet pet : response.body()) {
                     float[] results = new float[1];
                     Location.distanceBetween(location.getLatitude(), location.getLongitude(), pet.getAddress().getLat(), pet.getAddress().getLon(), results);
                     float distanceInMeters = results[0];
                     if (distanceInMeters < 10000) {
-                        addMarkerPet(pet.getAddress().getLat(),pet.getAddress().getLon(), pet.getImage(), pet.getName(), pet.getOwnersPhone());
+                        addMarkerPet(pet.getAddress().getLat(), pet.getAddress().getLon(), pet.getImage(), pet.getName(), pet.getOwnersPhone());
 
                     }
                 }
-                if (response.code() == 200){
-                    Log.d("REZ","Meesage recieved");
-                }else{
-                    Log.d("REZ","Meesage recieved: "+response.code());
+                if (response.code() == 200) {
+                    Log.d("REZ", "Meesage recieved");
+                } else {
+                    Log.d("REZ", "Meesage recieved: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Pet>> call, Throwable t) {
-                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
     }

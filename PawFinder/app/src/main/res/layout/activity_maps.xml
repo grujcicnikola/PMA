@@ -5,24 +5,34 @@
     android:layout_height="match_parent"
     tools:context=".activity.MapsActivity">
 
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:accessibilityPaneTitle="@string/app_name"
+        android:background="?attr/toolbarBackground"
+        android:elevation="4dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:title="@string/title_missing_second"
+        app:titleTextColor="?attr/toolbarText" />
 
     <LinearLayout
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/map"
-        />
+        android:orientation="vertical" />
+
 
     <Button
         android:id="@+id/btn_missing_report_second"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_alignParentBottom="true"
-        android:background="@color/yellow"
-        android:textSize="20dp"
+        android:background="?attr/bigYellowBUtton"
         android:text="@string/next"
-        android:textColor="@color/white"/>
+        android:textColor="?attr/buttonText"
+        android:textSize="20dp" />
 
 
 </RelativeLayout>

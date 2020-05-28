@@ -42,7 +42,7 @@ public class MissingFragment extends Fragment {
     private ListView list;
     private List<Pet> pets = new ArrayList<Pet>();
 
-    public static  MissingFragment newInstance(Bundle bundle){
+    public static MissingFragment newInstance(Bundle bundle) {
         MissingFragment fragment = new MissingFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -61,8 +61,8 @@ public class MissingFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
 
-               // Log.d("Dobijeno", response.body().toString());
-                Log.d("BROJ","ima ih" + response.body().size());
+                // Log.d("Dobijeno", response.body().toString());
+                Log.d("BROJ", "ima ih" + response.body().size());
                 /*for (Pet pet : response.body()) {
                     pets.add(pet);
                 }*/
@@ -70,27 +70,26 @@ public class MissingFragment extends Fragment {
                 pets = response.body();
                 PetsListAdapter adapter = new PetsListAdapter(getContext(), response.body());
                 list.setAdapter(adapter);
-                Log.d("POSLEFORA"," - " + pets);
-                if (response.code() == 200){
-                    Log.d("REZ","Meesage recieved");
+                Log.d("POSLEFORA", " - " + pets);
+                if (response.code() == 200) {
+                    Log.d("REZ", "Meesage recieved");
 
-                }else{
-                    Log.d("REZ","Meesage recieved: "+response.code());
+                } else {
+                    Log.d("REZ", "Meesage recieved: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Pet>> call, Throwable t) {
 
-                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
 
             }
         });
 
 
-
         //PetsListAdapter adapter = new PetsListAdapter(getContext(), MockupComments.getPets());
-        Log.d("PREADAPTERA"," - " + pets.size());
+        Log.d("PREADAPTERA", " - " + pets.size());
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -106,8 +105,9 @@ public class MissingFragment extends Fragment {
                 intent.putExtra("additionalInfo", pets.get(position).getAdditionalInfo());
                 intent.putExtra("image", pets.get(position).getImage());
                 intent.putExtra("date", pets.get(position).getMissingSince());
-                intent.putExtra("lon_pets", pets.get(position).getAddress().getLon());
-                intent.putExtra("lat_pets", pets.get(position).getAddress().getLat());
+                intent.putExtra("id_of_pet", pets.get(position).getId());
+                Log.d("PETSID ", "ima ih" + pets.get(position).getId());
+
                 startActivity(intent);
             }
         });

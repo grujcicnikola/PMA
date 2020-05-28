@@ -1,3 +1,4 @@
+
 package com.example.pawfinder.activity;
 
 import android.app.DatePickerDialog;
@@ -17,20 +18,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.pawfinder.R;
+import com.example.pawfinder.activity.MapsActivity;
 import com.example.pawfinder.model.PetGender;
 import com.example.pawfinder.model.PetType;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
 
-public class MissingReportFirstPage extends AppCompatActivity implements  DatePickerDialog.OnDateSetListener{
+public class MissingReportFirstPage extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     //dodati zbog error poruka
     private TextInputLayout layoutName;
     private TextInputLayout layoutDate;
-
+    private Toolbar toolbar;
     private TextView dateText;
     private EditText name;
     private Spinner gender;
@@ -39,11 +42,13 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_missing_report_first_page);
         setTitle(R.string.title_missing_first);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         name = findViewById(R.id.enter_pet_name);
         gender = findViewById(R.id.gender);
         type = findViewById(R.id.type);
@@ -121,9 +126,9 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
             public void onClick(View v) {
                 if (name.getText().toString().isEmpty() || name.getText().toString() == null) {
                     layoutName.setError((getText(R.string.name_blank)));
-                }else if (dateText.getText().toString().isEmpty() || dateText.getText().equals("dd/mm/yyyy") || dateText.getText().toString() == null) {
+                } else if (dateText.getText().toString().isEmpty() || dateText.getText().equals("dd/mm/yyyy") || dateText.getText().toString() == null) {
                     layoutDate.setError((getText(R.string.date_blank)));
-                }else {
+                } else {
                     name.setError(null);
                     dateText.setError(null);
                     Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
@@ -138,7 +143,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
         });
     }
 
-    private void showDatePickerDialog(){
+    private void showDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
@@ -150,7 +155,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements  DatePi
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         //uzima datum koji je selektovan
-        String date = dayOfMonth + "/" + (month+1) + "/" + year;
+        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
         dateText.setText(date);
     }
 

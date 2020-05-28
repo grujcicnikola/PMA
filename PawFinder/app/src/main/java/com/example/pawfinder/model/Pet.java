@@ -35,7 +35,8 @@ public class Pet {
     @SerializedName("address")
     private Address address;
 
-    public Pet() {}
+    public Pet() {
+    }
 
     public Pet(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
         this.id = id;
@@ -95,11 +96,17 @@ public class Pet {
         return image;
     }
 
-    public String getAdditionalInfo() { return additionalInfo; }
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
 
-    public String getMissingSince() { return missingSince; }
+    public String getMissingSince() {
+        return missingSince;
+    }
 
-    public String getOwnersPhone() { return ownersPhone; }
+    public String getOwnersPhone() {
+        return ownersPhone;
+    }
 
     public boolean isFound() {
         return isFound;
@@ -125,15 +132,21 @@ public class Pet {
         this.gender = gender;
     }
 
-    public void setAdditionalInfo(String additionalInfo) { this.additionalInfo = additionalInfo; }
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
 
     public void setImage(String image) {
         this.image = image;
     }
 
-    public void setMissingSince(String missingSince) { this.missingSince = missingSince; }
+    public void setMissingSince(String missingSince) {
+        this.missingSince = missingSince;
+    }
 
-    public void setOwnersPhone(String ownersPhone) { this.ownersPhone = ownersPhone; }
+    public void setOwnersPhone(String ownersPhone) {
+        this.ownersPhone = ownersPhone;
+    }
 
     public void setFound(boolean found) {
         isFound = found;
@@ -154,13 +167,13 @@ public class Pet {
     @NonNull
     @Override
     public String toString() {
-        return "Name: "  + this.getName() + "\n"+
-                "Type: " + this.getType() + "\n"+
+        return "Name: " + this.getName() + "\n" +
+                "Type: " + this.getType() + "\n" +
                 "Gender: " + this.getGender() + "\n" +
-                "Missing since: " + this.getMissingSince() + "\n"+
-                "Last seen: " + "\n"+
+                "Missing since: " + this.getMissingSince() + "\n" +
+                "Last seen: " + "\n" +
                 "Owners email: " + "pera@gmail.com" + "\n" +
-                "Owners phone: "  + this.getOwnersPhone() + "\n" +
+                "Owners phone: " + this.getOwnersPhone() + "\n" +
                 "Additional information: " + ": " + this.getAdditionalInfo();
     }
 }

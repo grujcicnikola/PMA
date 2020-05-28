@@ -10,19 +10,52 @@
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <item name="colorControlNormal">@color/colorBluePrimary</item>
         <item name="actionMenuTextColor">@color/grey</item>
+        <item name="tabBackgroundColor">@color/yellow</item>
+        <item name="toolbarBackground">@color/white</item>
+        <item name="toolbarText">@color/black</item>
+        <item name="tabSelectedTextColor">@color/tabSelected</item>
+        <item name="colorOfNavigationHeader">@color/yellow</item>
+        <item name="navigationItemText">@color/tabSelected</item>
+        <item name="yellow">@color/yellow</item>
+        <item name="buttonText">@color/white</item>
+        <item name="buttonTextWhite">@color/white</item>
+        <item name="reportBackground">@color/white</item>
+        <item name="bluePrimery">@color/colorBluePrimary</item>
+        <item name="bigYellowBUtton">@color/yellow</item>
+        <item name="blackText">@color/black</item>
+        <item name="smallYellowButton">@color/yellow</item>
+        <item name="blueLight">@color/colorBlueLight</item>
+        <item name="yellowCorners">@color/yellow</item>
     </style>
 
     <!-- Night / dark  Mode theme. -->
     <style name="darktheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryDark">@color/yellow</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="titleTextColor">@color/black</item>
-        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
-        <item name="colorControlNormal">@color/colorBluePrimary</item>
+        <item name="colorPrimary">@color/blue400</item>
+        <item name="colorPrimaryDark">@color/blue400</item>
+        <item name="colorAccent">@color/blue400</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggleNight</item>
+        <item name="colorControlNormal">@color/blue400</item>
         <item name="actionMenuTextColor">@color/grey</item>
-
+        <item name="tabBackgroundColor">@color/grey800</item>
+        <item name="toolbarBackground">@color/grey900</item>
+        <item name="toolbarText">@color/white</item>
+        <item name="android:windowBackground">@color/blackLight</item>
+        <item name="android:statusBarColor">@color/blackLight</item>
+        <item name="tabSelectedTextColor">@color/blue400</item>
+        <item name="colorOfNavigationHeader">@color/grey800</item>
+        <item name="navigationItemText">@color/blue400</item>
+        <item name="yellow">@color/yellow200</item>
+        <item name="buttonText">@color/white</item>
+        <item name="buttonTextWhite">@color/black</item>
+        <item name="reportBackground">@color/grey900</item>
+        <item name="bluePrimery">@color/blue400</item>
+        <item name="bigYellowBUtton">@color/grey800</item>
+        <item name="blackText">@color/colorGrey</item>
+        <item name="smallYellowButton">@color/yellow200</item>
+        <item name="blueLight">@color/blueDark</item>
+        <item name="yellowCorners">@color/greyBlue</item>
     </style>
 
 
@@ -45,28 +78,37 @@
         <item name="color">@android:color/black</item>
     </style>
 
+    <style name="AppTheme.DrawerArrowToggleNight" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/blue400</item>
+    </style>
+
     <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
-        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textColor">?attr/navigationItemText</item>
         <item name="android:textSize">18dp</item>
     </style>
+
     <style name="NavDrawerTextStyleLarge" parent="Base.TextAppearance.AppCompat">
-        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textColor">?attr/navigationItemText</item>
         <item name="android:textSize">20dp</item>
     </style>
+
     <style name="NavDrawerTextStyleXLarge" parent="Base.TextAppearance.AppCompat">
-        <item name="android:textColor">@color/tabSelected</item>
+        <item name="android:textColor">?attr/navigationItemText</item>
         <item name="android:textSize">30dp</item>
     </style>
 
     <style name="MineCustomTabTextLarge" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">20dp</item>
     </style>
+
     <style name="MineCustomTabTextXLarge" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">30dp</item>
     </style>
+
     <style name="ToolBarLarge" parent="ToolbarTheme">
         <item name="android:textSize">22dp</item>
     </style>
+
     <style name="ToolBarXLarge" parent="ToolbarTheme">
         <item name="android:textSize">28dp</item>
     </style>

@@ -7,9 +7,9 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map_view_on_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/map_view_on_map" />
+        android:orientation="vertical" />
 
 </FrameLayout>

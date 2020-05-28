@@ -43,12 +43,12 @@ import com.google.maps.android.ui.IconGenerator;
  */
 public class ViewOnMapFragment extends Fragment implements OnMapReadyCallback {
 
-        private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-        private GoogleMap mMap;
-        private SupportMapFragment supportMapFragment;
-        private Marker pet;
-        private Double lon;
-        private Double lat;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private GoogleMap mMap;
+    private SupportMapFragment supportMapFragment;
+    private Marker pet;
+    private Double lon;
+    private Double lat;
 
 
     public ViewOnMapFragment() {
@@ -105,7 +105,6 @@ public class ViewOnMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         //callback koji poziva getMapAsync, kada je mapa spremna
@@ -123,7 +122,6 @@ public class ViewOnMapFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
         });
-
 
 
     }

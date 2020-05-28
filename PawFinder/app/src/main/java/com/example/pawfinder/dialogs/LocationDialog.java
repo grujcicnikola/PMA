@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.pawfinder.R;
 
-public class LocationDialog extends AlertDialog.Builder{
+public class LocationDialog extends AlertDialog.Builder {
 
     private Integer which;
 
@@ -18,14 +18,14 @@ public class LocationDialog extends AlertDialog.Builder{
         super(context);
         if (which == null) {
             setUpDialog(1);
-        }else{
+        } else {
             setUpDialog(which);
         }
 
     }
 
 
-    private void setUpDialog(Integer w){
+    private void setUpDialog(Integer w) {
         setTitle(R.string.oops);
 
         switch (w) {
@@ -34,8 +34,6 @@ public class LocationDialog extends AlertDialog.Builder{
             case 2:
                 setMessage(R.string.map_message);
         }
-
-
 
 
         setCancelable(false);
@@ -55,7 +53,7 @@ public class LocationDialog extends AlertDialog.Builder{
 
     }
 
-    public AlertDialog prepareDialog(Integer i){
+    public AlertDialog prepareDialog(Integer i) {
 
         AlertDialog dialog = create();
         dialog.setCanceledOnTouchOutside(false);

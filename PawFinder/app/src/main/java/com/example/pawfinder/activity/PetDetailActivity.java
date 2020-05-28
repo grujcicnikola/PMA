@@ -47,7 +47,7 @@ public class PetDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_pet_detail);
@@ -55,11 +55,10 @@ public class PetDetailActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         ImageView imgView = (ImageView) findViewById(R.id.pet_details_image);
-        ImageButton imageButton= (ImageButton) findViewById(R.id.buttonViewComments);
+        ImageButton imageButton = (ImageButton) findViewById(R.id.buttonViewComments);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
 
             String name = bundle.getString("petsName");
             String type = bundle.getString("petsType");
@@ -94,9 +93,14 @@ public class PetDetailActivity extends AppCompatActivity {
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getApplicationContext(), ViewCommentsActivity.class);
-                    i.putExtra("position_of_pet",String.valueOf(position_of_pet));
-                    startActivity(i);
+                    Intent intent = new Intent(getApplicationContext(), ViewCommentsActivity.class);
+                    //i.putExtra("position_of_pet",String.valueOf(position_of_pet));
+                    intent.putExtra("view_comments_petsName", bundle.getString("petsName"));
+                    intent.putExtra("view_comments_additionalInfo", bundle.getString("additionalInfo"));
+                    intent.putExtra("view_comments_id", bundle.getLong("id_of_pet"));
+                    Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
+                    intent.putExtra("view_comments_image", bundle.getString("image"));
+                    startActivity(intent);
                 }
             });
 
@@ -105,8 +109,8 @@ public class PetDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
-                    intent.putExtra("lon_view",lon);
-                    intent.putExtra("lat_view",lat);
+                    intent.putExtra("lon_view", lon);
+                    intent.putExtra("lat_view", lat);
                     startActivity(intent);
                 }
             });

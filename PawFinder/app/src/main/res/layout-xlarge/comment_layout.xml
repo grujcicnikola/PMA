@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="left"
-    android:paddingTop="10dp"
-    >
+    android:orientation="horizontal"
+    android:paddingTop="10dp">
 
     <RelativeLayout
         android:id="@+id/comment_layout"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/white">
+        android:layout_marginRight="20dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,8 +29,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_toEndOf="@id/imageView"
-            android:orientation="vertical"
-            android:background="@drawable/layout_rounded_bluelight">
+            android:background="@drawable/layout_rounded_bluelight"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -43,23 +41,23 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
                     android:textColor="@color/black"
                     android:textSize="30dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/date_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="18dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"
                     android:textColor="@color/black"
                     android:textSize="25dp" />
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -69,12 +67,12 @@
 
                 <TextView
                     android:id="@+id/user_comment"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="none"
                     android:textColor="@color/black"
-                    android:textSize="30dp"
-                    android:ellipsize="none"/>
+                    android:textSize="30dp" />
 
 
             </LinearLayout>

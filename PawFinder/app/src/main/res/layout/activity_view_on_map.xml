@@ -4,14 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ViewOnMapActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activity.ViewOnMapActivity">
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:accessibilityPaneTitle="@string/app_name"
+        android:background="?attr/toolbarBackground"
+        android:elevation="4dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:title="@string/title_activity_view_on_map"
+        app:titleTextColor="?attr/toolbarText" />
 
     <LinearLayout
+        android:id="@+id/pet_location_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/pet_location_map"
-        />
-    
+        android:orientation="vertical" />
+
 </RelativeLayout>

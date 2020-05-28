@@ -30,9 +30,9 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="@drawable/rounded_blue_button"
-            android:text="View on map"
+            android:text="@string/button_view_on_map"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="?attr/buttonTextWhite"
             android:textSize="20dp" />
 
         <ImageButton
@@ -56,9 +56,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/yellow"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:background="?attr/yellowCorners"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,7 +256,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </RelativeLayout>

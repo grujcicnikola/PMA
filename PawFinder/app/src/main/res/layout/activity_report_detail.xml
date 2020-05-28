@@ -17,11 +17,11 @@
             android:id="@+id/report_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/toolbarBackground"
             android:theme="@style/ToolbarTheme"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/report_detail_content"/>
+    <include layout="@layout/report_detail_content" />
 </LinearLayout>

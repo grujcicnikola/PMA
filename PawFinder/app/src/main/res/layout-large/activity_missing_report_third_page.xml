@@ -1,125 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.MissingReportThirdPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-<ScrollView
-    android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="0dip"
-    android:layout_weight="1"
-    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".activity.MissingReportThirdPage">
 
-    >
-    <RelativeLayout
+    <include layout="@layout/toolbar_layout"></include>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dip"
+        android:layout_weight="1"
         android:fillViewport="true"
+        android:fitsSystemWindows="true"
+
         >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/linear">
+            android:fillViewport="true"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:minWidth="375dp"
-                android:layout_width="wrap_content"
-                android:minHeight="50dp"
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/label_pet_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/phone_number"
-                    android:textSize="25dp"
-                    android:textColor="@color/yellow"/>
-
-                <EditText
-                    android:id="@+id/enter_phone_number"
-                    android:layout_width="match_parent"
-                    android:textSize="25dp"
                     android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:importantForAutofill="no"
-                    android:inputType="phone" />
-            </LinearLayout>
+                    android:minWidth="375dp"
+                    android:minHeight="50dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:minWidth="375dp"
-                android:layout_width="wrap_content"
-                android:minHeight="50dp"
-                android:layout_marginVertical="@dimen/activity_vertical_margin"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                    <TextView
+                        android:id="@+id/label_pet_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number"
+                        android:textColor="?attr/yellow"
+                        android:textSize="25dp" />
 
-                <TextView
-                    android:id="@+id/label_add_info"
+                    <EditText
+                        android:id="@+id/enter_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"
+                        android:textSize="25dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_info"
-                    android:textSize="25dp"
-                    android:textColor="@color/yellow"/>
-
-                <EditText
-                    android:id="@+id/enter_add_info"
-                    android:layout_width="match_parent"
-                    android:textSize="25dp"
                     android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:importantForAutofill="no"
-                    android:inputType="text" />
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:minWidth="375dp"
+                    android:minHeight="50dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/label_add_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_info"
+                        android:textColor="?attr/yellow"
+                        android:textSize="25dp" />
+
+                    <EditText
+                        android:id="@+id/enter_add_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:textSize="25dp" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
+            <Button
+                android:id="@+id/choose_pet_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rounded_yellow_button"
+                android:minWidth="50dp"
+                android:text="@string/upload_image"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
 
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/choose_pet_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linear"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:minWidth="50dp"
-            android:background="@drawable/rounded_yellow_button"
-            android:layout_gravity="center"
-            android:text="@string/upload_image"
-            android:textSize="25dp"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:adjustViewBounds="true"
-            android:layout_below="@id/choose_pet_image"
-            android:layout_marginTop="3dp"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:id="@+id/upload_image_view"
-            android:contentDescription="@string/pet_image" />
-
+            <ImageView
+                android:id="@+id/upload_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/choose_pet_image"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/pet_image"
+                android:gravity="center_horizontal"
+                android:minHeight="50dp" />
 
 
         </RelativeLayout>
-</ScrollView>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_missing_report_third"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:textSize="25dp"
-        android:background="@drawable/rounded_yellow_button"
+        android:background="?attr/bigYellowBUtton"
         android:text="@string/finish"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="25dp" />
 </LinearLayout>

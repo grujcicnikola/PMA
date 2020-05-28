@@ -29,7 +29,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_report_detail);
@@ -37,13 +37,12 @@ public class ReportDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.report_toolbar);
         ImageView imgView = (ImageView) findViewById(R.id.pet_report_details_image);
         Button buttonFound = (Button) findViewById(R.id.found_btn);
-        ImageButton commentsButton= (ImageButton) findViewById(R.id.report_comments);
+        ImageButton commentsButton = (ImageButton) findViewById(R.id.report_comments);
 
         MyReportsListAdapter adapter = new MyReportsListAdapter(this, MockupComments.getReports());
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
 
             String name = bundle.getString("report_pet_name");
             String type = bundle.getString("report_pet_type");
@@ -65,7 +64,11 @@ public class ReportDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getApplicationContext(), ViewCommentsActivity.class);
-                    i.putExtra("position_of_pet_report",String.valueOf(1));
+                    i.putExtra("view_comments_petsName", bundle.getString("report_pet_name"));
+                    i.putExtra("view_comments_additionalInfo", bundle.getString("report_pet_additionalInfo"));
+                    i.putExtra("view_comments_id", bundle.getLong("report_pet_of_pet"));
+                    Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
+                    i.putExtra("view_comments_image", bundle.getString("report_pet_image"));
                     startActivity(i);
                 }
             });

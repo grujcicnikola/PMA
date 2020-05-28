@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class PetsListAdapter extends BaseAdapter {
 
     Context mContext;
@@ -59,8 +58,7 @@ public class PetsListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.missing_pet_item, null);
-        }else
-        {
+        } else {
             view = convertView;
         }
 

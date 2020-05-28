@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +46,11 @@ public class MyReportsFragment extends Fragment {
     private static PrefConfig prefConfig;
     TextView text;
 
-    public static  MyReportsFragment newInstance(Bundle bundle){
+    public static MyReportsFragment newInstance(Bundle bundle) {
         MyReportsFragment fragment = new MyReportsFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
 
     @Override
@@ -63,22 +63,18 @@ public class MyReportsFragment extends Fragment {
 
         text = (TextView) view.findViewById(R.id.reports_message);
 
-        if(prefConfig.readLoginStatus())
-        {
+        if (prefConfig.readLoginStatus()) {
             final Call<List<Pet>> call = ServiceUtils.petService.getPetsByUser(prefConfig.readUserEmail());
             call.enqueue(new Callback<List<Pet>>() {
                 @Override
                 public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
-                    if(response.code() == 200)
-                    {
+                    if (response.code() == 200) {
                         pets = response.body();
 
-                        if(pets.size() > 0)
-                        {
+                        if (pets.size() > 0) {
                             MyReportsListAdapter adapter = new MyReportsListAdapter(getContext(), pets);
                             list.setAdapter(adapter);
-                        }else
-                        {
+                        } else {
                             text.setVisibility(View.VISIBLE);
                         }
                     }
@@ -97,10 +93,13 @@ public class MyReportsFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     Intent intent = new Intent(getContext(), ReportDetailActivity.class);
-                    intent.putExtra("report_pet_name",pets.get(position).getName());
-                    intent.putExtra("report_pet_type",pets.get(position).getType().toString());
-                    intent.putExtra("report_pet_date",pets.get(position).getMissingSince());
-                    intent.putExtra("report_pet_image",pets.get(position).getImage());
+                    intent.putExtra("report_pet_name", pets.get(position).getName());
+                    intent.putExtra("report_pet_type", pets.get(position).getType().toString());
+                    intent.putExtra("report_pet_date", pets.get(position).getMissingSince());
+                    intent.putExtra("report_pet_image", pets.get(position).getImage());
+                    intent.putExtra("report_pet_additionalInfo", pets.get(position).getAdditionalInfo());
+                    intent.putExtra("report_pet_of_pet", pets.get(position).getId());
+                    Log.d("PETSIMAAGE", pets.get(position).getImage());
                     startActivity(intent);
                 }
             });

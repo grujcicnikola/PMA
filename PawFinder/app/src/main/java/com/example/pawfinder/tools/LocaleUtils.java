@@ -14,14 +14,13 @@ public class LocaleUtils {
 
     public LocaleUtils(SharedPreferences sharedPreferences, Context context) {
         super();
-        this.sharedPreferences=sharedPreferences;
+        this.sharedPreferences = sharedPreferences;
         this.context = context;
     }
 
 
-
-    public void setLocale(){
-        String localeString = sharedPreferences.getString("language","en");
+    public void setLocale() {
+        String localeString = sharedPreferences.getString("language", "en");
         locale = new Locale(localeString);
         Locale.setDefault(locale);
         saveLocale(localeString);
@@ -37,6 +36,7 @@ public class LocaleUtils {
         //finish();
         //startActivity(getIntent());
     }
+
     public void saveLocale(String lang) {
         String langPref = "language";
 

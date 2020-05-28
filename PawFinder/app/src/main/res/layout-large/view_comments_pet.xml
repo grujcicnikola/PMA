@@ -9,26 +9,26 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@color/white"
         android:accessibilityPaneTitle="@string/app_name"
-        app:titleTextColor="@color/black"
-        android:id="@+id/toolBar"
+        android:background="?attr/toolbarBackground"
         android:elevation="4dp"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:title="@string/comments"/>
+        app:title="@string/comments"
+        app:titleTextColor="?attr/toolbarText" />
     //INFO o ljubimcu
 
     <RelativeLayout
         android:id="@+id/pet_info_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/yellow"
+        android:layout_below="@id/toolBar"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@id/toolBar">
+        android:background="?attr/bigYellowBUtton">
 
         <ImageView
             android:id="@+id/imageView"
@@ -49,8 +49,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/name_label"
@@ -102,9 +102,9 @@
     //KOMENTARI
 
 
-
     //NOVI KOMENTAR
     //android:fadeScrollbars="true"
+
     <ListView
         android:id="@+id/shop_comments_list"
         android:layout_width="match_parent"
@@ -134,17 +134,16 @@
             android:textSize="25dp"></EditText>
 
         <Button
-            android:id="@+id/shop_comment_button"
+            android:id="@+id/comment_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="13dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="2"
+            android:background="@drawable/small_yellow_button"
             android:text="@string/send"
-            android:textSize="25dp"
-            android:background="@drawable/rounded_yellow_button"
-            android:textColor="@color/white"
-            ></Button>
+            android:textColor="?attr/buttonTextWhite"
+            android:textSize="25dp"></Button>
     </LinearLayout>
 
 

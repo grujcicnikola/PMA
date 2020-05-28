@@ -4,9 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MapsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activity.MapsActivity">
 
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:accessibilityPaneTitle="@string/app_name"
+        android:background="?attr/toolbarBackground"
+        android:elevation="4dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:title="@string/title_missing_second"
+        app:titleTextColor="?attr/toolbarText" />
 
     <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -22,11 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/yellow"
-        android:textSize="30dp"
+        android:background="?attr/bigYellowBUtton"
         android:text="@string/next"
-        android:textColor="@color/white"/>
+        android:textColor="?attr/buttonText"
+        android:textSize="30dp" />
 
 
 </RelativeLayout>
-

@@ -1,104 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.CreateAccountActivity">
+
+    <include layout="@layout/toolbar_layout"></include>
 
     <ImageView
         android:id="@+id/c_image"
         android:layout_width="270dp"
         android:layout_height="170dp"
-        android:src="@drawable/logo"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/toolBar"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/c_signup_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/btn_signUp"
-        android:textSize="30dp"
-        android:textColor="@color/black"
         android:layout_below="@id/c_image"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:text="@string/btn_signUp"
+        android:textColor="?attr/blackText"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/c_email_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/email"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/yellow"
         android:layout_below="@id/c_signup_text"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:layout_marginTop="10dp"
+        android:text="@string/email"
+        android:textColor="?attr/yellow"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/c_email_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textWebEmailAddress"
         android:layout_below="@id/c_email_label"
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"
-        android:textSize="20dp"/>
+        android:inputType="textWebEmailAddress"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/c_password_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/password"
-        android:textColor="@color/yellow"
-        android:textSize="20dp"
-        android:textStyle="bold"
         android:layout_below="@id/c_email_edit"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:text="@string/password"
+        android:textColor="?attr/yellow"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/c_password_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:layout_below="@id/c_password_label"
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"
+        android:inputType="textPassword"
         android:textSize="20dp"
-        app:passwordToggleEnabled="true"/>
+        app:passwordToggleEnabled="true" />
 
 
     <LinearLayout
         android:id="@+id/c_lin_lay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
         android:layout_below="@id/c_password_edit"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image">
+        android:layout_alignRight="@id/c_image"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:buttonTint="@color/yellow"
+            android:buttonTint="?attr/yellow"
             android:text="I agree to the "
-            android:textSize="20dp"
-            android:textColor="@color/colorGrey"/>
+            android:textColor="@color/colorGrey"
+            android:textSize="20dp" />
+
         <TextView
             android:id="@+id/termsOfService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clickable="true"
             android:text="@string/TermsOfServices"
+            android:textColorLink="?attr/yellow"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColorLink="@color/yellow"
-            android:clickable="true"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -106,14 +110,14 @@
         android:id="@+id/c_signup_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_yellow_button"
-        android:layout_marginTop="10dp"
-        android:text="@string/btn_signUp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:textSize="20dp"
         android:layout_below="@id/c_lin_lay"
         android:layout_alignLeft="@id/c_image"
-        android:layout_alignRight="@id/c_image"/>
+        android:layout_alignRight="@id/c_image"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_yellow_button"
+        android:text="@string/btn_signUp"
+        android:textAlignment="center"
+        android:textColor="?attr/buttonText"
+        android:textSize="20dp" />
 
 </RelativeLayout>

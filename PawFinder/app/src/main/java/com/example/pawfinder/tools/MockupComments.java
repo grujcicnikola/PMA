@@ -19,7 +19,7 @@ public class MockupComments {
 
     public static List<Comment> getComments() {
         ArrayList<Comment> comments = new ArrayList<Comment>();
-        Comment u1 = new Comment(Long.valueOf(1), "Video sam ga na uglu bulevara Lazara", new Date(), getUsers().get(0), getPets().get(0));
+        /*Comment u1 = new Comment(Long.valueOf(1), "Video sam ga na uglu bulevara Lazara", new Date(), getUsers().get(0), getPets().get(0));
         Comment u2 = new Comment(Long.valueOf(2), "Bas je lep!", new Date(), getUsers().get(1), getPets().get(0));
         Comment u3 = new Comment(Long.valueOf(3), "Nisam ga video. Primetio sam da ima mnogo lutalica u Novom Sadu.", new Date(), getUsers().get(2), getPets().get(0));
         Comment u4 = new Comment(Long.valueOf(1), "Lep je", new Date(), getUsers().get(1), getPets().get(1));
@@ -29,7 +29,7 @@ public class MockupComments {
         comments.add(u2);
         comments.add(u3);
         comments.add(u4);
-        comments.add(u5);
+        comments.add(u5);*/
 
         return comments;
 

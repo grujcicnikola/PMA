@@ -18,18 +18,19 @@ public class ThemeUtils {
 
     public ThemeUtils(SharedPreferences sharedPreferences, Context context) {
         super();
-        this.sharedPreferences=sharedPreferences;
+        this.sharedPreferences = sharedPreferences;
         this.context = context;
     }
 
-    public void setTheme(){
-        String themeString = sharedPreferences.getString("theme","white");
-        if(themeString.equals("white")){
+    public void setTheme() {
+        String themeString = sharedPreferences.getString("theme", "white");
+        if (themeString.equals("white")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }
+
     public void saveTheme(String lang) {
         String langPref = "theme";
 

@@ -18,10 +18,10 @@ public class Comment {
 
     public Comment(Long id, String message, Date date, User user, Pet pet) {
         this.id = id;
-        this.message=message;
-        this.date=date;
-        this.pet=pet;
-        this.user=user;
+        this.message = message;
+        this.date = date;
+        this.pet = pet;
+        this.user = user;
     }
 
     public Long getId() {

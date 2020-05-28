@@ -13,12 +13,14 @@ import com.example.pawfinder.fragments.MissingFragment;
 import com.example.pawfinder.fragments.MyReportsFragment;
 import com.example.pawfinder.fragments.NearYouFragment;
 import com.example.pawfinder.R;
+
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
+
     public ViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
-        this.context=context;
+        this.context = context;
     }
 
     @NonNull
@@ -38,7 +40,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 missingFragment = new MissingFragment().newInstance(bundle);
                 return missingFragment;
-                //break;
+            //break;
             case 2:
                 reportsFragment = new MyReportsFragment().newInstance(bundle);
                 return reportsFragment;

@@ -1,3 +1,4 @@
+
 package com.example.pawfinder.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,19 +23,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity  extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity {
 
     public static FragmentManager fm;
-    
+
     public MapsFragment mapsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
-        setTitle(R.string.title_missing_second);
         setContentView(R.layout.activity_maps);
 
         final Intent help = getIntent();
@@ -45,7 +45,7 @@ public class MapsActivity  extends AppCompatActivity {
 
 
         fm = getSupportFragmentManager();
-        if (findViewById(R.id.map)!=null) {
+        if (findViewById(R.id.map) != null) {
             //fragment je vec dodat - activiy je resumed
             if (savedInstanceState != null) {
                 return;
@@ -66,9 +66,9 @@ public class MapsActivity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if ( mapsFragment.getPet() == null ) {
+                if (mapsFragment.getPet() == null) {
                     Toast.makeText(getApplicationContext(), getText(R.string.location_blank), Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Intent intent = new Intent(getApplicationContext(), MissingReportThirdPage.class);
                     intent.putExtra("PET_LOST_LON", mapsFragment.getPet().getPosition().longitude);
                     intent.putExtra("PET_LOST_LAT", mapsFragment.getPet().getPosition().latitude);
@@ -85,5 +85,5 @@ public class MapsActivity  extends AppCompatActivity {
     }
 
 
-
 }
+

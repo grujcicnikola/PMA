@@ -53,8 +53,7 @@ public class MyReportsListAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.report_item, null);
-        }else
-        {
+        } else {
             view = convertView;
         }
 

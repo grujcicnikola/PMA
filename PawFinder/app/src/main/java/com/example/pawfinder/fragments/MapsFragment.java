@@ -124,8 +124,8 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                     //Request location updates: - pokretanje procesa lociranja
                     locationManager.requestLocationUpdates(provider, 180, 50, this);
                     Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
-                }else if(ContextCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                } else if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
                     locationManager.requestLocationUpdates(provider, 180, 50, this);
@@ -207,7 +207,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                     }
 
                 } else if (grantResults.length > 0
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -260,8 +260,8 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
 
                 //Request location updates:
                 location = locationManager.getLastKnownLocation(provider);
-            }else if(ContextCompat.checkSelfPermission(getContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            } else if (ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
                 location = locationManager.getLastKnownLocation(provider);
@@ -273,7 +273,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (pet!=null) {
+                if (pet != null) {
                     pet.remove();
                 }
 
@@ -303,7 +303,6 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         });
 
 
-
         if (location != null) {
             addMarker(location);
         }
@@ -318,7 +317,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         }
 
         IconGenerator icg = new IconGenerator(getContext());
-        icg.setColor(Color.rgb(239,187,64)); // green background
+        icg.setColor(Color.rgb(239, 187, 64)); // green background
         icg.setTextAppearance(R.style.BlackText); // black text
         Bitmap bm = icg.makeIcon(getText(R.string.your_location));
 

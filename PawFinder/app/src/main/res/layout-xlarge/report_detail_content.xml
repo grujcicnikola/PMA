@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,16 +18,16 @@
         android:id="@+id/report_lin_lay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/pet_report_details_image"
         android:layout_alignLeft="@id/pet_report_details_image"
         android:layout_alignRight="@id/pet_report_details_image"
-        android:orientation="vertical"
-        android:background="@drawable/layout_textview">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/layout_textview"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -36,21 +35,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/label_name"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:id="@+id/report_text_view_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -58,22 +55,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/label_type"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:id="@+id/report_text_view_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -81,21 +76,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/label_missing"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:id="@+id/report_text_view_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -103,40 +96,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/label_last_seen"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:id="@+id/report_text_view_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="35dp">
-            </TextView>
+                android:textSize="35dp"></TextView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/found_btn"
                 android:layout_width="370dp"
                 android:layout_height="60dp"
-                android:background="@drawable/rounded_blue_button"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/rounded_blue_button"
                 android:text="@string/button_found"
-                android:textColor="@color/white"
-                android:textSize="30dp"/>
+                android:textColor="?attr/buttonTextWhite"
+                android:textSize="30dp" />
 
             <ImageButton
                 android:id="@+id/report_comments"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/comments_pic"/>
+                android:background="@drawable/comments_pic" />
         </LinearLayout>
 
     </LinearLayout>

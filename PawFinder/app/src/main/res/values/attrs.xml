@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="tabBackgroundColor" format="color"></attr>
+        <attr name="toolbarBackground" format="color"></attr>
+        <attr name="toolbarText" format="color"></attr>
+        <attr name="tabSelectedTextColor" format="color"></attr>
+        <attr name="colorOfNavigationHeader" format="color"></attr>
+        <attr name="navigationItemText" format="color"></attr>
+        <attr name="yellow" format="color"></attr>
+        <attr name="buttonText" format="color"></attr>
+        <attr name="reportBackground" format="color"></attr>
+        <attr name="bluePrimery" format="color"></attr>
+        <attr name="bigYellowBUtton" format="color"></attr>
+        <attr name="blackText" format="color"></attr>
+        <attr name="buttonTextWhite" format="color"></attr>
+        <attr name="smallYellowButton" format="color"></attr>
+        <attr name="preferenceText" format="color"></attr>
+        <attr name="blueLight" format="color"></attr>
+        <attr name="yellowCorners" format="color"></attr>
+    </declare-styleable>
+</resources>

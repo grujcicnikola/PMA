@@ -63,7 +63,7 @@
 
     <string name="general_settings">General</string>
     <string name="pref_theme">Theme</string>
-    <string name="pref_theme_sum">Description</string>
+    <string name="pref_theme_sum">Change theme</string>
     <string name="account_settings">Account</string>
     <string name="pref_change_passoword">Change password</string>
     <string name="comments">Comments</string>
@@ -86,6 +86,7 @@
 
     <!--report missing-->
     <string name="button_found">Found</string>
+    <string name="button_view_on_map">View on map</string>
     <!--tabovi-->
     <string name="tab_near">Near you</string>
     <string name="tab_missing">Missing</string>
