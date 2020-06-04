@@ -72,6 +72,16 @@ public class PetsListAdapter extends BaseAdapter {
         Pet pet = missingPets.get(position);
         image.setImageResource(R.drawable.avatar);
         Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
+        //onaj koji nije otisao na server da je siv
+        if (pet.isSent() != null) {
+            if (pet.isSent() == false) {
+                view.setBackgroundResource(R.color.grey300);
+            }else{
+                view.setBackgroundResource(R.color.white);
+            }
+        }else{
+            view.setBackgroundResource(R.color.white);
+        }
 
         return view;
     }

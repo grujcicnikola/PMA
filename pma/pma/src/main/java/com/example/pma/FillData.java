@@ -62,21 +62,21 @@ public class FillData {
 		userService.saveUser(user5);
 		
 		//ADDRESS
-		Address a1 = new Address("Novi Sad", "Stevana Mokranjca",1, 19.8178678, 45.2586882);
+		Address a1 = new Address("Novi Sad", "Stevana Mokranjca","1", 19.8178678, 45.2586882);
 		addressService.add(a1);
-		Address a2 = new Address("Zrenjanin", "Cara Dusana",1, 20.3881148, 45.3823109);
+		Address a2 = new Address("Zrenjanin", "Cara Dusana","1", 20.3881148, 45.3823109);
 		addressService.add(a2);
-		Address a3 = new Address("Novi Sad", "Mise Dimitrijevica",1, 19.8326309, 45.2478133);
+		Address a3 = new Address("Novi Sad", "Mise Dimitrijevica","1", 19.8326309, 45.2478133);
 		addressService.add(a3);
-		Address a4 = new Address("Novi Sad", "Micurinova",1, 19.8259408, 45.2530566);
+		Address a4 = new Address("Novi Sad", "Micurinova","1", 19.8259408, 45.2530566);
 		addressService.add(a4);
-		Address a5 = new Address("Novi Sad", "Radnicka",1, 19.8444193, 45.2488004);
+		Address a5 = new Address("Novi Sad", "Radnicka","1", 19.8444193, 45.2488004);
 		addressService.add(a5);
-		Address a6 = new Address("Novi Sad", "Mose Pijade",1, 19.854462, 45.222700);
+		Address a6 = new Address("Novi Sad", "Mose Pijade","1", 19.854462, 45.222700);
 		addressService.add(a6);
-		Address a7 = new Address("Novi Sad", "Svetozara Miletica",1, 19.854326,45.223552);
+		Address a7 = new Address("Novi Sad", "Svetozara Miletica","1", 19.854326,45.223552);
 		addressService.add(a7);
-		Address a8 = new Address("Novi Sad", "Vladimira Nazora",1,  19.855238, 45.225298);
+		Address a8 = new Address("Novi Sad", "Vladimira Nazora","1",  19.855238, 45.225298);
 		addressService.add(a8);
 		
 		

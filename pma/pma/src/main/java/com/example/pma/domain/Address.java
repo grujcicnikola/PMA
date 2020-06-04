@@ -20,7 +20,7 @@ public class Address {
 	@Column
     private String street;
 	@Column
-    private int number;
+    private String number;		//zbog 148a koji sam pogodila
 	@Column
     private Double lon;
 	@Column
@@ -31,7 +31,7 @@ public class Address {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Address(String city, String street, int number, Double lon, Double lat) {
+	public Address(String city, String street, String number, Double lon, Double lat) {
 		this.city = city;
 		this.street = street;
 		this.number = number;
@@ -64,10 +64,10 @@ public class Address {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public Double getLon() {

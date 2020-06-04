@@ -7,7 +7,7 @@ public class AddressDTO {
 	private Long id;
 	private String city;
     private String street;
-    private int number;
+    private String number;
     private Double lon;
     private Double lat;
     
@@ -20,7 +20,7 @@ public class AddressDTO {
 		this.lon = address.getLon();
 		this.lat = address.getLat();
 	}
-	public AddressDTO(Long id, String city, String street, int number, Double lon, Double lat) {
+	public AddressDTO(Long id, String city, String street, String number, Double lon, Double lat) {
 		super();
 		this.id = id;
 		this.city = city;
@@ -47,10 +47,10 @@ public class AddressDTO {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public Double getLon() {

@@ -9,6 +9,8 @@ import java.util.Date;
 
 public class Pet {
 
+    private String markerId;
+
     @SerializedName("id")
     private Long id;
     @SerializedName("type")
@@ -35,10 +37,12 @@ public class Pet {
     @SerializedName("address")
     private Address address;
 
+    private Boolean isSent;
+
     public Pet() {
     }
 
-    public Pet(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
+    public Pet(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user, Address a, boolean isSent) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -49,9 +53,10 @@ public class Pet {
         this.ownersPhone = ownersPhone;
         this.isFound = isFound;
         this.user = user;
+        this.address = a;
     }
 
-    public Pet(PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user) {
+    public Pet(PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user, Address a, boolean isSent) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -62,6 +67,8 @@ public class Pet {
         this.ownersPhone = ownersPhone;
         this.isFound = isFound;
         this.user = user;
+        this.address = a;
+        this.isSent = isSent;
     }
 
     public Pet(PetType type, String name, PetGender gender, String description, String dateOfLost, String contact, boolean isFound, User user, Address address) {
@@ -74,6 +81,22 @@ public class Pet {
         this.isFound = isFound;
         this.user = user;
         this.address = address;
+    }
+
+    public Pet(String markerId, Long id, PetType type, String name, PetGender gender, String additionalInfo, String image, String missingSince, String ownersPhone, boolean isFound, User user, Address address) {
+        this.markerId = markerId;
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.gender = gender;
+        this.additionalInfo = additionalInfo;
+        this.image = image;
+        this.missingSince = missingSince;
+        this.ownersPhone = ownersPhone;
+        this.isFound = isFound;
+        this.user = user;
+        this.address = address;
+        this.isSent = isSent;
     }
 
     public Long getId() {
@@ -162,6 +185,22 @@ public class Pet {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getMarkerId() {
+        return markerId;
+    }
+
+    public void setMarkerId(String markerId) {
+        this.markerId = markerId;
+    }
+
+    public Boolean isSent() {
+        return isSent;
+    }
+
+    public void setSent(Boolean sent) {
+        isSent = sent;
     }
 
     @NonNull

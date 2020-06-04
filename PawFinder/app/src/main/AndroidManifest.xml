@@ -98,6 +98,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <provider
+            android:name="com.example.pawfinder.db.DBContentProvider"
+            android:authorities="com.example.pawfinder"
+            android:exported="false" />
+
+
     </application>
 
 

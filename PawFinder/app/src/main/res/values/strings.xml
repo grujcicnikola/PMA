@@ -120,5 +120,6 @@
     <string name="date_blank">Please enter date</string>
     <string name="location_blank">Please pin were pet is lost</string>
     <string name="phone_blank">Please enter your phone number</string>
+    <string name="network_disabled">There is no network, when network is available your missing report will be sent!</string>
 </resources>
 

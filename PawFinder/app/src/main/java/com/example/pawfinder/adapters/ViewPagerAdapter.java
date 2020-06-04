@@ -19,7 +19,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context context;
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, Context context) {
-        super(fm);
+        super(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
     }
 

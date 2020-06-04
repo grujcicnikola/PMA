@@ -10,8 +10,8 @@ public class Address {
     private String city;
     @SerializedName("street")
     private String street;
-    @SerializedName("number")
-    private int number;
+    @SerializedName("number")   //zbog 148a
+    private String number;
     @SerializedName("lon")
     private Double lon;
     @SerializedName("lat")
@@ -20,8 +20,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String city, String street, int number, Double lon, Double lat) {
-        this.id = id;
+    public Address(String city, String street, String number, Double lon, Double lat) {
         this.city = city;
         this.street = street;
         this.number = number;
@@ -46,7 +45,7 @@ public class Address {
         return street;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -70,7 +69,7 @@ public class Address {
         this.street = street;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

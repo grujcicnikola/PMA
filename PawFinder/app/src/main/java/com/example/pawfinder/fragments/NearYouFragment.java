@@ -3,6 +3,7 @@ package com.example.pawfinder.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -29,9 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pawfinder.R;
+import com.example.pawfinder.activity.PetDetailActivity;
 import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.dialogs.LocationDialog;
+import com.example.pawfinder.model.Address;
 import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.model.PetGender;
+import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.model.PinData;
 import com.example.pawfinder.service.ServiceUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -67,6 +72,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     private Marker myMarker;
     private List<Marker> petsLocation;
     private List<PinData> petsMarkerPinData;
+    private List<Pet> pets;
 
 
     public static NearYouFragment newInstance() {
@@ -113,6 +119,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
         alertDialog.show();
     }
+
 
     @Override
     public void onResume() {
@@ -243,7 +250,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
         Location location = null;
 
-        if (mMap != null) {
+        /*if (mMap != null) {
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                 @Override
                 public View getInfoWindow(Marker marker) {
@@ -278,7 +285,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     return null;
                 }
             });
-        }
+        }*/
 
         if (checkLocationPermission()) {
             if (ContextCompat.checkSelfPermission(getContext(),
@@ -299,7 +306,19 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                marker.showInfoWindow();
+                //marker.showInfoWindow();
+                if (marker.getId() == myMarker.getId()) {
+                    marker.showInfoWindow();
+                    return true;
+                }
+                if (pets != null) {
+                    for (Pet p : pets) {
+                        if (marker.getId().equals(p.getMarkerId())) {
+                            openActivity(p);
+                            return true;
+                        }
+                    }
+                }
                 return true;
             }
         });
@@ -321,6 +340,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             addMarker(location);
             petsLocation = new ArrayList<>();
             petsMarkerPinData = new ArrayList<>();
+            pets = new ArrayList<>();
             callForPets(location);
         }
     }
@@ -345,13 +365,15 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(loc).zoom(14).build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));    //ovo sam dodala ne znam da li je sa tim lepse
+
 
         //u pozadini ove metode se desava matematika za pomeranje pozicije kamere da gleda u nasu lokaciju
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    private void addMarkerPet(Double lat, Double lon, String urlImage, String name, String phone) {
-        LatLng loc = new LatLng(lat, lon);
+    private void addMarkerPet(Pet p) {
+        LatLng loc = new LatLng(p.getAddress().getLat(), p.getAddress().getLon());
 
         /*if (petsLocation.size() != 0) {
             petsLocation.clear();
@@ -360,16 +382,20 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         if (petsLocation == null) {
             petsLocation = new ArrayList<>();
             petsMarkerPinData = new ArrayList<>();
+            pets = new ArrayList<>();
         }
 
         Marker m = mMap.addMarker(new MarkerOptions()
-                .title(name)
+                .title(p.getName())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .position(loc));
         m.setFlat(true);
-        m.isVisible();
+
         petsLocation.add(m);
-        petsMarkerPinData.add(new PinData(m.getId(), urlImage, name, phone));
+        petsMarkerPinData.add(new PinData(m.getId(), p.getImage(), p.getName(), p.getOwnersPhone()));
+        pets.add(new Pet(m.getId(), p.getId(), p.getType(), p.getName(), p.getGender(), p.getAdditionalInfo(), p.getImage(), p.getMissingSince(), p.getOwnersPhone(), p.isFound(), p.getUser(), p.getAddress()));
+        //m.isVisible();
+       // m.showInfoWindow();
     }
 
     @Override
@@ -402,7 +428,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     Location.distanceBetween(location.getLatitude(), location.getLongitude(), pet.getAddress().getLat(), pet.getAddress().getLon(), results);
                     float distanceInMeters = results[0];
                     if (distanceInMeters < 10000) {
-                        addMarkerPet(pet.getAddress().getLat(), pet.getAddress().getLon(), pet.getImage(), pet.getName(), pet.getOwnersPhone());
+                        addMarkerPet(pet);
 
                     }
                 }
@@ -418,5 +444,22 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                 Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
             }
         });
+    }
+
+    public void openActivity(Pet p) {
+        Intent intent = new Intent(getContext(), PetDetailActivity.class);
+        intent.putExtra("petsName", p.getName());
+        intent.putExtra("petsType", p.getType().toString());
+        intent.putExtra("petsGender", p.getGender().toString());
+        intent.putExtra("ownersEmail", p.getUser().getEmail());
+        intent.putExtra("ownersPhone", p.getOwnersPhone());
+        intent.putExtra("additionalInfo", p.getAdditionalInfo());
+        intent.putExtra("image", p.getImage());
+        intent.putExtra("date", p.getMissingSince());
+        intent.putExtra("id_of_pet", p.getId());
+        intent.putExtra("lon_pets", p.getAddress().getLon());
+        intent.putExtra("lat_pets",p.getAddress().getLat());
+
+        startActivity(intent);
     }
 }

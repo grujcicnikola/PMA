@@ -94,9 +94,9 @@ public class PetController {
 		Pet a = new Pet(pet.getType(), pet.getName(), pet.getGender(), pet.getAdditionalInfo(), null, d,
 				pet.getOwnersPhone(), false, userService.getByEmail(pet.getOwner().getEmail()), address);
 		
-		petService.addNewPet(a);
+		Pet p = petService.addNewPet(a);
 		
-		return new ResponseEntity<>(pet,HttpStatus.OK);
+		return new ResponseEntity<>(p,HttpStatus.OK);
 	}
 }
 

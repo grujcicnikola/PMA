@@ -34,13 +34,14 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.splash);
         setTitle(R.string.app_name);
         int SPLASH_TIME_OUT = 1000;
-        new Timer().schedule(new TimerTask() {
+        //zakomentarisala da mi se 2 puta ne bi otvarao maain
+        /*new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                 finish(); // da ne bi mogao da ode back na splash
             }
-        }, SPLASH_TIME_OUT);
+        }, SPLASH_TIME_OUT);*/
 
         prefConfig = new PrefConfig(this);
 

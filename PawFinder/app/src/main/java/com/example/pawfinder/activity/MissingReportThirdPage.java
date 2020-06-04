@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,16 +32,14 @@ import com.example.pawfinder.model.PetGender;
 import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
+import com.example.pawfinder.sync.PetSqlSync;
+import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.PrefConfig;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -151,19 +151,25 @@ public class MissingReportThirdPage extends AppCompatActivity {
                     List<android.location.Address> fullAddressFromMap;
                     geocoder = new Geocoder(MissingReportThirdPage.this, Locale.getDefault());
                     try {
-                        String sPlace;
                         fullAddressFromMap = geocoder.getFromLocation(lat, lon, 1);
                         String street = fullAddressFromMap.get(0).getAddressLine(0);
                         String city = fullAddressFromMap.get(0).getAddressLine(1);
                         String country = fullAddressFromMap.get(0).getAddressLine(2);
 
-                        /*String[] splitAddress = fullAddressFromMap.split(",");
-                        sPlace = splitAddress[0] + "\n";
-                        if(city != null && !city.isEmpty()) {
-                            String[] splitCity = city.split(",");
-                            sPlace += splitCity[0];
-                        }*/
-                        address = new Address(city, street, 1, lon, lat);
+                        String[] splitAddress = street.split(",");
+                        String s = splitAddress[0];
+                        String ci = splitAddress[1];
+                        String c = splitAddress[2];
+
+                        String sPlace[] = s.split(" ");
+                        int size = sPlace.length;
+                        String n = sPlace[size-1];
+                        String streetBack = "";
+                        for (int i = 0; i<(size-1); i++) {
+                            streetBack += sPlace[i] + " ";
+                        }
+
+                        address = new Address(ci, streetBack, n, lon, lat);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -171,8 +177,9 @@ public class MissingReportThirdPage extends AppCompatActivity {
                     if (prefConfig.readLoginStatus()) {
                         user.setEmail(prefConfig.readUserEmail());
                     }
-                    Log.d("DATUM", "STRING " + date);
+                    Log.d("DATUM", "STRING " + date + " email " + user.getEmail());
                     pet = new Pet(type, name, gender, infoET.getText().toString(), date, phoneNumberET.getText().toString(), false, user, address);
+
                     addPet(pet);
                     Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
                     startActivity(intent);
@@ -199,26 +206,36 @@ public class MissingReportThirdPage extends AppCompatActivity {
     }
 
     public void addPet(Pet petAdd) {
-        Call<Pet> call = ServiceUtils.petService.postMissing(petAdd);
-        Log.d("PETS", "usao");
-        call.enqueue(new Callback<Pet>() {
-            @Override
-            public void onResponse(Call<Pet> call, Response<Pet> response) {
-                Log.d("PETADD", "ima ih" + response.body());
-                if (response.code() == 200) {
-                    Log.d("REZ", "Meesage recieved");
-                    Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d("REZ", "Meesage recieved: " + response.code());
+        if (NetworkTool.getConnectivityStatus(getApplicationContext()) == NetworkTool.TYPE_NOT_CONNECTED) {
+            Toast.makeText(this, R.string.network_disabled, Toast.LENGTH_SHORT).show();
+            ArrayList<Pet> pets = new ArrayList<>();
+            petAdd.setSent(false);      //nije otisao na back
+            pets.add(petAdd);
+            PetSqlSync.fillDatabase(pets, this, 3);
+        }else {
+            petAdd.setSent(true);       //otisao na back
+            Call<Pet> call = ServiceUtils.petService.postMissing(petAdd);
+            Log.d("PETS", "usao");
+            call.enqueue(new Callback<Pet>() {
+                @Override
+                public void onResponse(Call<Pet> call, Response<Pet> response) {
+                    Log.d("PETADD", "ima ih" + response.body());
+                    if (response.code() == 200) {
+                        Log.d("REZ", "Meesage recieved");
+                        Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("REZ", "Meesage recieved: " + response.code());
+                        Toast.makeText(getApplicationContext(), R.string.add_pet_failure, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Pet> call, Throwable t) {
+                    Log.d("PETADD", t.getMessage() != null ? t.getMessage() : "error");
                     Toast.makeText(getApplicationContext(), R.string.add_pet_failure, Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
-                Log.d("PETADD", t.getMessage() != null ? t.getMessage() : "error");
-                Toast.makeText(getApplicationContext(), R.string.add_pet_failure, Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
     }
+
 }
