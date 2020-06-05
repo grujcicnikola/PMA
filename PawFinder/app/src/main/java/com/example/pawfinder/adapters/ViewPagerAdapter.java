@@ -23,6 +23,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         this.context = context;
     }
 
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

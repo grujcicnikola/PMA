@@ -75,11 +75,14 @@
     <string name="pref_file">com.abc.preference_file</string>
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_email</string>
+
     <!--komentari-->
     <string name="label_name_comment">Name:</string>
     <string name="label_additional_comment">Additional info:</string>
     <string name="send">Send</string>
     <string name="text_send">Type your comment</string>
+    <string name="comment_problem">Problem while sending comment!</string>
+
 
     <!--skenirani podaci-->
     <string name="scanned_data">Scanned data</string>
@@ -99,6 +102,7 @@
     <string name="qr_add">ADD CONTENT</string>
     <string name="qr_launch">LAUNCH URL</string>
     <string name="qr_barcode">No Barcode Detected</string>
+    <string name="notURL">This is not url!</string>
 
     <!--mape pinovi-->
     <string name="your_location">YOUR LOCATION</string>
@@ -121,5 +125,8 @@
     <string name="location_blank">Please pin were pet is lost</string>
     <string name="phone_blank">Please enter your phone number</string>
     <string name="network_disabled">There is no network, when network is available your missing report will be sent!</string>
+
+
+
 </resources>
 

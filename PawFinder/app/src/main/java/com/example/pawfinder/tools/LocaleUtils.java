@@ -9,7 +9,7 @@ import java.util.Locale;
 public class LocaleUtils {
 
     private Locale locale;
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     private Context context;
 
     public LocaleUtils(SharedPreferences sharedPreferences, Context context) {

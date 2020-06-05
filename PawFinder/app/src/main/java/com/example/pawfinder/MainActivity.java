@@ -1,10 +1,16 @@
 package com.example.pawfinder;
 
+import android.app.AlarmManager;
+import android.app.Fragment;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,20 +23,34 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pawfinder.activity.BarCodeActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
+import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.example.pawfinder.activity.PreferenceActivity;
+import com.example.pawfinder.db.DBContentProvider;
+import com.example.pawfinder.fragments.MissingFragment;
+import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.service.ServiceUtils;
+import com.example.pawfinder.sync.PetSqlSync;
 import com.example.pawfinder.tools.LocaleUtils;
+import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.ThemeUtils;
 import com.example.pawfinder.tools.PrefConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+
+import hossamscott.com.github.backgroundservice.RunService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -44,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private LocaleUtils localeUtils;
     private ThemeUtils themeUtils;
     private static PrefConfig prefConfig;
-
+    private MainActivity mainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         setContentView(R.layout.activity_main);
         prefConfig = new PrefConfig(this);
-
-
+        mainActivity=this;
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolBar);
@@ -73,6 +92,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(1).select();         //da selektovan bude Missing
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                // Check if this is the page you want.
+                if(position==1){
+                    Log.i("fragment","missing");
+                    startService();
+                }else{
+                    Log.i("fragment","ostalo");
+                    unregisterReceiver(alarm_receiver);
+                }
+            }
+        });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -185,5 +219,73 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        /*
+        Register BroadcastReceiver to get notification when service is over
+         */
+
+        startService();
+    }
+
+
+
+    public  void startService(){
+        IntentFilter intentFilter = new IntentFilter("alaram_received");
+        registerReceiver(alarm_receiver, intentFilter);
+        RunService repeat = new RunService(this);
+        repeat.call(15, true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            unregisterReceiver(alarm_receiver);
+        } catch(IllegalArgumentException e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+    final BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            // your logic here
+            Log.i("alarm_received", "logic");
+            int status = NetworkTool.getConnectivityStatus(getApplicationContext());
+            if (status != NetworkTool.TYPE_NOT_CONNECTED) {
+                Log.i("alarm_received", "success");
+                //Log.i("stanje", String.valueOf(MissingFragment.pets.size()));
+                //MissingFragment.updatelist();
+                PetSqlSync.sendUnsaved(mainActivity);
+                mainActivity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
+
+                final Call<List<Pet>> call = ServiceUtils.petService.getAll();
+                call.enqueue(new Callback<List<Pet>>() {
+                    @Override
+                    public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+                        // Log.d("Dobijeno", response.body().toString());
+                        //Log.d("BROJ", "ima ih" + response.body().size());
+
+                        MissingFragment.pets = response.body();
+                        MissingFragment.adapter.updateResults(MissingFragment.pets);
+                        PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, mainActivity, 0);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Pet>> call, Throwable t) {
+                        Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+                    }
+                });
+            } else {
+                Log.i("alarm_received", "not connected to internet");
+            }
+        }
+    };
 }
 

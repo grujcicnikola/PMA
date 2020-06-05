@@ -292,12 +292,16 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
-                location = locationManager.getLastKnownLocation(provider);
+                if(provider !=null){
+                    location = locationManager.getLastKnownLocation(provider);
+                }
             } else if (ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
-                location = locationManager.getLastKnownLocation(provider);
+                if(provider !=null) {
+                    location = locationManager.getLastKnownLocation(provider);
+                }
             }
         }
 

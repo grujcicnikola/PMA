@@ -74,11 +74,14 @@
     <string name="pref_file">com.abc.preference_file</string>
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_email</string>
+
     <!--komentari-->
     <string name="label_name_comment">Ime:</string>
     <string name="label_additional_comment">Dodatne informacije:</string>
     <string name="send">Pošalji</string>
     <string name="text_send">Upišite komentar</string>
+    <string name="comment_problem">Došlo je do problema prilikom slanja komenatara!</string>
+
     <!--skenirani podaci-->
     <string name="scanned_data">Skenirani podaci</string>
 
@@ -97,7 +100,7 @@
     <string name="qr_add">DODAJ SADRŽAJ</string>
     <string name="qr_launch">OTVORI URL</string>
     <string name="qr_barcode">Nije detektovan barkod</string>
-
+    <string name="notURL">Ovo nije url!</string>
 
     <!--mape pinovi-->
     <string name="your_location">VASA LOKACIJA</string>
@@ -120,6 +123,10 @@
     <string name="location_blank">Niste oznacili gde je ljubimac nestao</string>
     <string name="phone_blank">Unesite vas broj telefona</string>
     <string name="network_disabled">Internet nije dostupan, kada bude ukljucen vasa prijava nestanka ljubimca ce biti kreirana!</string>
+
+
+
+
 
 </resources>
 

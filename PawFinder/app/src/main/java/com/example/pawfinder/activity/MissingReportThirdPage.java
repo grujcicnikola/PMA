@@ -107,8 +107,10 @@ public class MissingReportThirdPage extends AppCompatActivity {
         gender = PetGender.valueOf(help.getStringExtra("PET_GENDER"));
         type = PetType.valueOf(help.getStringExtra("PET_TYPE"));
         date = help.getStringExtra("PET_DATE_LOST");
-
-
+        //Log.d("provera", String.valueOf(gender));
+        //Log.d("provera", help.getStringExtra("PET_GENDER"));
+        //Log.d("provera", String.valueOf(type));
+        //Log.d("provera", help.getStringExtra("PET_TYPE"));
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

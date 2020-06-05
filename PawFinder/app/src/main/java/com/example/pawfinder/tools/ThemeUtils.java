@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class ThemeUtils {
 
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     private Context context;
 
 
@@ -26,9 +26,11 @@ public class ThemeUtils {
         String themeString = sharedPreferences.getString("theme", "white");
         if (themeString.equals("white")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+        saveTheme(themeString);
     }
 
     public void saveTheme(String lang) {

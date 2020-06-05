@@ -29,9 +29,11 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -71,12 +73,24 @@ public class PetDetailActivity extends AppCompatActivity {
             lon = bundle.getDouble("lon_pets");
             lat = bundle.getDouble("lat_pets");
 
+            //lokalizacija tipa
+            String[] type_values= getResources().getStringArray(R.array.type_values);
+            int index_type = Arrays.asList(type_values).indexOf(type);
+            String[] type_entries = getResources().getStringArray(R.array.type_entries);
+            String type_entry = String.valueOf(type_entries[index_type]);
+
+            //lokalizacija pola
+            String[] gender_values= getResources().getStringArray(R.array.genders_values);
+            int index_gender = Arrays.asList(gender_values).indexOf(gender);
+            String[] gender_entries = getResources().getStringArray(R.array.genders_entries);
+            String gender_entry = String.valueOf(gender_entries[index_gender]);
+
             TextView name_txt = (TextView) findViewById(R.id.pet_details_text_name);
             name_txt.setText(name);
             TextView type_txt = (TextView) findViewById(R.id.pet_details_text_type);
-            type_txt.setText(type);
+            type_txt.setText(type_entry);
             TextView gender_txt = (TextView) findViewById(R.id.pet_details_text_gender);
-            gender_txt.setText(gender);
+            gender_txt.setText(gender_entry);
             TextView missing_txt = (TextView) findViewById(R.id.pet_details_text_missing);
             missing_txt.setText(date);
             TextView location_txt = (TextView) findViewById(R.id.pet_details_text_location);

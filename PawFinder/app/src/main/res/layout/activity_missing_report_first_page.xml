@@ -85,7 +85,8 @@
                         android:layout_height="wrap_content"
                         android:minHeight="30dp"
                         android:text="@string/label_gender"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:entries="@array/genders_entries"/>
 
                 </LinearLayout>
 
@@ -111,7 +112,8 @@
                         android:layout_height="wrap_content"
                         android:minHeight="30dp"
                         android:text="@string/label_type"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:entries="@array/type_entries"/>
 
                 </LinearLayout>
 

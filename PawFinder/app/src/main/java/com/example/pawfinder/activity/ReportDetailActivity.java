@@ -23,6 +23,8 @@ import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.MockupComments;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
+
 public class ReportDetailActivity extends AppCompatActivity {
 
 
@@ -49,11 +51,17 @@ public class ReportDetailActivity extends AppCompatActivity {
             String date = bundle.getString("report_pet_date");
             String image = bundle.getString("report_pet_image");
 
+            //lokalizacija tipa
+            String[] type_values= getResources().getStringArray(R.array.type_values);
+            int index_type = Arrays.asList(type_values).indexOf(type);
+            String[] type_entries = getResources().getStringArray(R.array.type_entries);
+            String type_entry = String.valueOf(type_entries[index_type]);
+
             toolbar.setTitle(name);
             TextView name_txt = (TextView) findViewById(R.id.report_text_view_name);
             name_txt.setText(name);
             TextView type_txt = (TextView) findViewById(R.id.report_text_view_type);
-            type_txt.setText(type);
+            type_txt.setText(type_entry);
             TextView date_txt = (TextView) findViewById(R.id.report_text_view_date);
             date_txt.setText(date);
 

@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
 
     <uses-feature
@@ -103,7 +104,6 @@
             android:name="com.example.pawfinder.db.DBContentProvider"
             android:authorities="com.example.pawfinder"
             android:exported="false" />
-
 
     </application>
 

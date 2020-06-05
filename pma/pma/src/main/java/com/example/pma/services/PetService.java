@@ -35,4 +35,9 @@ public class PetService {
 		return petRepo.save(pet);
 	}
 
+	
+	public Pet findById(Long id) {
+		// TODO Auto-generated method stub
+		return petRepo.findById(id).get();
+	}
 }

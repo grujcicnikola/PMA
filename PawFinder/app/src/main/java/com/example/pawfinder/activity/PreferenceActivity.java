@@ -20,6 +20,8 @@ public class PreferenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
+        }else{
+            setTheme(R.style.AppTheme);
         }
         setContentView(R.layout.settings_layout);
         setTitle(R.string.nav_item_settings);

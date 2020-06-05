@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.fragments.MissingFragment;
+import com.example.pawfinder.model.Comment;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.service.ServiceUtils;
 import com.squareup.picasso.Picasso;
@@ -73,17 +74,18 @@ public class PetsListAdapter extends BaseAdapter {
         image.setImageResource(R.drawable.avatar);
         Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
         //onaj koji nije otisao na server da je siv
-        if (pet.isSent() != null) {
+        /*if (pet.isSent() != null) {
             if (pet.isSent() == false) {
                 view.setBackgroundResource(R.color.grey300);
-            }else{
-                view.setBackgroundResource(R.color.white);
             }
-        }else{
-            view.setBackgroundResource(R.color.white);
-        }
+        }*/
 
         return view;
+    }
+
+    public void updateResults(List<Pet> updatePets) {
+        missingPets = updatePets;
+        notifyDataSetChanged();
     }
 
 }

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
 import com.example.pawfinder.activity.PetDetailActivity;
 import com.example.pawfinder.adapters.PetsListAdapter;
@@ -36,6 +37,7 @@ import com.example.pawfinder.tools.NetworkTool;
 import java.util.ArrayList;
 import java.util.List;
 
+import hossamscott.com.github.backgroundservice.RunService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,10 +50,11 @@ public class MissingFragment extends Fragment{
     public static final String SYNC_DATA = "SYNC_DATA";
     public static final String SEND_DATA = "SEND_DATA" ;
     private ListView list;
-    private List<Pet> pets = new ArrayList<Pet>();
+    public static  List<Pet> pets = new ArrayList<Pet>();
+    public static PetsListAdapter adapter;
     //private NetworkMonitor sync;
 
-    private BroadcastReceiver broadcastReceiver  = new BroadcastReceiver() {
+   /* private BroadcastReceiver broadcastReceiver  = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -66,7 +69,7 @@ public class MissingFragment extends Fragment{
                 }
             }
         }
-    };
+    };*/
     /*private static MissingFragment missingFragmentInstance;
     public static MissingFragment  getInstace(){
         return missingFragmentInstance;
@@ -84,6 +87,8 @@ public class MissingFragment extends Fragment{
        // missingFragmentInstance = this;
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,16 +99,11 @@ public class MissingFragment extends Fragment{
         return view;
     }
 
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
+    /*public void sendAndSyncData(){
         if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
             Log.d("ima", " interneta if");
             //registrujem broadcast
-           // sync = new NetworkMonitor();
+            // sync = new NetworkMonitor();
 
             IntentFilter filterData = new IntentFilter();
             filterData.addAction(SEND_DATA);
@@ -129,7 +129,7 @@ public class MissingFragment extends Fragment{
                     Log.d("BROJ", "ima ih" + response.body().size());
 
                     pets = response.body();
-                    PetsListAdapter adapter = new PetsListAdapter(getContext(), response.body());
+                    adapter = new PetsListAdapter(getContext(), response.body());
                     list.setAdapter(adapter);
 
                     Log.d("POSLEFORA", " - " + pets);
@@ -156,6 +156,46 @@ public class MissingFragment extends Fragment{
         }
 
 
+    }
+*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //sendAndSyncData();
+        if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+            Log.d("ima", " interneta if");
+
+            final Call<List<Pet>> call = ServiceUtils.petService.getAll();
+            call.enqueue(new Callback<List<Pet>>() {
+                @Override
+                public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+                    // Log.d("Dobijeno", response.body().toString());
+                    Log.d("BROJ", "ima ih" + response.body().size());
+
+                    pets = response.body();
+                    adapter = new PetsListAdapter(getContext(), response.body());
+                    list.setAdapter(adapter);
+
+                    Log.d("POSLEFORA", " - " + pets);
+                    if (response.code() == 200) {
+                        Log.d("REZ", "Meesage recieved");
+                    } else {
+                        Log.d("REZ", "Meesage recieved: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Pet>> call, Throwable t) {
+                    Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+                }
+            });
+        }else{
+            //kada nema neta - prikaz iz sqlite
+            Log.d("nema", " interneta else");
+            fillView();
+        }
+
         //PetsListAdapter adapter = new PetsListAdapter(getContext(), MockupComments.getPets());
         Log.d("PREADAPTERA", " - " + pets.size());
 
@@ -181,8 +221,37 @@ public class MissingFragment extends Fragment{
                 startActivity(intent);
             }
         });
+        /*
+        Register BroadcastReceiver to get notification when service is over
+         */
+
+        //IntentFilter intentFilter = new IntentFilter("alaram_received");
+        //LocalBroadcastManager.getInstance(getActivity()).registerReceiver(alarm_receiver, intentFilter);
+
+        /*
+        If you want to repeat the alarm every X sec just add true in your call
+        */
+        //LocalBroadcastManager.getInstance(getContext()).sendBroadcast();
+        //RunService repeat = new RunService(getActivity());
+       // repeat.call(5, true);
+
     }
 
+
+    /*BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // your logic here
+            Log.i("alarm_received", "logic");
+            int status = NetworkTool.getConnectivityStatus(getContext());
+            if (status != NetworkTool.TYPE_NOT_CONNECTED) {
+                Log.i("alarm_received", "success");
+
+            } else {
+                Log.i("alarm_received", "not connected to internet");
+            }
+        }
+    };*/
     //popunjava se prikaz kada je offline korisnik
     public void fillView(){
         String[] allColumns = { PetSQLHelper.COLUMN_ID,
@@ -231,7 +300,7 @@ public class MissingFragment extends Fragment{
         }
 
         pets = petView;
-        PetsListAdapter adapter = new PetsListAdapter(getContext(), pets);
+        adapter = new PetsListAdapter(getContext(), pets);
         list.setAdapter(adapter);
 
     }
@@ -243,7 +312,7 @@ public class MissingFragment extends Fragment{
         /*if(sync != null){
             getActivity().unregisterReceiver(sync);
         }*/
-        if(broadcastReceiver != null){
+       /* if(broadcastReceiver != null){
             try {
                 LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
             }catch(Exception e){
@@ -251,7 +320,7 @@ public class MissingFragment extends Fragment{
             }
 
         }
-
+*/
 
     }
 

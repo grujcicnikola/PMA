@@ -17,6 +17,7 @@ import com.example.pawfinder.tools.MockupComments;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Callback;
@@ -71,5 +72,10 @@ public class CommentAdapter extends BaseAdapter {
 
         return vi;
 
+    }
+
+    public void updateResults(List<Comment> updatedComments) {
+        comments = updatedComments;
+        notifyDataSetChanged();
     }
 }

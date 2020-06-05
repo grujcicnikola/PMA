@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,21 +57,6 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
 
         layoutName = findViewById(R.id.text_input_layout_name);
         layoutDate = findViewById(R.id.text_input_layout_date);
-
-        Spinner spinnerGender = findViewById(R.id.gender);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<PetGender> adapterGender = new ArrayAdapter<PetGender>(this, R.layout.spinner_item, PetGender.values());
-        // Specify the layout to use when the list of choices appears
-        adapterGender.setDropDownViewResource(R.layout.spinner_item);
-        // Apply the adapter to the spinner
-        spinnerGender.setAdapter(adapterGender);
-
-
-        Spinner spinnerType = findViewById(R.id.type);
-        ArrayAdapter<PetType> adapterType = new ArrayAdapter<PetType>(this, R.layout.spinner_item, PetType.values());
-        adapterType.setDropDownViewResource(R.layout.spinner_item);
-        spinnerType.setAdapter(adapterType);
-
 
         findViewById(R.id.btn_get_date).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,11 +117,19 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
                 } else {
                     name.setError(null);
                     dateText.setError(null);
+                    //lokalizacija pola
+                    int spinner_pos = gender.getSelectedItemPosition();
+                    String[] gender_values = getResources().getStringArray(R.array.genders_values);
+                    String gender_value = String.valueOf(gender_values[spinner_pos]);
+                    //lokalizacija tipa
+                    int spinner_type = type.getSelectedItemPosition();
+                    String[] type_values = getResources().getStringArray(R.array.type_values);
+                    String type_value = String.valueOf(type_values[spinner_type]);
+
                     Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                     intent.putExtra("PET_NAME", name.getText().toString());
-                    intent.putExtra("PET_GENDER", gender.getSelectedItem().toString());
-                    intent.putExtra("PET_GENDER_ID", gender.getSelectedItemId());
-                    intent.putExtra("PET_TYPE", type.getSelectedItem().toString());
+                    intent.putExtra("PET_GENDER", gender_value);
+                    intent.putExtra("PET_TYPE", type_value);
                     intent.putExtra("PET_DATE_LOST", dateText.getText().toString());
                     startActivity(intent);
                 }

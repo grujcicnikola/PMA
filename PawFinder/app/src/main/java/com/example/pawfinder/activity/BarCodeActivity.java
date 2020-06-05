@@ -66,9 +66,14 @@ public class BarCodeActivity extends AppCompatActivity {
                     //Intent intent = new Intent(getApplicationContext(), ScannedDataActivity.class);
                     //intent.putExtra("scanned_data",intentData);
                     //startActivity(intent);
-                    Uri uri = Uri.parse(intentData); // missing 'http://' will cause crashed
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    if (intentData.startsWith("http://") || intentData.startsWith("https://")){
+                        Uri uri = Uri.parse(intentData); // missing 'http://' will cause crashed
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.notURL), Toast.LENGTH_SHORT).show();
+                    }
+
                     /*komentar sa stackoverflow-a
                      If there are no apps on the device that can receive the implicit intent,
                      your app will crash when it calls startActivity(). To first verify that an app

@@ -18,6 +18,7 @@ public class ServiceUtils {
     public static final String POST_MISSING = "pet/postMissing";
     public static final String GET_ALL_IN_RANGE = "pet/getAllInRange";
     public static final String GET_MISSING = "pet/getMissing";
+    public static final String ADD_COMMENT = "comment/add";
 
     public static OkHttpClient test() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

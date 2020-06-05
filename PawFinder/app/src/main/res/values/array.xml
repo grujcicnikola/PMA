@@ -21,5 +21,26 @@
         <item>sr</item>
     </string-array>
 
+    <string-array name="genders_entries">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+
+    <string-array name="genders_values">
+        <item>MALE</item>
+        <item>FEMALE</item>
+    </string-array>
+
+    <string-array name="type_entries">
+        <item>dog</item>
+        <item>cat</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="type_values">
+        <item>DOG</item>
+        <item>CAT</item>
+        <item>OTHER</item>
+    </string-array>
 
 </resources>

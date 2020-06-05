@@ -24,6 +24,13 @@ public class Comment {
         this.user = user;
     }
 
+    public Comment(String message, Date date, User user, Pet pet) {
+        this.message = message;
+        this.date = date;
+        this.pet = pet;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
