@@ -1,26 +1,19 @@
 package com.example.pawfinder.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pawfinder.R;
-import com.example.pawfinder.fragments.MissingFragment;
-import com.example.pawfinder.model.Comment;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.service.ServiceUtils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +22,6 @@ public class PetsListAdapter extends BaseAdapter {
     Context mContext;
     List<Pet> missingPets;
     TextView pet_name_text;
-
 
     public PetsListAdapter(Context mContext, List<Pet> missingPets) {
         this.mContext = mContext;
@@ -71,14 +63,11 @@ public class PetsListAdapter extends BaseAdapter {
 
         ImageView image = (ImageView) view.findViewById(R.id.imageView);
         Pet pet = missingPets.get(position);
+        Log.d("zivotinja", "ime: " + pet.getName() + " , slika: " + pet.getImage());
         image.setImageResource(R.drawable.avatar);
-        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
-        //onaj koji nije otisao na server da je siv
-        /*if (pet.isSent() != null) {
-            if (pet.isSent() == false) {
-                view.setBackgroundResource(R.color.grey300);
-            }
-        }*/
+        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).fit().into(image);
+//        Picasso.get().setLoggingEnabled(true);
+
 
         return view;
     }

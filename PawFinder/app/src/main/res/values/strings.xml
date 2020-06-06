@@ -116,6 +116,11 @@
     <string name="no">No</string>
     <string name="location_alert_title">Allow user location</string>
     <string name="location_alert_message">To continue working we need your locations....Allow now?</string>
+    <string name="dialog_message">Checking information, please wait.</string>
+    <string name="login_dialog_title">Login</string>
+    <string name="create_account_dialog_title">Create account</string>
+    <string name="missing_report_dialog_title">Adding missing report</string>
+
 
     <!--missing pet report-->
     <string name="add_pet_success">Pet successfully reported!</string>
@@ -125,7 +130,18 @@
     <string name="location_blank">Please pin were pet is lost</string>
     <string name="phone_blank">Please enter your phone number</string>
     <string name="network_disabled">There is no network, when network is available your missing report will be sent!</string>
+    <string name="image_blank">Please upload pets image</string>
 
+    <string name="galery_access_permission">You can\'t report missing without galery access permission</string>
+
+    <!-- Toasts -->
+    <string name="create_account_email_toast">You must enter email address</string>
+    <string name="create_account_email_notvalid_toast">Email address not valid</string>
+    <string name="create_account_password_toast">You must enter password</string>
+    <string name="create_account_success_message">User account created! Please login</string>
+    <string name="create_account_email_already_exists">Error. Account with input email already exists</string>
+    <string name="login_email_error">Error. Wrong email address, please try again</string>
+    <string name="login_password_error">Error. Wrong password, please try again</string>
 
 
 </resources>

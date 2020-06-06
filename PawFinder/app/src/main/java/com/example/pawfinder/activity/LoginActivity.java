@@ -80,12 +80,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final String emailTxt = emailEdit.getText().toString();
         String passwordTxt = passwordEdit.getText().toString();
 
-        if (TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt)) {
-            Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT);
-        } else {
+        if (TextUtils.isEmpty(emailTxt)) {
+            Toast.makeText(this, R.string.create_account_email_toast, Toast.LENGTH_SHORT);
+        } else if(TextUtils.isEmpty(passwordTxt)){
+            Toast.makeText(this, R.string.create_account_password_toast, Toast.LENGTH_SHORT);
+        }
+        else {
             progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Login");
-            progressDialog.setMessage("Checking information, please wait");
+            progressDialog.setTitle(LoginActivity.this.getResources().getString(R.string.login_dialog_title));
+            progressDialog.setMessage(LoginActivity.this.getResources().getString(R.string.dialog_message));
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -103,9 +106,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
                     } else if (response.code() == 403) {
-                        Toast.makeText(context, "Error. Please check your email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.login_email_error, Toast.LENGTH_LONG).show();
                     } else if (response.code() == 400) {
-                        Toast.makeText(context, "Error. Wrong password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.login_password_error, Toast.LENGTH_LONG).show();
                     }
                 }
 

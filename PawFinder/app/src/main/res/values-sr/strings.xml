@@ -114,6 +114,10 @@
     <string name="no">Ne</string>
     <string name="location_alert_title">Dozvolite lociranje</string>
     <string name="location_alert_message">Za koriscenje svih funkcija aplikacije potrebna je vasa lokacija.... Da li sada dopustate?</string>
+    <string name="dialog_message">Provera podataka, molimo sačekajte.</string>
+    <string name="login_dialog_title">Prijava</string>
+    <string name="create_account_dialog_title">Kreiranje naloga</string>
+    <string name="missing_report_dialog_title">Prijava nestanka</string>
 
     <!--missing pet report-->
     <string name="add_pet_success">Ljubimac je uspesno prijavljen!</string>
@@ -123,9 +127,18 @@
     <string name="location_blank">Niste oznacili gde je ljubimac nestao</string>
     <string name="phone_blank">Unesite vas broj telefona</string>
     <string name="network_disabled">Internet nije dostupan, kada bude ukljucen vasa prijava nestanka ljubimca ce biti kreirana!</string>
+    <string name="image_blank">Dodajte sliku ljubimca</string>
 
+    <string name="galery_access_permission">Morate dozvoliti pristup galeriji</string>
 
-
+    <!-- Toasts -->
+    <string name="create_account_email_toast">Morate uneti mejl adresu</string>
+    <string name="create_account_email_notvalid_toast">Format unete email adrese nije validan</string>
+    <string name="create_account_password_toast">Morate uneti lozinku</string>
+    <string name="create_account_success_message">Nalog je uspešno kreiran! Ulogujte se za dalje korišćenje aplikacije</string>
+    <string name="create_account_email_already_exists">Greška. Nalog sa unetim mejlom već postoji</string>
+    <string name="login_email_error">Uneli ste pogrešnu mejl adresu, pokušajte ponovo</string>
+    <string name="login_password_error">Uneli ste pogrešnu šifru, pokušajte ponovo</string>
 
 
 </resources>

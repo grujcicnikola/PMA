@@ -103,7 +103,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     startService();
                 }else{
                     Log.i("fragment","ostalo");
-                    unregisterReceiver(alarm_receiver);
+                    try{
+                        unregisterReceiver(alarm_receiver);
+                    }catch(IllegalArgumentException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

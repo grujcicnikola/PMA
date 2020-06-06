@@ -96,6 +96,7 @@ public class MissingFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_missing, container, false);
         list = (ListView) view.findViewById(R.id.pets_list);
 
+
         return view;
     }
 
@@ -142,22 +143,106 @@ public class MissingFragment extends Fragment{
                     } else {
                         Log.d("REZ", "Meesage recieved: " + response.code());
                     }
-                }
+=======
+//        final Call<List<Pet>> call = ServiceUtils.petService.getAll();
+//        call.enqueue(new Callback<List<Pet>>() {
+//            @Override
+//            public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+//
+//                // Log.d("Dobijeno", response.body().toString());
+//                Log.d("BROJ", "ima ih" + response.body().size());
+//                /*for (Pet pet : response.body()) {
+//                    pets.add(pet);
+//                }*/
+//                //view[0] = generateDataList(response.body(), view[0]);
+//                pets = response.body();
+//                PetsListAdapter adapter = new PetsListAdapter(getContext(), response.body());
+//                list.setAdapter(adapter);
+//                Log.d("POSLEFORA", " - " + pets);
+//                if (response.code() == 200) {
+//                    Log.d("REZ", "Meesage recieved");
+//
+//                } else {
+//                    Log.d("REZ", "Meesage recieved: " + response.code());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Pet>> call, Throwable t) {
+//
+//                Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+//
+//            }
+//        });
+//
+//
+//        //PetsListAdapter adapter = new PetsListAdapter(getContext(), MockupComments.getPets());
+//        Log.d("PREADAPTERA", " - " + pets.size());
+//
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Intent intent = new Intent(getContext(), PetDetailActivity.class);
+//                intent.putExtra("petsName", pets.get(position).getName());
+//                intent.putExtra("petsType", pets.get(position).getType().toString());
+//                intent.putExtra("petsGender", pets.get(position).getGender().toString());
+//                intent.putExtra("ownersEmail", pets.get(position).getUser().getEmail());
+//                intent.putExtra("ownersPhone", pets.get(position).getOwnersPhone());
+//                intent.putExtra("additionalInfo", pets.get(position).getAdditionalInfo());
+//                intent.putExtra("image", pets.get(position).getImage());
+//                intent.putExtra("date", pets.get(position).getMissingSince());
+//                intent.putExtra("id_of_pet", pets.get(position).getId());
+//                Log.d("PETSID ", "ima ih" + pets.get(position).getId());
+//
+//                startActivity(intent);
+//            }
+//        });
 
-                @Override
-                public void onFailure(Call<List<Pet>> call, Throwable t) {
-                    Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
-                }
-            });
-        }else{
-            //kada nema neta - prikaz iz sqlite
-            Log.d("nema", " interneta else");
-            fillView();
-        }
 
 
-    }
-*/
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        final Call<List<Pet>> call = ServiceUtils.petService.getAll();
+//        call.enqueue(new Callback<List<Pet>>() {
+//            @Override
+//            public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+//
+//                // Log.d("Dobijeno", response.body().toString());
+//                Log.d("BROJ", "ima ih" + response.body().size());
+//                /*for (Pet pet : response.body()) {
+//                    pets.add(pet);
+//                }*/
+//                //view[0] = generateDataList(response.body(), view[0]);
+//                pets = response.body();
+//                PetsListAdapter adapter = new PetsListAdapter(getContext(), response.body());
+//                list.setAdapter(adapter);
+//                Log.d("POSLEFORA", " - " + pets);
+//                if (response.code() == 200) {
+//                    Log.d("REZ", "Meesage recieved");
+//
+//                } else {
+//                    Log.d("REZ", "Meesage recieved: " + response.code());
+//>>>>>>> Stashed changes
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<Pet>> call, Throwable t) {
+//                    Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+//                }
+//            });
+//        }else{
+//            //kada nema neta - prikaz iz sqlite
+//            Log.d("nema", " interneta else");
+//            fillView();
+//        }
+//
+//
+//    }
+//*/
 
     @Override
     public void onResume() {
@@ -221,6 +306,7 @@ public class MissingFragment extends Fragment{
                 startActivity(intent);
             }
         });
+
         /*
         Register BroadcastReceiver to get notification when service is over
          */

@@ -71,15 +71,15 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         String passwordText = password.getText().toString();
 
         if (TextUtils.isEmpty(emailText)) {
-            Toast.makeText(this, "You must enter email address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.create_account_email_toast, Toast.LENGTH_SHORT).show();
         } else if (!this.validateEmail(emailText)) {
-            Toast.makeText(this, "Email address not valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.create_account_email_notvalid_toast, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(passwordText)) {
-            Toast.makeText(this, "You must enter password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.create_account_password_toast, Toast.LENGTH_SHORT).show();
         } else {
             progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Create account");
-            progressDialog.setMessage("Checking information, please wait");
+            progressDialog.setTitle(CreateAccountActivity.this.getResources().getString(R.string.create_account_dialog_title));
+            progressDialog.setMessage(CreateAccountActivity.this.getResources().getString(R.string.dialog_message));
             progressDialog.setCancelable(false);
             progressDialog.show();
             User user = new User(emailText, passwordText);
@@ -92,19 +92,18 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                     if (response.code() == 200) {
 
 
-                        Toast.makeText(context, "User signed in! Please login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.create_account_success_message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, LoginActivity.class);
                         startActivity(intent);
 
                     } else if (response.code() == 400) {
-                        Toast.makeText(context, "Error. Account with email already exists.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.create_account_email_already_exists, Toast.LENGTH_LONG).show();
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("REZ", "Nije uspelo");
                 }
             });
 
