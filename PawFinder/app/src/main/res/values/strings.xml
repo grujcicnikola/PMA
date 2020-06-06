@@ -131,6 +131,7 @@
     <string name="phone_blank">Please enter your phone number</string>
     <string name="network_disabled">There is no network, when network is available your missing report will be sent!</string>
     <string name="image_blank">Please upload pets image</string>
+    <string name="sync_pet">Network is available, your missing report is visible to other users.</string>
 
     <string name="galery_access_permission">You can\'t report missing without galery access permission</string>
 
@@ -142,6 +143,10 @@
     <string name="create_account_email_already_exists">Error. Account with input email already exists</string>
     <string name="login_email_error">Error. Wrong email address, please try again</string>
     <string name="login_password_error">Error. Wrong password, please try again</string>
+
+
+
+
 
 
 </resources>

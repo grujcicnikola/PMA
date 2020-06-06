@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.pawfinder.R;
 import com.example.pawfinder.db.DBContentProvider;
 import com.example.pawfinder.db.PetSQLHelper;
 import com.example.pawfinder.model.Address;
@@ -27,10 +29,11 @@ import retrofit2.Response;
 
 public class PetSqlSync {
 
-    private static PrefConfig prefConfig;
-
     //fill sqlite with server data
     public static void fillDatabase(ArrayList<Pet> listPets, Activity activity, int fleg) {
+        if (fleg == 0 && listPets.size()>0) {
+            activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
+        }
         PetSQLHelper dbHelper = new PetSQLHelper(activity);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -68,7 +71,7 @@ public class PetSqlSync {
         Cursor cursor = activity.getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
                 null);
 
-        int brojac = 0;
+
         List<Long> ids = new ArrayList<>();
 
         if (cursor != null) {
@@ -78,7 +81,6 @@ public class PetSqlSync {
                 Boolean isSent = Boolean.valueOf(cursor.getString(12));
                 if (isSent != null) {
                     if (isSent == false) {
-                        ++brojac;
                         Long id = Long.parseLong(cursor.getString(0));
                         PetType type = PetType.valueOf(cursor.getString(2));
                         String name = cursor.getString(1);
@@ -87,23 +89,15 @@ public class PetSqlSync {
                         String image = cursor.getString(5);
                         String missingSince = cursor.getString(6);
                         String ownersPhone = cursor.getString(7);
-                        boolean isFound = Boolean.valueOf(cursor.getString(9));
+                        boolean isFound = Boolean.valueOf(cursor.getString(8));
 
                         //nece lepo iz sqlite da procita email
                         User userObject = new User();
-                        String user = "";
-                        user = cursor.getString(8);
-                        userObject.setEmail(user);
-                        prefConfig = new PrefConfig(activity.getApplicationContext());
-
-                        if (prefConfig.readLoginStatus()) {
-                            userObject.setEmail(prefConfig.readUserEmail());
-                        }
+                        userObject.setEmail(cursor.getString(9));
 
                         Address address = new Address(Double.parseDouble(cursor.getString(10)), Double.parseDouble(cursor.getString(11)));
 
-
-                        Log.d("petList SYNC", "ima ih" + " " + type + " " + name + " " + user);
+                        Log.d("petList SYNC", "ima ih" + " " + type + " " + name + " " + userObject.getEmail());
 
                         c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, userObject, address, isSent);
                         c.setSent(true);       //otisao na back
@@ -113,8 +107,9 @@ public class PetSqlSync {
                         call.enqueue(new Callback<Pet>() {
                             @Override
                             public void onResponse(Call<Pet> call, Response<Pet> response) {
-                                Log.d("PETADDSYNC", "ima ih" + response.body());
+                                Log.d("PETADDSYNC", "ima ih" + response.code());
                                 if (response.code() == 200) {
+                                    Toast.makeText(activity, response.body().getName() + " " + R.string.sync_pet, Toast.LENGTH_SHORT).show();
                                 } else {
                                 }
                             }
@@ -132,12 +127,14 @@ public class PetSqlSync {
             cursor.close();
         }
 
-        Log.d("BROJAC", "brojac " + brojac);
-        if (brojac>0) {
-            //obrisem sada celu
-            //activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
-       }
+        //Log.d("BROJAC", "brojac " + brojac);
+       /* if (brojac == null) {
 
+       }else if (brojac == 1){*/
+            //obrisem sada celu
+
+        //}
+        //activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
 
     }
 

@@ -10,7 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceUtils {
 
     //10.0.2.2. za emulator
-    public static final String SERVICE_API_PATH = "http://192.168.1.105:8080/";
+    public static final String SERVICE_API_PATH = "http://adresa:8080/";
+
     public static final String GET_ALL_PETS = "pet/getAll";
     public static final String GET_ALL_USERS = "user/getAll";
     public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAll";

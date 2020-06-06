@@ -127,6 +127,7 @@
     <string name="location_blank">Niste oznacili gde je ljubimac nestao</string>
     <string name="phone_blank">Unesite vas broj telefona</string>
     <string name="network_disabled">Internet nije dostupan, kada bude ukljucen vasa prijava nestanka ljubimca ce biti kreirana!</string>
+    <string name="sync_pet">Internet je dostupan, vasa prijava ljubimaca je vidljiva ostalim korisnicima.</string>
     <string name="image_blank">Dodajte sliku ljubimca</string>
 
     <string name="galery_access_permission">Morate dozvoliti pristup galeriji</string>

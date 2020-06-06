@@ -103,11 +103,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     startService();
                 }else{
                     Log.i("fragment","ostalo");
-                    try{
-                        unregisterReceiver(alarm_receiver);
-                    }catch(IllegalArgumentException e)
-                    {
-                        e.printStackTrace();
+                    if (alarm_receiver!=null) {
+                        try {
+                            unregisterReceiver(alarm_receiver);
+                        }catch(Exception e){
+                            Log.d("alarm", "broadcast");
+                        }
+
                     }
                 }
             }
@@ -249,7 +251,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onPause() {
         super.onPause();
         try {
-            unregisterReceiver(alarm_receiver);
+            if (alarm_receiver!=null) {
+                unregisterReceiver(alarm_receiver);
+            }
         } catch(IllegalArgumentException e) {
 
             e.printStackTrace();
@@ -257,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
-    final BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
+    public final BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
             // your logic here
@@ -267,8 +271,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Log.i("alarm_received", "success");
                 //Log.i("stanje", String.valueOf(MissingFragment.pets.size()));
                 //MissingFragment.updatelist();
-                PetSqlSync.sendUnsaved(mainActivity);
-                mainActivity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
+               // if (intent.getAction().equals(MissingFragment.SEND_DATA)) {
+                    PetSqlSync.sendUnsaved(mainActivity);
+                //}
+                //mainActivity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
 
                 final Call<List<Pet>> call = ServiceUtils.petService.getAll();
                 call.enqueue(new Callback<List<Pet>>() {

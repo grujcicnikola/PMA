@@ -65,7 +65,6 @@ public class MissingFragment extends Fragment{
                     PetSqlSync.fillDatabase((ArrayList<Pet>) pets, getActivity(), 0);
                 }else if (intent.getAction().equals(MissingFragment.SEND_DATA)) {
                     PetSqlSync.sendUnsaved(getActivity());
-                    getActivity().getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
                 }
             }
         }
@@ -138,7 +137,10 @@ public class MissingFragment extends Fragment{
                         Log.d("REZ", "Meesage recieved");
                         //sinhronizujemo server sa sqlite
                         Intent ints = new Intent(SYNC_DATA);
-                        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(ints);
+                        if (pets.size() > 0) {
+                            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(ints);
+                        }
+
                         //getContext().sendBroadcast(ints);
                     } else {
                         Log.d("REZ", "Meesage recieved: " + response.code());
@@ -248,8 +250,13 @@ public class MissingFragment extends Fragment{
     public void onResume() {
         super.onResume();
         //sendAndSyncData();
+
         if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
             Log.d("ima", " interneta if");
+            //Intent intentFilter = new Intent(SEND_DATA);
+            // getActivity().sendBroadcast(intentFilter);
+
+            PetSqlSync.sendUnsaved(getActivity());
 
             final Call<List<Pet>> call = ServiceUtils.petService.getAll();
             call.enqueue(new Callback<List<Pet>>() {
@@ -348,8 +355,6 @@ public class MissingFragment extends Fragment{
         Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
                 null);
 
-        String[] from = new String[]{PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_MISSINGSINCE};
-        int[] to = new int[]{R.id.pet_name, R.id.pet_dateOfLost};
         List<Pet> petView = new ArrayList<>();
 
         if (cursor != null) {
@@ -364,10 +369,10 @@ public class MissingFragment extends Fragment{
                 String image = cursor.getString(5);
                 String missingSince = cursor.getString(6);
                 String ownersPhone = cursor.getString(7);
-                boolean isFound = Boolean.valueOf(cursor.getString(9));
+                boolean isFound = Boolean.valueOf(cursor.getString(8));
 
                 User user = new User();
-                String email =  cursor.getString(8);
+                String email =  cursor.getString(9);
                 user.setEmail(email);
 
                 Address address = new Address(Double.parseDouble(cursor.getString(10)), Double.parseDouble(cursor.getString(11)));

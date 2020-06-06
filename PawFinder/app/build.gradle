@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.4+'
 
     implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.2'
 
     //backgroudservie za sinhronizaciju
     implementation 'com.hossam.backgroundService:backgroundService:2.1.1'
