@@ -139,13 +139,13 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
                     //Request location updates: - pokretanje procesa lociranja
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
-                    Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
                 } else if (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
-                    Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -433,7 +433,6 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                     float distanceInMeters = results[0];
                     if (distanceInMeters < 10000) {
                         addMarkerPet(pet);
-
                     }
                 }
                 if (response.code() == 200) {

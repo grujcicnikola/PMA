@@ -102,7 +102,7 @@ public class PetDetailActivity extends AppCompatActivity {
             additional_txt.setText(info);
 
             toolbar.setTitle(name);
-            Picasso.get().load(ServiceUtils.IMAGES_URL + image).fit().into(imgView);
+            Picasso.get().load(ServiceUtils.IMAGES_URL + image).into(imgView);
 
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override

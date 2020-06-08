@@ -65,7 +65,7 @@ public class PetsListAdapter extends BaseAdapter {
         Pet pet = missingPets.get(position);
         Log.d("zivotinja", "ime: " + pet.getName() + " , slika: " + pet.getImage());
         image.setImageResource(R.drawable.avatar);
-        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).fit().into(image);
+        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
 //        Picasso.get().setLoggingEnabled(true);
 
 

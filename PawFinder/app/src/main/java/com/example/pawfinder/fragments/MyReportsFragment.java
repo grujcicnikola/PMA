@@ -68,6 +68,13 @@ public class MyReportsFragment extends Fragment {
         list = (ListView) view.findViewById(R.id.reports_list);
 
         text = (TextView) view.findViewById(R.id.reports_message);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
             if (prefConfig.readLoginStatus()) {
                 final Call<List<Pet>> call = ServiceUtils.petService.getPetsByUser(prefConfig.readUserEmail());
@@ -111,10 +118,8 @@ public class MyReportsFragment extends Fragment {
                 });
             }
         }else{
-                fillView();
-            }
-
-        return view;
+            fillView();
+        }
     }
 
     public void fillView(){

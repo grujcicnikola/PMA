@@ -63,7 +63,7 @@ public class MyReportsListAdapter extends BaseAdapter {
         pet_name_text.setText(pet.getName());
 
         ImageView image = (ImageView) view.findViewById(R.id.report_image);
-        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).fit().into(image);
+        Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
 
         return view;
     }

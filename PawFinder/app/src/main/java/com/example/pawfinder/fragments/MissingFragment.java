@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,11 +34,22 @@ import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.sync.PetSqlSync;
 import com.example.pawfinder.tools.NetworkTool;
+import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
+import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import hossamscott.com.github.backgroundservice.RunService;
+import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -256,7 +268,6 @@ public class MissingFragment extends Fragment{
             //Intent intentFilter = new Intent(SEND_DATA);
             // getActivity().sendBroadcast(intentFilter);
 
-            PetSqlSync.sendUnsaved(getActivity());
 
             final Call<List<Pet>> call = ServiceUtils.petService.getAll();
             call.enqueue(new Callback<List<Pet>>() {
@@ -268,7 +279,7 @@ public class MissingFragment extends Fragment{
                     pets = response.body();
                     adapter = new PetsListAdapter(getContext(), response.body());
                     list.setAdapter(adapter);
-
+                    PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, getActivity(), 0);
                     Log.d("POSLEFORA", " - " + pets);
                     if (response.code() == 200) {
                         Log.d("REZ", "Meesage recieved");
@@ -280,6 +291,7 @@ public class MissingFragment extends Fragment{
                 @Override
                 public void onFailure(Call<List<Pet>> call, Throwable t) {
                     Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
+
                 }
             });
         }else{

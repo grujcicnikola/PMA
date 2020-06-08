@@ -14,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class DBContentProvider extends ContentProvider {
+
     private PetSQLHelper database;
 
     private static final int PET = 10;
     private static final int PET_ID = 20;
+    private static final int PET_FALSE = 30;
 
     private static final String AUTHORITY = "com.example.pawfinder";
 
@@ -30,6 +32,8 @@ public class DBContentProvider extends ContentProvider {
     static {
         sURIMatcher.addURI(AUTHORITY, PET_PATH, PET);
         sURIMatcher.addURI(AUTHORITY, PET_PATH + "/#", PET_ID);
+        //sURIMatcher.addURI(AUTHORITY, PET_PATH + "/#", PET_FALSE);
+
     }
 
     @Override
@@ -56,6 +60,10 @@ public class DBContentProvider extends ContentProvider {
             case PET:
                 // Set the table
                 queryBuilder.setTables(PetSQLHelper.TABLE_PET);
+            /*case PET_FALSE:
+                // not sent
+                queryBuilder.appendWhere(PetSQLHelper.COLUMN_SYNCSTATUS + "="
+                        + "false");*/
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -144,12 +152,13 @@ public class DBContentProvider extends ContentProvider {
                 break;
             case PET_ID:
                 Log.d("updatePETID", " usao ");
-                String idCinema = uri.getLastPathSegment();
+                String idPet = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlDB.update(PetSQLHelper.TABLE_PET,
                             values,
-                            PetSQLHelper.COLUMN_ID + "=" + idCinema,
+                            PetSQLHelper.COLUMN_SERVER_ID + "=" + idPet,
                             null);
+                    Log.d("updatePETID", String.valueOf(rowsUpdated));
                 } else {
                     rowsUpdated = sqlDB.update(PetSQLHelper.TABLE_PET,
                             values,

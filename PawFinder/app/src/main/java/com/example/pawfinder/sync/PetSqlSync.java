@@ -2,11 +2,15 @@ package com.example.pawfinder.sync;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.db.DBContentProvider;
@@ -29,37 +33,49 @@ import retrofit2.Response;
 
 public class PetSqlSync {
 
+    private static Integer brojac;
+
     //fill sqlite with server data
     public static void fillDatabase(ArrayList<Pet> listPets, Activity activity, int fleg) {
-        if (fleg == 0 && listPets.size()>0) {
+       /* if (fleg == 0 && listPets.size()>0) {
             activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
-        }
-        PetSQLHelper dbHelper = new PetSQLHelper(activity);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        }*/
 
-        {
-            for (Pet p : listPets) {
-                ContentValues entry = new ContentValues();
-                fillContent(p, entry);
-                if (fleg == 3) {            //MissingReport third page
-                    entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "false");
-                }else{
-                    entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
-                }
+           PetSQLHelper dbHelper = new PetSQLHelper(activity);
+           SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-                if (p.getId() == null) {
-                    activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
-                }else{
-                    if (activity.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET+"/" + p.getId()), entry,  "", null) == 0){
-                        activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
-                    }
-                }
+           {
+               for (Pet p : listPets) {
+                   ContentValues entry = new ContentValues();
+                   fillContent(p, entry);
+                   if (fleg == 3) {            //MissingReport third page
+                       entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "false");
+                   } else {
+                       entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
+                   }
 
+                   //nema id znaci nije sa servera
+                   if (p.getId() == null) {
+                       Log.d("fillDatabase", p.getName() + " null");
+                       activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
+                   } else {
+                       Log.d("fillDatabase", p.getName() + " else");
+                       if (activity.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + p.getId()), entry, "", null) == 0) {
+                           Log.d("fillDatabase", p.getName() + " insert");
+                           entry.put(PetSQLHelper.COLUMN_SERVER_ID, p.getId());
+                           activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
+                       }
+                   }
 
-            }
-        }
+                   if (fleg == 3) {
+                       break;
+                   }
 
-        db.close();
+               }
+           }
+
+           db.close();
+
     }
 
     public static void sendUnsaved(final Activity activity){
@@ -67,12 +83,15 @@ public class PetSqlSync {
                 PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_TYPE, PetSQLHelper.COLUMN_GENDER,
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
-                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};
-        Cursor cursor = activity.getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
-                null);
+                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS, PetSQLHelper.COLUMN_SERVER_ID};
+        String selection = "syncstatus = ?";
+        String[] selectionArgs = {"false"};
 
+        //Cursor cursor = activity.getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
+         //       null);
+        Cursor cursor = activity.getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, selection, selectionArgs,
+              null);
 
-        List<Long> ids = new ArrayList<>();
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -91,7 +110,6 @@ public class PetSqlSync {
                         String ownersPhone = cursor.getString(7);
                         boolean isFound = Boolean.valueOf(cursor.getString(8));
 
-                        //nece lepo iz sqlite da procita email
                         User userObject = new User();
                         userObject.setEmail(cursor.getString(9));
 
@@ -108,8 +126,11 @@ public class PetSqlSync {
                             @Override
                             public void onResponse(Call<Pet> call, Response<Pet> response) {
                                 Log.d("PETADDSYNC", "ima ih" + response.code());
+                                brojac = 1;
+
                                 if (response.code() == 200) {
-                                    Toast.makeText(activity, response.body().getName() + " " + R.string.sync_pet, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(activity, response.body().getName() + " " + activity.getText(R.string.sync_pet), Toast.LENGTH_SHORT).show();
+
                                 } else {
                                 }
                             }
@@ -125,16 +146,22 @@ public class PetSqlSync {
             }
             // always close the cursor
             cursor.close();
+
         }
 
-        //Log.d("BROJAC", "brojac " + brojac);
-       /* if (brojac == null) {
+        Log.d("BROJAC", "brojac " + brojac);
+        /*if (brojac == null) {
 
-       }else if (brojac == 1){*/
+       }else if (brojac == 1 && cursor.isClosed()){*/
             //obrisem sada celu
+            Log.d("BROJAC", "dropujem");
 
         //}
-        //activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
+
+       // if (cursor.isClosed()) {
+        activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
+        //}
+
 
     }
 

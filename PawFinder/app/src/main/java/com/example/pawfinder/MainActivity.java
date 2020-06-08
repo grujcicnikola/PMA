@@ -1,5 +1,6 @@
 package com.example.pawfinder;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.PendingIntent;
@@ -41,6 +42,7 @@ import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.ThemeUtils;
 import com.example.pawfinder.tools.PrefConfig;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -48,6 +50,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hossamscott.com.github.backgroundservice.RunService;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -231,9 +237,40 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        /*
-        Register BroadcastReceiver to get notification when service is over
-         */
+        ReactiveNetwork
+                .observeNetworkConnectivity(getApplicationContext())
+                .flatMapSingle(connectivity -> ReactiveNetwork.checkInternetConnectivity())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(final Disposable d) {
+                        // this will be invoked before operation is started
+                    }
+
+                    @Override
+                    public void onNext(final Boolean isConnectedToInternet) {
+                        // do your action, when you're connected to the internet
+                        if (isConnectedToInternet == true) {
+                            Log.d("ISCONNECTED", "Meesage recieved");
+                            PetSqlSync.sendUnsaved(mainActivity);
+                        }
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        // handle an error here <-----------------
+                        //Snackbar.make(getView(), "Network timeout!", Snackbar.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // this will be invoked when operation is completed
+                    }
+
+                });
+
+
 
         startService();
     }
@@ -252,7 +289,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         super.onPause();
         try {
             if (alarm_receiver!=null) {
-                unregisterReceiver(alarm_receiver);
+                try{
+                    unregisterReceiver(alarm_receiver);
+                }catch (Exception e){
+
+                }
+
             }
         } catch(IllegalArgumentException e) {
 
@@ -271,10 +313,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Log.i("alarm_received", "success");
                 //Log.i("stanje", String.valueOf(MissingFragment.pets.size()));
                 //MissingFragment.updatelist();
-               // if (intent.getAction().equals(MissingFragment.SEND_DATA)) {
-                    PetSqlSync.sendUnsaved(mainActivity);
-                //}
-                //mainActivity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
 
                 final Call<List<Pet>> call = ServiceUtils.petService.getAll();
                 call.enqueue(new Callback<List<Pet>>() {

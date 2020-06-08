@@ -123,13 +123,13 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
 
                     //Request location updates: - pokretanje procesa lociranja
                     locationManager.requestLocationUpdates(provider, 180, 50, this);
-                    Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
                 } else if (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
                     locationManager.requestLocationUpdates(provider, 180, 50, this);
-                    Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                   //Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
                 }
             }
         }

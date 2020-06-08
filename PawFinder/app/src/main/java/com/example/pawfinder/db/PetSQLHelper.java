@@ -3,6 +3,7 @@ package com.example.pawfinder.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -16,6 +17,7 @@ public class PetSQLHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_PET = "petdb";
     public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_SERVER_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_GENDER = "gender";
@@ -45,7 +47,8 @@ public class PetSQLHelper extends SQLiteOpenHelper {
             + COLUMN_ISFOUND + " text, "
             + COLUMN_LAT + " text, "
             + COLUMN_LON + " text, "
-            + COLUMN_SYNCSTATUS + " integer"
+            + COLUMN_SYNCSTATUS + " text, "
+            + COLUMN_SERVER_ID + "text"
             + ")";
 
     private static final String DB_DROP = "drop table if exists " + TABLE_PET;
@@ -57,6 +60,8 @@ public class PetSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        Log.d("onCreate", "Meesage recieved");
         db.execSQL(DB_CREATE);
     }
 
