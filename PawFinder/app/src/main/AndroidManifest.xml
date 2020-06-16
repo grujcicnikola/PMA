@@ -40,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PetDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.CreateAccountActivity"

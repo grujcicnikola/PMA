@@ -5,6 +5,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -40,7 +42,7 @@ public class FillData {
 	private CommentService commentService;
 
 	@PostConstruct
-    public void init() throws URISyntaxException, IOException {
+    public void init() throws URISyntaxException, IOException, ParseException {
 		
 		//USERS
 		User user = new User("jova@gmail.com", "123");
@@ -81,28 +83,36 @@ public class FillData {
 		
 		
 		//PETS
-		Pet pet = new Pet(PetType.DOG,"Dzeki",PetGender.MALE, "Pas ima zelenu ogrlicu", "puppydog.jpg", new Date(), "123-456", false, user, a1);
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-10");
+		Pet pet = new Pet(PetType.DOG,"Dzeki",PetGender.MALE, "Pas ima zelenu ogrlicu", "puppydog.jpg", date, "123-456", false, user, a1);
 		petService.addNewPet(pet);
 		
-		Pet pet1 = new Pet(PetType.DOG,"Aleks",PetGender.MALE, "Opis neki", "labrador.jpg", new Date(), "123-456", false, user1, a2);
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-01");
+		Pet pet1 = new Pet(PetType.DOG,"Aleks",PetGender.MALE, "Opis neki", "labrador.jpg", date1, "123-456", false, user1, a2);
 		petService.addNewPet(pet1);
 		
-		Pet pet2 = new Pet(PetType.CAT,"Djura",PetGender.MALE, "Ne prilazi nepoznatima", "cat.jpg", new Date(), "123-456", false, user2, a3);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-12");
+		Pet pet2 = new Pet(PetType.CAT,"Djura",PetGender.MALE, "Ne prilazi nepoznatima", "cat.jpg", date2, "123-456", false, user2, a3);
 		petService.addNewPet(pet2);
 		
-		Pet pet3 = new Pet(PetType.CAT,"Kiki",PetGender.FEMALE, "Ruska plava macka", "russiancat.jpg", new Date(), "021/444-444", false, user, a4);
+		Date date3 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-29");
+		Pet pet3 = new Pet(PetType.CAT,"Kiki",PetGender.FEMALE, "Ruska plava macka", "russiancat.jpg", date3, "021/444-444", false, user, a4);
 		petService.addNewPet(pet3);
 		
-		Pet pet4 = new Pet(PetType.DOG,"Bobi",PetGender.MALE, "Drustven, prilazi deci", "samojedjpg.jpg", new Date(), "021/123-456", false, user3, a5);
+		Date date4 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-10");
+		Pet pet4 = new Pet(PetType.DOG,"Bobi",PetGender.MALE, "Drustven, prilazi deci", "samojedjpg.jpg", date4, "021/123-456", false, user3, a5);
 		petService.addNewPet(pet4);
 		
-		Pet pet5 = new Pet(PetType.DOG,"Moksi",PetGender.FEMALE, "Laje ali ne ujeda", "pup.jpg", new Date(), "123-456", false, user4,a6);
+		Date date5 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-05-29");
+		Pet pet5 = new Pet(PetType.DOG,"Moksi",PetGender.FEMALE, "Laje ali ne ujeda", "pup.jpg", date5, "123-456", false, user4,a6);
 		petService.addNewPet(pet5);
 		
-		Pet pet6 = new Pet(PetType.DOG,"Reks",PetGender.MALE, "Vucjak, star godinu dana, pobegao u blizini marketa", "download.jpg", new Date(), "123456789", false, user5, a7);
+		Date date6 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-14");
+		Pet pet6 = new Pet(PetType.DOG,"Reks",PetGender.MALE, "Vucjak, star godinu dana, pobegao u blizini marketa", "download.jpg", date6, "123456789", false, user5, a7);
 		petService.addNewPet(pet6);
 		
-		Pet pet7 = new Pet(PetType.DOG,"Mona",PetGender.FEMALE, "Pas ima crvenu ogrlicu sa kodom", "dalmatian.jpg", new Date(), "123456789", false, user2, a8);
+		Date date7 = new SimpleDateFormat("yyyy-MM-dd").parse("2020-06-15");
+		Pet pet7 = new Pet(PetType.DOG,"Mona",PetGender.FEMALE, "Pas ima crvenu ogrlicu sa kodom", "dalmatian.jpg", date7, "123456789", false, user2, a8);
 		petService.addNewPet(pet7);
 		
 		

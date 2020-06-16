@@ -15,7 +15,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.location.Geocoder;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -181,7 +184,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
                     layoutPhone.setError((getText(R.string.phone_blank)));
                 } else if(imageView.getDrawable() == null)
                 {
-                    layoutPhone.setError((getText(R.string.image_blank)));
+                    Toast.makeText(MissingReportThirdPage.this, R.string.image_blank, Toast.LENGTH_SHORT).show();
                 } else {
                     Address address = new Address(lon, lat);
                     ;
@@ -231,16 +234,9 @@ public class MissingReportThirdPage extends AppCompatActivity {
         //(resultCode == numberOfSelected &&???
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                imageBitMap = this.rotateImageIfRequired(MissingReportThirdPage.this,bitmap, uri);
-                imageView.setImageBitmap(imageBitMap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            imageBitMap = compressImage(uri);
+            imageView.setImageBitmap(imageBitMap);
             imgFile = new File(getPathFromUri(uri));
-
 
         }
     }
@@ -260,7 +256,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
             progressDialog.setCancelable(false);
             progressDialog.show();
 
-            //pravim novi fajl zbog rotiranja koje sam radila, da bih sliku sacuvala  u portrait orijentaciji
+            //pravim novi fajl zbog rotiranja i skaliranja koje sam radila
             File filesDir = getApplicationContext().getFilesDir();
             File imageFile = new File(filesDir, imgFile.getName());
             OutputStream os;
@@ -311,16 +307,6 @@ public class MissingReportThirdPage extends AppCompatActivity {
     }
 
 
-    public String getPathFromUri(Uri uri) {
-
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-    }
-
     // This function is called when user accept or decline the permission.
     // Request Code is used to check which permission called this function.
     // This request code is provided when user is prompt for permission.
@@ -344,35 +330,119 @@ public class MissingReportThirdPage extends AppCompatActivity {
         }
     }
 
-    public  Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+    public String getPathFromUri(Uri uri) {
 
-        InputStream input = context.getContentResolver().openInputStream(selectedImage);
-        ExifInterface ei;
-        if (Build.VERSION.SDK_INT > 23)
-            ei = new ExifInterface(input);
-        else
-            ei = new ExifInterface(selectedImage.getPath());
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
 
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+        return cursor.getString(column_index);
+    }
 
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(img, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(img, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(img, 270);
-            default:
-                return img;
+    public Bitmap compressImage(Uri imageUri) {
+
+        String filePath = getPathFromUri(imageUri);
+        Bitmap scaledBitmap = null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
+
+        int actualHeight = options.outHeight;
+        int actualWidth = options.outWidth;
+
+        float maxHeight = 720.0f;
+        float maxWidth = 1280.0f;
+        float imgRatio = actualWidth / actualHeight;
+        float maxRatio = maxWidth / maxHeight;
+
+        if (actualHeight > maxHeight || actualWidth > maxWidth) {
+            if (imgRatio < maxRatio) {
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = (int) (imgRatio * actualWidth);
+                actualHeight = (int) maxHeight;
+            } else if (imgRatio > maxRatio) {
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = (int) (imgRatio * actualHeight);
+                actualWidth = (int) maxWidth;
+            } else {
+                actualHeight = (int) maxHeight;
+                actualWidth = (int) maxWidth;
+
+            }
         }
+
+        options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
+        options.inJustDecodeBounds = false;
+        options.inTempStorage = new byte[16 * 1024];
+
+        try {
+            bmp = BitmapFactory.decodeFile(filePath, options);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+
+        }
+        try {
+            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight,Bitmap.Config.ARGB_8888);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+        }
+
+        float ratioX = actualWidth / (float) options.outWidth;
+        float ratioY = actualHeight / (float) options.outHeight;
+        float middleX = actualWidth / 2.0f;
+        float middleY = actualHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(filePath);
+
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
+            Matrix matrix = new Matrix();
+            if (orientation == 6) {
+                matrix.postRotate(90);
+            } else if (orientation == 3) {
+                matrix.postRotate(180);
+            } else if (orientation == 8) {
+                matrix.postRotate(270);
+            }
+
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return scaledBitmap;
+
     }
 
-    public  Bitmap rotateImage(Bitmap img, int degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
-        img.recycle();
-        return rotatedImg;
-    }
+    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
 
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+            final float totalPixels = width * height;
+            final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap)
+            {
+                inSampleSize++;
+            }
+
+        return inSampleSize;
+    }
 }

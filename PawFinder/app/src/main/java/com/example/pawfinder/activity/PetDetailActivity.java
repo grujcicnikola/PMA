@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Button;
@@ -54,8 +56,10 @@ public class PetDetailActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_pet_detail);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ImageView imgView = (ImageView) findViewById(R.id.pet_details_image);
         ImageButton imageButton = (ImageButton) findViewById(R.id.buttonViewComments);
 
@@ -132,6 +136,20 @@ public class PetDetailActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish(); //close this activity and return to preview activity
+                break;
+        }
+
+        return true;
     }
 
 }

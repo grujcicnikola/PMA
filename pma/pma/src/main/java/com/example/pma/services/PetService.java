@@ -4,6 +4,7 @@ package com.example.pma.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.pma.domain.Pet;
@@ -17,7 +18,7 @@ public class PetService {
 
 	public List<Pet> findAll() {
 		// TODO Auto-generated method stub
-		return petRepo.findAll();
+		return petRepo.findByOrderByMissingSinceDesc();
 	}
 
 	public List<Pet> findAllByIsFound(boolean b) {
@@ -29,7 +30,7 @@ public class PetService {
 		// TODO Auto-generated method stub
 		return petRepo.findAllByOwnerId(ownerId);
 	}
-	
+
 	public Pet addNewPet(Pet pet) {
 		
 		return petRepo.save(pet);

@@ -12,6 +12,7 @@
     <string name="nav_item_settings">Podešavanja</string>
     <string name="nav_item_login">Prijava</string>
     <string name="nav_item_logout">Odjava</string>
+    <string name="nav_item_change_password">Promena šifre</string>
     <string name="qr_code_text">Dodaj sadržaj</string>
     <string name="createAccount">
         <a href="#">Kreiraj nalog</a>

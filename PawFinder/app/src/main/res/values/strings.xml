@@ -12,6 +12,7 @@
     <string name="nav_item_settings">Settings</string>
     <string name="nav_item_login">Login</string>
     <string name="nav_item_logout">Logout</string>
+    <string name="nav_item_change_password">Change password</string>
     <string name="qr_code_text">Add content</string>
     <string name="createAccount">
         <a href="#">Create an account</a>
@@ -34,7 +35,7 @@
     <string name="label_missing">Missing since:</string>
     <string name="label_last_seen">Last seen:</string>
     <string name="label_owners_email">Owners email:</string>
-    <string name="label_owners_phone">Owners_phone:</string>
+    <string name="label_owners_phone">Owners phone:</string>
     <string name="label_additional">Additional information:</string>
 
 

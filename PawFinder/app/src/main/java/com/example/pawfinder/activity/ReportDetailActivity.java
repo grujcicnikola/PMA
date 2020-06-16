@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -37,6 +39,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.report_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ImageView imgView = (ImageView) findViewById(R.id.pet_report_details_image);
         Button buttonFound = (Button) findViewById(R.id.found_btn);
         ImageButton commentsButton = (ImageButton) findViewById(R.id.report_comments);
@@ -84,5 +88,18 @@ public class ReportDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+                break;
+        }
+
+        return true;
+    }
 }
 
