@@ -187,7 +187,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Call<Comment> call, Throwable t) {
                 Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
-                Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
             }
         });
     }

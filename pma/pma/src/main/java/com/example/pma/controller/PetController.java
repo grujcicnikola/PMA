@@ -84,6 +84,26 @@ public class PetController {
 		return new ResponseEntity<>(petsDTO,HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/getAllInRange/{lon}/{lat}/{range}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAllInRange(@PathVariable Double lon, @PathVariable Double lat, @PathVariable Double range){
+		List<Pet> pets = petService.findAllByIsFound(false);
+		List<Pet> petsInRange = new ArrayList<Pet>();
+		
+		for (Pet pet : pets) {
+			//distance in meters
+			Double distance = converter.distance(pet.getAddress().getLat(), lat, pet.getAddress().getLon(),
+			        lon, 0.0, 0.0);
+			//range in km
+			if ( distance <= (range*1000) ) {
+				petsInRange.add(pet);
+			}
+		}
+		
+		List<PetDTO> petsDTO = converter.convertToPetDTO(petsInRange);
+		
+		return new ResponseEntity<>(petsDTO,HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/getByOwner/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getByOwner(@PathVariable String email){
 		

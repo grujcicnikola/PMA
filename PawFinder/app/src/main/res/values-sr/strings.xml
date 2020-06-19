@@ -9,6 +9,7 @@
     <string name="drawer_header_text">Zaglavlje drawer-a</string>
     <string name="nav_item_report">Prijavi nestalog ljubimca</string>
     <string name="nav_item_qr_code">Skeniraj QR kod</string>
+    <string name="nav_item_near_you">Domet za ljubimace u vasoj blizini</string>
     <string name="nav_item_settings">Podešavanja</string>
     <string name="nav_item_login">Prijava</string>
     <string name="nav_item_logout">Odjava</string>
@@ -110,7 +111,7 @@
     <!-- dijalozi -->
     <string name="oops">Ooops</string>
     <string name="near_you_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Vasa lokacija nam je potrebna da bismo vam prikazali koji su ljubimci nestali u vasoj blizini.</string>
-    <string name="map_message">Your Lokacija vam je iskljucena, da li zelite da je ukljucite? Ukoliko dopustite da vas lociramo, lakse cete oznaciti gde vam je ljubimac nestao.</string>
+    <string name="map_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Ukoliko dopustite da vas lociramo, lakse cete oznaciti gde vam je ljubimac nestao.</string>
     <string name="sure">Naravno</string>
     <string name="no">Ne</string>
     <string name="location_alert_title">Dozvolite lociranje</string>
@@ -119,6 +120,7 @@
     <string name="login_dialog_title">Prijava</string>
     <string name="create_account_dialog_title">Kreiranje naloga</string>
     <string name="missing_report_dialog_title">Prijava nestanka</string>
+    <string name="range_title">Izaberite domet u kilometrima</string>
 
     <!--missing pet report-->
     <string name="add_pet_success">Ljubimac je uspesno prijavljen!</string>

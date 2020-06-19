@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NearYouFragment">
+    tools:context=".fragments.NearYouFragment"
+    android:tag="fragment_near_you_tag">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,5 +13,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical" />
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/near_you_center_icon"
+        android:src="@drawable/ic_gps"></ImageView>
 
 </FrameLayout>

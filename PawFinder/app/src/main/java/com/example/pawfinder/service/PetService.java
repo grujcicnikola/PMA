@@ -35,8 +35,8 @@ public interface PetService {
     @GET(ServiceUtils.GET_MISSING)
     Call<List<Pet>> getMissing();
 
-    @GET(ServiceUtils.GET_ALL_IN_RANGE + "/{lon}/{lat}")
-    Call<List<Pet>> getAllInRange(@Path("lon") Double lon, @Path("lat") Double lat);
+    @GET(ServiceUtils.GET_ALL_IN_RANGE + "/{lon}/{lat}/{range}")
+    Call<List<Pet>> getAllInRange(@Path("lon") Double lon, @Path("lat") Double lat, @Path("range") Double range);
 
     @Headers({
             "User-Agent: Mobile-Android",

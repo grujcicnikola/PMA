@@ -3,6 +3,7 @@ package com.example.pawfinder.dialogs;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -31,8 +32,12 @@ public class LocationDialog extends AlertDialog.Builder {
         switch (w) {
             case 1:
                 setMessage(R.string.near_you_message);
+                Log.d("MESSAGE", "1");
+                break;
             case 2:
                 setMessage(R.string.map_message);
+                Log.d("MESSAGE", "2");
+                break;
         }
 
 

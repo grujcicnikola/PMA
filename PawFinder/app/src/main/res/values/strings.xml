@@ -10,6 +10,7 @@
     <string name="nav_item_report">Report missing pet</string>
     <string name="nav_item_qr_code">Scan QR code</string>
     <string name="nav_item_settings">Settings</string>
+    <string name="nav_item_near_you">Range for pets near you</string>
     <string name="nav_item_login">Login</string>
     <string name="nav_item_logout">Logout</string>
     <string name="nav_item_change_password">Change password</string>
@@ -121,7 +122,7 @@
     <string name="login_dialog_title">Login</string>
     <string name="create_account_dialog_title">Create account</string>
     <string name="missing_report_dialog_title">Adding missing report</string>
-
+    <string name="range_title">Pick radius in kilometers</string>
 
     <!--missing pet report-->
     <string name="add_pet_success">Pet successfully reported!</string>

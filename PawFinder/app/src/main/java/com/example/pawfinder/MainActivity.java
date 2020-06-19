@@ -2,19 +2,25 @@ package com.example.pawfinder;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Fragment;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.NumberPicker;
+import android.widget.SeekBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +29,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -35,6 +44,7 @@ import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.example.pawfinder.activity.PreferenceActivity;
 import com.example.pawfinder.db.DBContentProvider;
 import com.example.pawfinder.fragments.MissingFragment;
+import com.example.pawfinder.fragments.NearYouFragment;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.sync.PetSqlSync;
@@ -48,6 +58,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import hossamscott.com.github.backgroundservice.RunService;
 import io.reactivex.Observer;
@@ -60,7 +71,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     private Toolbar toolbar;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -72,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private static PrefConfig prefConfig;
     private MainActivity mainActivity;
 
+    public static Integer nearYouRange;
+    private SeekBar np;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +93,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             setTheme(R.style.darktheme);
         }
 
+        nearYouRange = 10;
+
         setContentView(R.layout.activity_main);
         prefConfig = new PrefConfig(this);
-        mainActivity=this;
+        mainActivity = this;
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolBar);
@@ -99,20 +114,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         tabLayout.getTabAt(1).select();         //da selektovan bude Missing
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {}
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             public void onPageSelected(int position) {
                 // Check if this is the page you want.
-                if(position==1){
-                    Log.i("fragment","missing");
+                if (position == 1) {
+                    Log.i("fragment", "missing");
                     startService();
-                }else{
-                    Log.i("fragment","ostalo");
-                    if (alarm_receiver!=null) {
+                } else {
+                    Log.i("fragment", "ostalo");
+                    if (alarm_receiver != null) {
                         try {
                             unregisterReceiver(alarm_receiver);
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             Log.d("alarm", "broadcast");
                         }
 
@@ -123,6 +141,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        /*Menu menuNav = navigationView.getMenu();
+        MenuItem mi = menuNav.findItem(R.id.item_number);
+        np = (SeekBar) mi.getActionView();
+        /*np.setMinValue(2);
+        np.setMaxValue(20);
+        np.setOnValueChangedListener(onValueChangeListener);*/
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -142,6 +166,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     case R.id.navigation_item_settings:
                         i = new Intent(getApplicationContext(), PreferenceActivity.class);
                         startActivity(i);
+                        break;
+
+                    case R.id.navigation_item_range:
+                        showNumberPickerDialog();
+                        Log.d("RANGENUMBER", String.valueOf(nearYouRange));
                         break;
 
                     case R.id.navigation_item_logout:
@@ -271,13 +300,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 });
 
 
-
         startService();
     }
 
 
-
-    public  void startService(){
+    public void startService() {
         IntentFilter intentFilter = new IntentFilter("alaram_received");
         registerReceiver(alarm_receiver, intentFilter);
         RunService repeat = new RunService(this);
@@ -288,15 +315,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onPause() {
         super.onPause();
         try {
-            if (alarm_receiver!=null) {
-                try{
+            if (alarm_receiver != null) {
+                try {
                     unregisterReceiver(alarm_receiver);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
             }
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 
             e.printStackTrace();
         }
@@ -336,5 +363,52 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         }
     };
-}
 
+
+    NumberPicker.OnValueChangeListener onValueChangeListener =
+            new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                    Toast.makeText(MainActivity.this,
+                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
+                    nearYouRange = numberPicker.getValue();
+                }
+            };
+
+
+
+    public void showNumberPickerDialog(){
+        NumberPicker picker = new NumberPicker(MainActivity.this);
+        picker.setMinValue(1);
+        picker.setMaxValue(50);
+
+        FrameLayout layout = new FrameLayout(MainActivity.this);
+        layout.addView(picker, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER));
+
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getText(R.string.range_title))
+                .setView(layout)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    // do something with picker.getValue()
+                    picker.getValue();
+                    nearYouRange = picker.getValue();
+
+                    Log.d("ONRESUME", "tu sam");
+                    tabLayout.getTabAt(1).select();
+                    tabLayout.getTabAt(0).select();
+                   /* NearYouFragment frg = (NearYouFragment) viewPagerAdapter.getItem(0);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.attach(frg);
+                    ft.commit();*/
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    public Integer getNearYouRange() {
+        return nearYouRange;
+    }
+}

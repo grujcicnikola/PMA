@@ -1,6 +1,7 @@
 package com.example.pawfinder.fragments;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,17 +27,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
 import com.example.pawfinder.activity.PetDetailActivity;
 import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.dialogs.LocationDialog;
 import com.example.pawfinder.model.Address;
 import com.example.pawfinder.model.Pet;
-import com.example.pawfinder.model.PetGender;
-import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.model.PinData;
 import com.example.pawfinder.service.ServiceUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,6 +73,10 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     private List<PinData> petsMarkerPinData;
     private List<Pet> pets;
 
+    private ImageView gps_center;
+    private Location location;
+    private Boolean isStatusChanged;
+
 
     public static NearYouFragment newInstance() {
         return new NearYouFragment();
@@ -91,7 +94,16 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_near_you, container, false);
+        gps_center = view.findViewById(R.id.near_you_center_icon);
+
+        Log.d("ONRESUME", "onCreateView");
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("ONRESUME", "onStart");
     }
 
     private void createMapFragmentAndInflate() {
@@ -108,24 +120,19 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         supportMapFragment.getMapAsync(this);
     }
 
-    private void showLocatonDialog() {
-        if (alertDialog == null) {
-            alertDialog = new LocationDialog(getActivity()).prepareDialog(1);
-        } else {
-            if (alertDialog.isShowing()) {
-                alertDialog.dismiss();
-            }
-        }
-
-        alertDialog.show();
-    }
-
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("ONRESUME", "onResume");
 
         createMapFragmentAndInflate();  //vraca nam najbolji dostupan provajder
+        checkAndLocate();
+
+    }
+
+
+    public void checkAndLocate(){
 
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean wifi = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -139,25 +146,18 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
                     //Request location updates: - pokretanje procesa lociranja
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
-                  //  Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
                 } else if (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
                     locationManager.requestLocationUpdates(provider, 180, 100, this);
-                   // Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        //otkacinjemo lisener da ne bi baterija curila
-        locationManager.removeUpdates(this);
-    }
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(),
@@ -248,7 +248,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         // poziva se samo jednom, a lociranje n puta
         mMap = googleMap;
 
-        Location location = null;
+        location = null;
 
         /*if (mMap != null) {
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -305,6 +305,22 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             }
         }
 
+        if(gps_center!=null) {
+            gps_center.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (location!=null) {
+                        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(loc).zoom(14).build();
+
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }else{
+                        checkAndLocate();
+                    }
+                }
+            });
+        }
 
         //ako zelmo da reagujemo na klik markera koristimo marker click listener
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -327,13 +343,19 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             }
         });
 
-
         if (location != null) {
             addMarker(location);
             callForPets(location);
+        }else{
+            LatLng loc = new LatLng(43.821111, 21.022447);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(loc).zoom(6).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
+
     }
+
 
     @Override
     public void onLocationChanged(final Location location) {
@@ -347,6 +369,18 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
             pets = new ArrayList<>();
             callForPets(location);
         }
+    }
+
+    private void showLocatonDialog() {
+        if (alertDialog == null) {
+            alertDialog = new LocationDialog(getActivity()).prepareDialog(1);
+        } else {
+            if (alertDialog.isShowing()) {
+                alertDialog.dismiss();
+            }
+        }
+
+        alertDialog.show();
     }
 
     private void addMarker(Location location) {
@@ -405,13 +439,17 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         //poziva se kada se status provajdera promeni
+       // Toast.makeText(getContext(), "STATUS CHANGED UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
+        isStatusChanged = true;
+        checkAndLocate();
     }
 
     //ako korisnik u toku razda ugasi odredjeni provajder ove dve se zovu
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(getContext(), "UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getContext(), "UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
+        isStatusChanged = true;
+        checkAndLocate();
 
     }
 
@@ -421,19 +459,21 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     }
 
     public void callForPets(final Location location) {
-        Call<List<Pet>> call = ServiceUtils.petService.getMissing();
+        Integer radius = MainActivity.nearYouRange;
+        if (radius != null) {
+            Log.d("NEARRADIUS", radius.toString());
+        }else{
+            radius = 3;
+        }
+        Call<List<Pet>> call = ServiceUtils.petService.getAllInRange(location.getLongitude(), location.getLatitude(), radius * 1.0);
+
         Log.d("PETS", "usao");
         call.enqueue(new Callback<List<Pet>>() {
             @Override
             public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
                 Log.d("NESTALI", "ima ih" + response.body().size());
                 for (Pet pet : response.body()) {
-                    float[] results = new float[1];
-                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), pet.getAddress().getLat(), pet.getAddress().getLon(), results);
-                    float distanceInMeters = results[0];
-                    if (distanceInMeters < 10000) {
-                        addMarkerPet(pet);
-                    }
+                    addMarkerPet(pet);
                 }
                 if (response.code() == 200) {
                     Log.d("REZ", "Meesage recieved");
@@ -465,4 +505,34 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
         startActivity(intent);
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d("ONRESUME", "onAttach");
+        if (location != null) {
+            Log.d("ONRESUME", "loc onAttach");
+            addMarker(location);
+            callForPets(location);
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //otkacinjemo lisener da ne bi baterija curila
+        //ako ovde otkacim, lisener vise nije aktivan i onda kada se gps upali ne registruje to
+        // locationManager.removeUpdates(this);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //otkacinjemo lisener da ne bi baterija curila
+         locationManager.removeUpdates(this);
+    }
 }
+
+
