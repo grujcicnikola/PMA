@@ -1,5 +1,7 @@
 package com.example.pma.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,42 +24,72 @@ import com.example.pma.dto.UserDTO;
 import com.example.pma.services.CommentService;
 import com.example.pma.services.PetService;
 import com.example.pma.services.UserService;
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
+import com.google.gson.JsonObject;
+import  com.example.pma.firebase.*;
 
 @RestController
 @RequestMapping("comment")
 public class CommentController {
-	
+
 	@Autowired
 	CommentService commentService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	PetService petService;
-	
+
 	Converter converter = new Converter();
-	
+
 	@RequestMapping(value = "/getAllByPet/{petId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAll(@PathVariable Long petId){
-		//System.out.println("pogodio comments");
-		
-		
+	public ResponseEntity<?> getAll(@PathVariable Long petId) {
+		// System.out.println("pogodio comments");
+
 		List<Comment> comments = commentService.findAllByPetId(petId);
 		List<CommentDTO> commentsDTO = converter.convertToCommentDTO(comments);
-		
-		return new ResponseEntity<>(commentsDTO,HttpStatus.OK);
+
+		return new ResponseEntity<>(commentsDTO, HttpStatus.OK);
 	}
+
+
 	
-	@RequestMapping(value= "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> registerUser(@RequestBody CommentDTO commentDTO) {
-		if(commentDTO.getUser().getEmail()==null || commentDTO.getPet().getId()==null) {
+		if (commentDTO.getUser().getEmail() == null || commentDTO.getPet().getId() == null) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
-		User user =this.userService.getByEmail(commentDTO.getUser().getEmail());
+		User user = this.userService.getByEmail(commentDTO.getUser().getEmail());
 		Pet pet = this.petService.findById(commentDTO.getPet().getId());
 		Comment comment = new Comment(commentDTO.getMessage(), new Date(), user, pet);
-		Comment saved =this.commentService.save(comment);
+		Comment saved = this.commentService.save(comment);
+		if (pet.getOwner().getEmail() != user.getEmail()) {
+			//FCMHelper.getInstance().sendNotification(type, typeParameter, notificationObject)
+			FCMHelper fcm = FCMHelper.getInstance();
+			JsonObject notificationObject = new JsonObject(); 
+			notificationObject.addProperty("body", commentDTO.getMessage());
+			notificationObject.addProperty("title", commentDTO.getUser().getEmail());
+			
+			JsonObject dataObject = new JsonObject(); 
+			dataObject.addProperty("name", pet.getName());
+			dataObject.addProperty("type", pet.getType().toString());
+			dataObject.addProperty("missing_since", pet.getMissingSince().toString().split(" ")[0]);
+			dataObject.addProperty("image", pet.getImage());
+			dataObject.addProperty("id", pet.getId());
+			dataObject.addProperty("additionalInfo", pet.getAdditionalInfo());
+			
+			try {
+				fcm.sendNotifictaionAndData(FCMHelper.TYPE_TO, pet.getOwner().getToken(), notificationObject,dataObject);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		
 		return new ResponseEntity(new CommentDTO(saved), HttpStatus.OK);
 	}
 

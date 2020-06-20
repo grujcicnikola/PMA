@@ -91,6 +91,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             listView.setAdapter(commentAdapter);
 
             updateComments();
+
         }
 
 
@@ -137,6 +138,8 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
+
+
     @Override
     public void onClick(View v) {
 
@@ -166,12 +169,6 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         call.enqueue(new Callback<Comment>() {
             @Override
             public void onResponse(Call<Comment> call, Response<Comment> response) {
-                Log.d("COMMENTADD", "ima ih" + response.body());
-                if (response.code() == 200) {
-                    Log.d("REZ", "Meesage recieved");
-                } else {
-                    Log.d("REZ", "Meesage recieved: " + response.code());
-                }
                 comments.add(response.body());
                 commentAdapter.updateResults(comments);
                 //commentAdapter.notifyDataSetChanged();
@@ -218,7 +215,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         If you want to repeat the alarm every X sec just add true in your call
         */
         RunService repeat = new RunService(this);
-        repeat.call(15, true);
+        repeat.call(5, true);
 
     }
 

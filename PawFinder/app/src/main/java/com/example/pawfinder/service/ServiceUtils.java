@@ -9,18 +9,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceUtils {
 
-    //10.0.2.2. za emulator
+    //. za emulator
     public static final String SERVICE_API_PATH = "http://adresa:8080/";
 
 
     public static final String GET_ALL_PETS = "pet/getAll";
     public static final String GET_ALL_USERS = "user/getAll";
-    public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAll";
+    public static final String PUT_TOKEN = "user/token";
     public static final String IMAGES_URL = SERVICE_API_PATH + "/images/";
     public static final String POST_MISSING = "pet/postMissing";
     public static final String GET_ALL_IN_RANGE = "pet/getAllInRange";
     public static final String GET_MISSING = "pet/getMissing";
     public static final String ADD_COMMENT = "comment/add";
+    public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAllByPet/{petId}";
+
 
     public static OkHttpClient test() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

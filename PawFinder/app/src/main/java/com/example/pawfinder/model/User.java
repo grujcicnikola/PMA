@@ -10,6 +10,8 @@ public class User {
 
     private String password;
 
+    private String token;
+
     //public java.util.Collection<Pet> pet;
 
     public User() {
@@ -31,6 +33,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setEmail(String email) {

@@ -60,4 +60,20 @@ public class UserController {
 		
 		return new ResponseEntity(HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value= "/token", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> token(@RequestBody UserDTO userDTO) {
+		
+		if(userService.getByEmail(userDTO.getEmail()) == null)
+		{
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+		User user =  userService.getByEmail(userDTO.getEmail());
+		user.setToken(userDTO.getToken());
+		userService.saveUser(user);
+		
+		return new ResponseEntity(HttpStatus.OK);
+	}
 }

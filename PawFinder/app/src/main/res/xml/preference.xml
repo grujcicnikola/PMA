@@ -6,6 +6,13 @@
         android:layout="@layout/preference_category_layout"
 
         android:title="@string/general_settings">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="notification"
+            android:summary="@string/pref_notification_summary"
+            android:title="@string/pref_notification"/>
+            <!--android:layout="@layout/preference_switch"-->
+
 
         <ListPreference
 
@@ -14,9 +21,10 @@
             android:entries="@array/pref_theme_entries"
             android:entryValues="@array/pref_theme_values"
             android:key="theme"
-            android:layout="@layout/preference_layout"
             android:summary="@string/pref_theme_sum"
             android:title="@string/pref_theme" />
+        <!--android:layout="@layout/preference_switch"-->
+
         <ListPreference
 
             android:defaultValue="en"
@@ -24,9 +32,9 @@
             android:entries="@array/pref_language_entries"
             android:entryValues="@array/pref_language_values"
             android:key="language"
-            android:layout="@layout/preference_layout"
             android:summary="@string/pref_language_sum"
             android:title="@string/pref_language" />
+        <!--android:layout="@layout/preference_switch"-->
 
 
     </PreferenceCategory>

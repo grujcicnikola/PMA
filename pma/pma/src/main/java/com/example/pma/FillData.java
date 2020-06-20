@@ -120,16 +120,16 @@ public class FillData {
 		Comment com1 = new Comment("Video sam ga na uglu bulevara Lazara", new Date(), user, pet);
 		commentService.save(com1);
 		
-        Comment com2 = new Comment("Bas je lep!", new Date(), user1 ,pet );
+        Comment com2 = new Comment("Bas je lep!", new Date(), user1 ,pet);
         commentService.save(com2);
         
         Comment com3 = new Comment("Nisam ga video. Primetio sam da ima mnogo lutalica u Novom Sadu.", new Date(), user2, pet);
         commentService.save(com3);
         
-        Comment com4 = new Comment("Lep je", new Date(),user3 ,pet1 );
+        Comment com4 = new Comment("Lep je", new Date(),user3 ,pet1);
         commentService.save(com4);
         
-        Comment com5 = new Comment("Nadam se da cete ga pronaci!", new Date(), user1,pet1 );
+        Comment com5 = new Comment("Nadam se da cete ga pronaci!", new Date(), user1, pet1);
         commentService.save(com5);
         
 	}

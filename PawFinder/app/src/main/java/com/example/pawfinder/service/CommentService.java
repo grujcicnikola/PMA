@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface CommentService {
@@ -19,8 +20,9 @@ public interface CommentService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @GET("comment/getAllByPet/{petId}")
+    @GET(ServiceUtils.GET_ALL_COMMENTS_BY_PET)
     Call<List<Comment>> getCommentsByPetsId(@Path("petId") Long petId);
+
 
     @Headers({
             "User-Agent: Mobile-Android",
@@ -28,4 +30,5 @@ public interface CommentService {
     })
     @POST(ServiceUtils.ADD_COMMENT)
     Call<Comment> addComment(@Body Comment comment);
+
 }

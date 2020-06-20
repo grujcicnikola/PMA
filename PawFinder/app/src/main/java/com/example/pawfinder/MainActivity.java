@@ -3,15 +3,23 @@ package com.example.pawfinder;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.icu.text.NumberFormat;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -28,10 +36,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
@@ -39,6 +48,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.pawfinder.activity.BarCodeActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
+import com.example.pawfinder.activity.ViewCommentsActivity;
 import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.example.pawfinder.activity.PreferenceActivity;
@@ -46,16 +56,25 @@ import com.example.pawfinder.db.DBContentProvider;
 import com.example.pawfinder.fragments.MissingFragment;
 import com.example.pawfinder.fragments.NearYouFragment;
 import com.example.pawfinder.model.Pet;
+import com.example.pawfinder.model.Comment;
+import com.example.pawfinder.model.User;
+import com.example.pawfinder.service.CommentService;
+import com.example.pawfinder.service.MyFirebaseInstanceService;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.sync.PetSqlSync;
 import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.NetworkTool;
+import com.example.pawfinder.tools.NotificationUtils;
 import com.example.pawfinder.tools.ThemeUtils;
 import com.example.pawfinder.tools.PrefConfig;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +84,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,15 +99,24 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private SharedPreferences sharedPreferences;
     private LocaleUtils localeUtils;
     private ThemeUtils themeUtils;
+    private NotificationUtils notificationUtils;
     private static PrefConfig prefConfig;
     private MainActivity mainActivity;
-
     public static Integer nearYouRange;
     private SeekBar np;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                Log.d("TOKEN",token);
+            }
+        });
+
+        prefConfig = new PrefConfig(this);
         setupSharedPreferences();
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
@@ -97,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         setContentView(R.layout.activity_main);
         prefConfig = new PrefConfig(this);
+
         mainActivity = this;
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main);
@@ -175,6 +205,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
+                        try {
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
@@ -241,8 +276,43 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         localeUtils.setLocale();
         themeUtils = new ThemeUtils(sharedPreferences, this);
         themeUtils.setTheme();
+        notificationUtils = new NotificationUtils(sharedPreferences,this);
+        notificationUtils.setNotification();
+        String token = MyFirebaseInstanceService.getToken(this);
+        sendTokenToServer(token);
     }
 
+    private void sendTokenToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
+
+
+        User user = new User();
+
+        if (prefConfig.readUserEmail()!=null) {
+            user.setEmail(prefConfig.readUserEmail());
+            user.setToken(token);
+            final Call<ResponseBody> call = ServiceUtils.userService.token(user);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.code() == 200) {
+                        Log.i("TOKENFIREBASE","send");
+                    } else if (response.code() == 400) {
+                        Log.i("TOKENFIREBASE","error");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.i("TOKENFIREBASE","error");
+                }
+            });
+
+        }
+
+    }
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
@@ -257,6 +327,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 //setTheme(R.style.darktheme);
                 finish();
                 startActivity(getIntent());
+                break;
+            }
+            case "notification": {
+                notificationUtils.setNotification();
+
                 break;
             }
         }
@@ -283,6 +358,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         if (isConnectedToInternet == true) {
                             Log.d("ISCONNECTED", "Meesage recieved");
                             PetSqlSync.sendUnsaved(mainActivity);
+                            Boolean notification = sharedPreferences.getBoolean("notification", true);
+                            if(notification){
+                                String token = MyFirebaseInstanceService.getToken(getApplicationContext());
+                                sendTokenToServer(token);
+                            }else{
+                                sendTokenToServer("");
+                            }
                         }
                     }
 
@@ -308,8 +390,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         IntentFilter intentFilter = new IntentFilter("alaram_received");
         registerReceiver(alarm_receiver, intentFilter);
         RunService repeat = new RunService(this);
-        repeat.call(15, true);
+
+        repeat.call(5, true);
     }
+
 
     @Override
     protected void onPause() {
@@ -335,12 +419,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         public void onReceive(final Context context, Intent intent) {
             // your logic here
             Log.i("alarm_received", "logic");
+
             int status = NetworkTool.getConnectivityStatus(getApplicationContext());
             if (status != NetworkTool.TYPE_NOT_CONNECTED) {
                 Log.i("alarm_received", "success");
                 //Log.i("stanje", String.valueOf(MissingFragment.pets.size()));
                 //MissingFragment.updatelist();
-
+                //getUnseenComments();
                 final Call<List<Pet>> call = ServiceUtils.petService.getAll();
                 call.enqueue(new Callback<List<Pet>>() {
                     @Override
@@ -361,6 +446,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             } else {
                 Log.i("alarm_received", "not connected to internet");
             }
+
         }
     };
 
@@ -412,3 +498,4 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         return nearYouRange;
     }
 }
+

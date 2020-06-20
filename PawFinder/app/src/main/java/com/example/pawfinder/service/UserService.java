@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface UserService {
 
@@ -26,5 +27,12 @@ public interface UserService {
     })
     @POST("user/login")
     Call<ResponseBody> login(@Body User user);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @PUT(ServiceUtils.PUT_TOKEN)
+    Call<ResponseBody> token(@Body User user);
 
 }

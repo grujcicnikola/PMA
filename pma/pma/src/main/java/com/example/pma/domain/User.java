@@ -22,6 +22,9 @@ public class User {
 	@Column
     private String password;
 	
+	@Column
+    private String token;
+	
 	@OneToMany
 	private List<Pet> pets = new ArrayList<Pet>();
 	
@@ -71,6 +74,14 @@ public class User {
 
 	public void setPets(List<Pet> pets) {
 		this.pets = pets;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	

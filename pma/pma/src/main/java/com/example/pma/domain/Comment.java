@@ -40,6 +40,7 @@ public class Comment {
 		this.date = date;
 		this.user = user;
 		this.pet = pet;
+		
 	}
 
 	public Long getId() {
@@ -81,6 +82,7 @@ public class Comment {
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
+
 	
 	
 
