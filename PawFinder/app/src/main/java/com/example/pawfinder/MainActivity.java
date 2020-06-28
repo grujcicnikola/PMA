@@ -62,6 +62,7 @@ import com.example.pawfinder.service.CommentService;
 import com.example.pawfinder.service.MyFirebaseInstanceService;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.sync.PetSqlSync;
+import com.example.pawfinder.sync.SyncReceiver;
 import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.NotificationUtils;
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private MainActivity mainActivity;
     public static Integer nearYouRange;
     private SeekBar np;
-
+    public BroadcastReceiver alarm_receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Log.d("TOKEN",token);
             }
         });
-
         prefConfig = new PrefConfig(this);
         setupSharedPreferences();
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         nearYouRange = 10;
 
         setContentView(R.layout.activity_main);
-        prefConfig = new PrefConfig(this);
+//        prefConfig = new PrefConfig(this);
 
         mainActivity = this;
         setTitle(R.string.app_name);
@@ -205,11 +205,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
-                        try {
-                            FirebaseInstanceId.getInstance().deleteInstanceId();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        sendTokenToServer("");//problem ako nema neta
                         Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
@@ -341,6 +337,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+
         ReactiveNetwork
                 .observeNetworkConnectivity(getApplicationContext())
                 .flatMapSingle(connectivity -> ReactiveNetwork.checkInternetConnectivity())
@@ -355,6 +352,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     @Override
                     public void onNext(final Boolean isConnectedToInternet) {
                         // do your action, when you're connected to the internet
+                        Log.d("ISCONNECTED", "onNext");
                         if (isConnectedToInternet == true) {
                             Log.d("ISCONNECTED", "Meesage recieved");
                             PetSqlSync.sendUnsaved(mainActivity);
@@ -365,6 +363,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             }else{
                                 sendTokenToServer("");
                             }
+
                         }
                     }
 
@@ -388,6 +387,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     public void startService() {
         IntentFilter intentFilter = new IntentFilter("alaram_received");
+        alarm_receiver = new SyncReceiver();
         registerReceiver(alarm_receiver, intentFilter);
         RunService repeat = new RunService(this);
 
@@ -414,41 +414,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
-    public final BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-            // your logic here
-            Log.i("alarm_received", "logic");
 
-            int status = NetworkTool.getConnectivityStatus(getApplicationContext());
-            if (status != NetworkTool.TYPE_NOT_CONNECTED) {
-                Log.i("alarm_received", "success");
-                //Log.i("stanje", String.valueOf(MissingFragment.pets.size()));
-                //MissingFragment.updatelist();
-                //getUnseenComments();
-                final Call<List<Pet>> call = ServiceUtils.petService.getAll();
-                call.enqueue(new Callback<List<Pet>>() {
-                    @Override
-                    public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
-                        // Log.d("Dobijeno", response.body().toString());
-                        //Log.d("BROJ", "ima ih" + response.body().size());
-
-                        MissingFragment.pets = response.body();
-                        MissingFragment.adapter.updateResults(MissingFragment.pets);
-                        PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, mainActivity, 0);
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Pet>> call, Throwable t) {
-                        Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
-                    }
-                });
-            } else {
-                Log.i("alarm_received", "not connected to internet");
-            }
-
-        }
-    };
 
 
     NumberPicker.OnValueChangeListener onValueChangeListener =

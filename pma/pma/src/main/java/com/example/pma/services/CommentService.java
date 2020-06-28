@@ -17,12 +17,22 @@ public class CommentService {
 
 	public List<Comment> findAllByPetId(Long petId) {
 		// TODO Auto-generated method stub
-		return commentRepo.findAllByPetId(petId);
+		return commentRepo.findAllByPetIdOrderByDateAsc(petId);
 	}
 	
 	public Comment save(Comment comment) {
 		
 		return commentRepo.save(comment);
+	}
+
+	public void remove(Long id) {
+		// TODO Auto-generated method stub
+		commentRepo.deleteById(id);	
+	}
+
+	public Comment findById(Long id) {
+		// TODO Auto-generated method stub
+		return commentRepo.findById(id).get();
 	}
 
 	

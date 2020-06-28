@@ -36,12 +36,12 @@ public class PetSqlSync {
     private static Integer brojac;
 
     //fill sqlite with server data
-    public static void fillDatabase(ArrayList<Pet> listPets, Activity activity, int fleg) {
+    public static void fillDatabase(ArrayList<Pet> listPets, Context context, int fleg) {
        /* if (fleg == 0 && listPets.size()>0) {
             activity.getContentResolver().delete(DBContentProvider.CONTENT_URI_PET, null, null);
         }*/
 
-           PetSQLHelper dbHelper = new PetSQLHelper(activity);
+           PetSQLHelper dbHelper = new PetSQLHelper(context);
            SQLiteDatabase db = dbHelper.getWritableDatabase();
 
            {
@@ -57,13 +57,13 @@ public class PetSqlSync {
                    //nema id znaci nije sa servera
                    if (p.getId() == null) {
                        Log.d("fillDatabase", p.getName() + " null");
-                       activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
+                       context.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
                    } else {
                        Log.d("fillDatabase", p.getName() + " else");
-                       if (activity.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + p.getId()), entry, "", null) == 0) {
+                       if (context.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + p.getId()), entry, "", null) == 0) {
                            Log.d("fillDatabase", p.getName() + " insert");
                            entry.put(PetSQLHelper.COLUMN_SERVER_ID, p.getId());
-                           activity.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
+                           context.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
                        }
                    }
 

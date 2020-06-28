@@ -76,7 +76,7 @@
     <string name="pref_file">com.abc.preference_file</string>
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_email</string>
-    <string name="pref_notification_summary">Omoguci notifikacije</string>
+    <string name="pref_notification_summary">Omogući notifikacije</string>
     <string name="pref_notification">Notifikacija</string>
 
     <!--komentari-->
@@ -85,6 +85,14 @@
     <string name="send">Pošalji</string>
     <string name="text_send">Upišite komentar</string>
     <string name="comment_problem">Došlo je do problema prilikom slanja komenatara!</string>
+    <string name="noInternet">Nema interneta!</string>
+    <string name="comment_delete_dialog_title">Obriši</string>
+    <string name="comment_delete_dialog_text">Da li ste sigurni da želite da obrišete?</string>
+    <string name="comment_delete_dialog_ok">Da</string>
+    <string name="comment_delete_dialog_cancel">Odustani</string>
+    <string name="comment_progress_title">Brisanje</string>
+    <string name="comment_progress_text">Molimo sačekajte...</string>
+
 
     <!--skenirani podaci-->
     <string name="scanned_data">Skenirani podaci</string>

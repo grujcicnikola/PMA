@@ -86,6 +86,13 @@
     <string name="send">Send</string>
     <string name="text_send">Type your comment</string>
     <string name="comment_problem">Problem while sending comment!</string>
+    <string name="noInternet">There is no internet!</string>
+    <string name="comment_delete_dialog_title">Delete</string>
+    <string name="comment_delete_dialog_text">Are you sure you want to delete?</string>
+    <string name="comment_delete_dialog_ok">Ok</string>
+    <string name="comment_delete_dialog_cancel">Cancel</string>
+    <string name="comment_progress_title">Deleting</string>
+    <string name="comment_progress_text">Please wait...</string>
 
 
     <!--skenirani podaci-->

@@ -102,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.code() == 200) //ok
                     {
                         prefConfig.writeUserEmail(emailTxt);
+                        Log.d("loggeduser",emailTxt);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);

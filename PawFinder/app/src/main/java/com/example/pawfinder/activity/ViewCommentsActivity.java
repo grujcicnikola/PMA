@@ -2,8 +2,11 @@
 package com.example.pawfinder.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -13,6 +16,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,6 +57,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
     private Activity activity;
     private static PrefConfig prefConfig;
     private Pet petInfo = new Pet();
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
+        progressDialog = new ProgressDialog(this);
         setTitle(R.string.comments);
         setContentView(R.layout.view_comments_pet);
         activity = this;
@@ -92,9 +98,70 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
 
             updateComments();
 
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+
+                    Comment comment = (Comment) commentAdapter.getItem(position);
+
+                    final long positionToRemove = comment.getId();
+                    if (comment.getPet().getUser().getEmail().equals(prefConfig.readUserEmail()) ||
+                            comment.getUser().getEmail().equals(prefConfig.readUserEmail())) {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(ViewCommentsActivity.this);
+                        adb.setTitle(getResources().getString(R.string.comment_delete_dialog_title));
+                        adb.setMessage(getResources().getString(R.string.comment_delete_dialog_text));
+                        adb.setNegativeButton(getResources().getString(R.string.comment_delete_dialog_cancel), null);
+                        adb.setPositiveButton(getResources().getString(R.string.comment_delete_dialog_ok), new AlertDialog.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                deleteComment(positionToRemove);
+
+                            }
+                        });
+                        adb.show();
+                    }
+                }
+            });
+
+
         }
+    }
+
+    private void deleteComment(Long positionToRemove) {
+        final Call<List<Comment>> call = ServiceUtils.commentService.deleteComment(positionToRemove);
+        progressDialog.setTitle(getResources().getString(R.string.comment_progress_title));
+        progressDialog.setMessage(getResources().getString(R.string.comment_progress_text));
+        progressDialog.setCancelable(false);
+
+        int status = NetworkTool.getConnectivityStatus(getApplicationContext());
+        if (status != NetworkTool.TYPE_NOT_CONNECTED) {
+            progressDialog.show();
+            call.enqueue(new Callback<List<Comment>>() {
+                @Override
+                public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+
+                    if (response.code() == 200) {
+                        Log.d("VIEW_COMMENTS", "Meesage recieved");
+                        comments = response.body();
+                        commentAdapter.updateResults(comments);
+                        progressDialog.dismiss();
+                    } else {
+                        Log.d("VIEW_COMMENTS", "Meesage recieved: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Comment>> call, Throwable t) {
+                    Log.d("VIEW_COMMENTS rez", t.getMessage() != null ? t.getMessage() : "error");
+                    progressDialog.dismiss();
+
+                }
 
 
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_LONG).show();
+
+        }
     }
 
     BroadcastReceiver alarm_receiver = new BroadcastReceiver() {
@@ -119,11 +186,11 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
                 Log.d("VIEW_COMMENTS", "ima ih" + response.body().size());
-                comments = response.body();
-                commentAdapter.updateResults(comments);
+
                 if (response.code() == 200) {
                     Log.d("VIEW_COMMENTS", "Meesage recieved");
-
+                    comments = response.body();
+                    commentAdapter.updateResults(comments);
                 } else {
                     Log.d("VIEW_COMMENTS", "Meesage recieved: " + response.code());
                 }
@@ -132,12 +199,12 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
                 Log.d("VIEW_COMMENTS rez", t.getMessage() != null ? t.getMessage() : "error");
+
             }
 
 
         });
     }
-
 
 
     @Override
@@ -157,36 +224,39 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void addComment(String message) {
-        Log.d("messageComment", message);
+        //Log.d("messageComment", message);
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
+        //messageEditText.clearFocus();
+        messageEditText.getText().clear();
         //ong id, String message, Date date, User user, Pet pet
         User user = new User();
         if (prefConfig.readLoginStatus()) {
             user.setEmail(prefConfig.readUserEmail());
+            //Log.i("userkkkk", user.getEmail());
+            final Comment comment = new Comment(message, null, user, petInfo);
+            Call<Comment> call = ServiceUtils.commentService.addComment(comment);
+            //Log.d("COMMENTADD", "usao");
+            call.enqueue(new Callback<Comment>() {
+                @Override
+                public void onResponse(Call<Comment> call, Response<Comment> response) {
+                    comments.add(response.body());
+                    commentAdapter.updateResults(comments);
+                    //commentAdapter.notifyDataSetChanged();
+
+
+                }
+
+                @Override
+                public void onFailure(Call<Comment> call, Throwable t) {
+                    Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
+                    // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        final Comment comment = new Comment(message, null, user, petInfo);
-        Call<Comment> call = ServiceUtils.commentService.addComment(comment);
-        Log.d("COMMENTADD", "usao");
-        call.enqueue(new Callback<Comment>() {
-            @Override
-            public void onResponse(Call<Comment> call, Response<Comment> response) {
-                comments.add(response.body());
-                commentAdapter.updateResults(comments);
-                //commentAdapter.notifyDataSetChanged();
-                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
-                //messageEditText.clearFocus();
-                messageEditText.getText().clear();
 
 
-            }
-
-            @Override
-            public void onFailure(Call<Comment> call, Throwable t) {
-                Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
-               // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public Bitmap stringToBitMap(String encodedString) {

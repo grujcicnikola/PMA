@@ -59,7 +59,7 @@ public class CommentController {
 	
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> registerUser(@RequestBody CommentDTO commentDTO) {
+	public ResponseEntity<?> addComment(@RequestBody CommentDTO commentDTO) {
 		if (commentDTO.getUser().getEmail() == null || commentDTO.getPet().getId() == null) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
@@ -86,11 +86,26 @@ public class CommentController {
 				fcm.sendNotifictaionAndData(FCMHelper.TYPE_TO, pet.getOwner().getToken(), notificationObject,dataObject);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			} 
 		}
 		
 		return new ResponseEntity(new CommentDTO(saved), HttpStatus.OK);
+	}
+
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+		if (id == null) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		Comment comment = this.commentService.findById(id);
+		Long petId = comment.getPet().getId();
+		this.commentService.remove(id);
+		List<Comment> comments = commentService.findAllByPetId(petId);
+		List<CommentDTO> commentsDTO = converter.convertToCommentDTO(comments);
+
+		return new ResponseEntity<>(commentsDTO, HttpStatus.OK);
 	}
 
 }

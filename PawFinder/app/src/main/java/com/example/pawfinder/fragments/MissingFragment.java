@@ -282,7 +282,7 @@ public class MissingFragment extends Fragment{
                     pets = response.body();
                     adapter = new PetsListAdapter(getContext(), response.body());
                     list.setAdapter(adapter);
-                    PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, getActivity(), 0);
+                    PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, getContext(), 0);
                     Log.d("POSLEFORA", " - " + pets);
                     if (response.code() == 200) {
                         Log.d("REZ", "Meesage recieved");
@@ -396,6 +396,7 @@ public class MissingFragment extends Fragment{
                 Log.d("petList ", "ima ih"  +" " + type +" "+ name +" "+ missingSince);
                // if (isSent != false) {    ovo ako ne budemo hteli da prikazujemo
                     c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
+                    c.setId(id);
                     petView.add(c);
                 //}
 

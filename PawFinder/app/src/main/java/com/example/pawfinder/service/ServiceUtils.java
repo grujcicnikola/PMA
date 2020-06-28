@@ -22,6 +22,7 @@ public class ServiceUtils {
     public static final String GET_MISSING = "pet/getMissing";
     public static final String ADD_COMMENT = "comment/add";
     public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAllByPet/{petId}";
+    public static final String DELETE_COMMENT ="comment/delete/{id}" ;
 
 
     public static OkHttpClient test() {

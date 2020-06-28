@@ -117,6 +117,7 @@ public class PetDetailActivity extends AppCompatActivity {
                     intent.putExtra("view_comments_additionalInfo", bundle.getString("additionalInfo"));
                     intent.putExtra("view_comments_id", bundle.getLong("id_of_pet"));
                     Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
+                    Log.d("PETSI* ", "ima ih" + bundle.getString("id_of_pet"));
                     intent.putExtra("view_comments_image", bundle.getString("image"));
                     startActivity(intent);
                 }

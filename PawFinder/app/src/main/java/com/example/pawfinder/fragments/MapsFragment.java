@@ -122,14 +122,18 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates: - pokretanje procesa lociranja
-                    locationManager.requestLocationUpdates(provider, 180, 50, this);
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 50, this);
+                    }
                     //Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
                 } else if (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
-                    locationManager.requestLocationUpdates(provider, 180, 50, this);
-                   //Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 50, this);
+                        //Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
@@ -203,7 +207,9 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        locationManager.requestLocationUpdates(provider, 1, 50, this);
+                        if (provider != null) {
+                            locationManager.requestLocationUpdates(provider, 1, 50, this);
+                        }
                     }
 
                 } else if (grantResults.length > 0
@@ -216,7 +222,9 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        locationManager.requestLocationUpdates(provider, 1, 50, this);
+                        if (provider != null) {
+                            locationManager.requestLocationUpdates(provider, 1, 50, this);
+                        }
                     }
 
                 }
@@ -259,12 +267,16 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
-                location = locationManager.getLastKnownLocation(provider);
+                if(provider!=null) {
+                    location = locationManager.getLastKnownLocation(provider);
+                }
             } else if (ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 //Request location updates:
-                location = locationManager.getLastKnownLocation(provider);
+                if(provider != null) {
+                    location = locationManager.getLastKnownLocation(provider);
+                }
             }
         }
 

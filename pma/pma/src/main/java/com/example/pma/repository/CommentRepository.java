@@ -11,7 +11,7 @@ import com.example.pma.domain.Pet;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-	List<Comment> findAllByPetId(Long petId);
+	List<Comment> findAllByPetIdOrderByDateAsc(Long petId);
 
 	
 
