@@ -9,6 +9,7 @@ public class User {
     private String email;
 
     private String password;
+    private String passwordNew;
 
     private String token;
 
@@ -21,6 +22,12 @@ public class User {
         this.email = email;
         this.password = password;
 //        this.pet = pet;
+    }
+
+    public User(String email, String password, String passwordNew) {
+        this.email = email;
+        this.password = password;
+        this.passwordNew = passwordNew;
     }
 
     public Long getId() {
@@ -165,4 +172,11 @@ public class User {
             pet.clear();
     }
 
+    public String getPasswordNew() {
+        return passwordNew;
+    }
+
+    public void setPasswordNew(String passwordNew) {
+        this.passwordNew = passwordNew;
+    }
 }

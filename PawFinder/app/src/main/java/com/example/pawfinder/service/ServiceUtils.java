@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceUtils {
 
-    //. za emulator
+    //10.0.2.2. za emulator
     public static final String SERVICE_API_PATH = "http://adresa:8080/";
 
 
@@ -23,6 +23,7 @@ public class ServiceUtils {
     public static final String ADD_COMMENT = "comment/add";
     public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAllByPet/{petId}";
     public static final String DELETE_COMMENT ="comment/delete/{id}" ;
+    public static final String CHANGE_PASSWORD = "user/changePassword";
 
 
     public static OkHttpClient test() {

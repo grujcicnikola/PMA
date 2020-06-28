@@ -17,12 +17,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.adapters.MyReportsListAdapter;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.MockupComments;
+import com.example.pawfinder.tools.NetworkTool;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
@@ -75,13 +77,17 @@ public class ReportDetailActivity extends AppCompatActivity {
             commentsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getApplicationContext(), ViewCommentsActivity.class);
-                    i.putExtra("view_comments_petsName", bundle.getString("report_pet_name"));
-                    i.putExtra("view_comments_additionalInfo", bundle.getString("report_pet_additionalInfo"));
-                    i.putExtra("view_comments_id", bundle.getLong("report_pet_of_pet"));
-                    Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
-                    i.putExtra("view_comments_image", bundle.getString("report_pet_image"));
-                    startActivity(i);
+                    if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                        Intent i = new Intent(getApplicationContext(), ViewCommentsActivity.class);
+                        i.putExtra("view_comments_petsName", bundle.getString("report_pet_name"));
+                        i.putExtra("view_comments_additionalInfo", bundle.getString("report_pet_additionalInfo"));
+                        i.putExtra("view_comments_id", bundle.getLong("report_pet_of_pet"));
+                        Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
+                        i.putExtra("view_comments_image", bundle.getString("report_pet_image"));
+                        startActivity(i);
+                    }else{
+                        Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

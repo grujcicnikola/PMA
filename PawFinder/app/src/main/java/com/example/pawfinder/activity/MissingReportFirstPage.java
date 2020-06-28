@@ -25,6 +25,7 @@ import com.example.pawfinder.R;
 import com.example.pawfinder.activity.MapsActivity;
 import com.example.pawfinder.model.PetGender;
 import com.example.pawfinder.model.PetType;
+import com.example.pawfinder.tools.NetworkTool;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
@@ -110,28 +111,32 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (name.getText().toString().isEmpty() || name.getText().toString() == null) {
-                    layoutName.setError((getText(R.string.name_blank)));
-                } else if (dateText.getText().toString().isEmpty() || dateText.getText().equals("dd/mm/yyyy") || dateText.getText().toString() == null) {
-                    layoutDate.setError((getText(R.string.date_blank)));
-                } else {
-                    name.setError(null);
-                    dateText.setError(null);
-                    //lokalizacija pola
-                    int spinner_pos = gender.getSelectedItemPosition();
-                    String[] gender_values = getResources().getStringArray(R.array.genders_values);
-                    String gender_value = String.valueOf(gender_values[spinner_pos]);
-                    //lokalizacija tipa
-                    int spinner_type = type.getSelectedItemPosition();
-                    String[] type_values = getResources().getStringArray(R.array.type_values);
-                    String type_value = String.valueOf(type_values[spinner_type]);
+                if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                    if (name.getText().toString().isEmpty() || name.getText().toString() == null) {
+                        layoutName.setError((getText(R.string.name_blank)));
+                    } else if (dateText.getText().toString().isEmpty() || dateText.getText().equals("dd/mm/yyyy") || dateText.getText().toString() == null) {
+                        layoutDate.setError((getText(R.string.date_blank)));
+                    } else {
+                        name.setError(null);
+                        dateText.setError(null);
+                        //lokalizacija pola
+                        int spinner_pos = gender.getSelectedItemPosition();
+                        String[] gender_values = getResources().getStringArray(R.array.genders_values);
+                        String gender_value = String.valueOf(gender_values[spinner_pos]);
+                        //lokalizacija tipa
+                        int spinner_type = type.getSelectedItemPosition();
+                        String[] type_values = getResources().getStringArray(R.array.type_values);
+                        String type_value = String.valueOf(type_values[spinner_type]);
 
-                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    intent.putExtra("PET_NAME", name.getText().toString());
-                    intent.putExtra("PET_GENDER", gender_value);
-                    intent.putExtra("PET_TYPE", type_value);
-                    intent.putExtra("PET_DATE_LOST", dateText.getText().toString());
-                    startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                        intent.putExtra("PET_NAME", name.getText().toString());
+                        intent.putExtra("PET_GENDER", gender_value);
+                        intent.putExtra("PET_TYPE", type_value);
+                        intent.putExtra("PET_DATE_LOST", dateText.getText().toString());
+                        startActivity(intent);
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                 }
             }
         });

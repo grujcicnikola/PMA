@@ -7,6 +7,7 @@ public class UserDTO {
 	private Long id;
 	private String email;
     private String password;
+    private String passwordNew;
     private String token;
     
     
@@ -50,6 +51,12 @@ public class UserDTO {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public String getPasswordNew() {
+		return passwordNew;
+	}
+	public void setPasswordNew(String passwordNew) {
+		this.passwordNew = passwordNew;
 	}
     
     

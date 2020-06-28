@@ -46,6 +46,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pawfinder.activity.BarCodeActivity;
+import com.example.pawfinder.activity.ChangePasswordActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
 import com.example.pawfinder.activity.ViewCommentsActivity;
@@ -66,6 +67,7 @@ import com.example.pawfinder.sync.SyncReceiver;
 import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.NotificationUtils;
+import com.example.pawfinder.tools.RangeUtils;
 import com.example.pawfinder.tools.ThemeUtils;
 import com.example.pawfinder.tools.PrefConfig;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private static PrefConfig prefConfig;
     private MainActivity mainActivity;
     public static Integer nearYouRange;
+    private RangeUtils rangeUtils;
     private SeekBar np;
     public BroadcastReceiver alarm_receiver;
     @Override
@@ -189,8 +192,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         break;
 
                     case R.id.navigation_item_item:
-                        Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
-                        startActivity(missingReport);
+                        if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                            Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
+                            startActivity(missingReport);
+                        }else{
+                            Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+
+                    case R.id.navigation_item_change_password:
+                        if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                            i = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                            startActivity(i);
+                        }else{
+                            Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                        }
                         break;
 
                     case R.id.navigation_item_settings:
@@ -274,6 +290,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         themeUtils.setTheme();
         notificationUtils = new NotificationUtils(sharedPreferences,this);
         notificationUtils.setNotification();
+        rangeUtils = new RangeUtils(sharedPreferences, this);
+        rangeUtils.setRange();
+
         String token = MyFirebaseInstanceService.getToken(this);
         sendTokenToServer(token);
     }
@@ -326,7 +345,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 break;
             }
             case "notification": {
-                notificationUtils.setNotification();
+                /*if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                    Log.d("ima", " interneta if");*/
+                    notificationUtils.setNotification();
+               /* }else{
+                    Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                }*/
 
                 break;
             }
@@ -355,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         Log.d("ISCONNECTED", "onNext");
                         if (isConnectedToInternet == true) {
                             Log.d("ISCONNECTED", "Meesage recieved");
-                            PetSqlSync.sendUnsaved(mainActivity);
+                            //PetSqlSync.sendUnsaved(mainActivity);
                             Boolean notification = sharedPreferences.getBoolean("notification", true);
                             if(notification){
                                 String token = MyFirebaseInstanceService.getToken(getApplicationContext());
@@ -433,6 +457,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         NumberPicker picker = new NumberPicker(MainActivity.this);
         picker.setMinValue(1);
         picker.setMaxValue(50);
+        picker.setValue(rangeUtils.readRange());
 
         FrameLayout layout = new FrameLayout(MainActivity.this);
         layout.addView(picker, new FrameLayout.LayoutParams(
@@ -447,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     // do something with picker.getValue()
                     picker.getValue();
                     nearYouRange = picker.getValue();
+                    rangeUtils.saveRange(nearYouRange);
 
                     Log.d("ONRESUME", "tu sam");
                     tabLayout.getTabAt(1).select();
@@ -459,6 +485,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
+
+
 
     public Integer getNearYouRange() {
         return nearYouRange;

@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,6 +37,8 @@ import android.widget.Toast;
 
 import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
+import com.example.pawfinder.db.DBContentProvider;
+import com.example.pawfinder.db.PetSQLHelper;
 import com.example.pawfinder.model.Address;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.model.PetGender;
@@ -180,49 +183,60 @@ public class MissingReportThirdPage extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phoneNumberET.getText().toString().isEmpty() || phoneNumberET.getText().toString() == null) {
-                    layoutPhone.setError((getText(R.string.phone_blank)));
-                } else if(imageView.getDrawable() == null)
-                {
-                    Toast.makeText(MissingReportThirdPage.this, R.string.image_blank, Toast.LENGTH_SHORT).show();
-                } else {
-                    Address address = new Address(lon, lat);
-                    ;
-                    User user = new User();
-                    Geocoder geocoder;
-                    List<android.location.Address> fullAddressFromMap;
-                    geocoder = new Geocoder(MissingReportThirdPage.this, Locale.getDefault());
-                    try {
-                        fullAddressFromMap = geocoder.getFromLocation(lat, lon, 1);
-                        String street = fullAddressFromMap.get(0).getAddressLine(0);
-                        String city = fullAddressFromMap.get(0).getAddressLine(1);
-                        String country = fullAddressFromMap.get(0).getAddressLine(2);
+                if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                    if (phoneNumberET.getText().toString().isEmpty() || phoneNumberET.getText().toString() == null) {
+                        layoutPhone.setError((getText(R.string.phone_blank)));
+                    } else if (imageView.getDrawable() == null) {
+                        Toast.makeText(MissingReportThirdPage.this, R.string.image_blank, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Address address = new Address(lon, lat);
+                        ;
+                        User user = new User();
+                        Geocoder geocoder;
+                        List<android.location.Address> fullAddressFromMap;
+                        geocoder = new Geocoder(MissingReportThirdPage.this, Locale.getDefault());
+                        try {
+                            fullAddressFromMap = geocoder.getFromLocation(lat, lon, 1);
+                            String street = fullAddressFromMap.get(0).getAddressLine(0);
+                            String city = fullAddressFromMap.get(0).getAddressLine(1);
+                            String country = fullAddressFromMap.get(0).getAddressLine(2);
 
-                        String[] splitAddress = street.split(",");
-                        String s = splitAddress[0];
-                        String ci = splitAddress[1];
-                        String c = splitAddress[2];
+                            String[] splitAddress = street.split(",");
+                            if (splitAddress.length >= 2) {
+                                String s = splitAddress[0];
+                                String ci = splitAddress[1];
+                                //String c = splitAddress[2];
 
-                        String sPlace[] = s.split(" ");
-                        int size = sPlace.length;
-                        String n = sPlace[size-1];
-                        String streetBack = "";
-                        for (int i = 0; i<(size-1); i++) {
-                            streetBack += sPlace[i] + " ";
+                                String sPlace[] = s.split(" ");
+                                int size = sPlace.length;
+                                if (size > 0){
+                                    String n = sPlace[size - 1];
+                                    String streetBack = "";
+                                    for (int i = 0; i < (size - 1); i++) {
+                                        streetBack += sPlace[i] + " ";
+                                    }
+                                    address = new Address(ci, streetBack, n, lon, lat);
+                                }else{
+                                    address = new Address(ci, s, "1", lon, lat);
+                                }
+                            }else{
+                                address = new Address("", "", "1", lon, lat);
+                            }
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
+                        if (prefConfig.readLoginStatus()) {
+                            user.setEmail(prefConfig.readUserEmail());
+                        }
+                        Log.d("DATUM", "STRING " + date + " email " + user.getEmail());
+                        pet = new Pet(type, name, gender, infoET.getText().toString(), date, phoneNumberET.getText().toString(), false, user, address);
 
-                        address = new Address(ci, streetBack, n, lon, lat);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        addPet(pet);
                     }
-                    if (prefConfig.readLoginStatus()) {
-                        user.setEmail(prefConfig.readUserEmail());
-                    }
-                    Log.d("DATUM", "STRING " + date + " email " + user.getEmail());
-                    pet = new Pet(type, name, gender, infoET.getText().toString(), date, phoneNumberET.getText().toString(), false, user, address);
-
-                    addPet(pet);
+                }else{
+                    Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -284,6 +298,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
                             public void onResponse(Call<Pet> call, Response<Pet> response) {
                                 progressDialog.dismiss();
                                 if (response.code() == 200) {
+
                                     Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
                                     startActivity(intent);

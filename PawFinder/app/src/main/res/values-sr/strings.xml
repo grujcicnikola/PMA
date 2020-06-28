@@ -142,6 +142,7 @@
     <string name="network_disabled">Internet nije dostupan, kada bude ukljucen vasa prijava nestanka ljubimca ce biti kreirana!</string>
     <string name="sync_pet">Internet je dostupan, vasa prijava ljubimaca je vidljiva ostalim korisnicima.</string>
     <string name="image_blank">Dodajte sliku ljubimca</string>
+    <string name="search">Pretrazite adresu</string>
 
     <string name="galery_access_permission">Morate dozvoliti pristup galeriji</string>
 
@@ -153,8 +154,17 @@
     <string name="create_account_email_already_exists">Greška. Nalog sa unetim mejlom već postoji</string>
     <string name="login_email_error">Uneli ste pogrešnu mejl adresu, pokušajte ponovo</string>
     <string name="login_password_error">Uneli ste pogrešnu šifru, pokušajte ponovo</string>
+    <string name="network">Molimo vas upalite internet za ovu akciju.</string>
+    <string name="success_change_password">Uspesno ste izmenili lozinku.</string>
+    <string name="same_passwords">Lozinke moraju biti iste.</string>
+    <string name="old_passwords">Niste uneli ispravnu trenutnu lozinku.</string>
+    <string name="map_network">Molim vas ukljucite internet da bi se mapa ucitala i onda cete moci da pinujete gde je ljubimac nestao.</string>
 
-
+    <!-- Change password -->
+    <string name="now_password">Trenutna lozinka</string>
+    <string name="new_password">Nova lozinka</string>
+    <string name="new_again_password">Nova lozinka, unesite jos jednom</string>
+    <string name="ok">OK</string>
 </resources>
 
 

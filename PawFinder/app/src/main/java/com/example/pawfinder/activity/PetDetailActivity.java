@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
@@ -27,6 +28,7 @@ import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.MockupComments;
+import com.example.pawfinder.tools.NetworkTool;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -111,15 +113,22 @@ public class PetDetailActivity extends AppCompatActivity {
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), ViewCommentsActivity.class);
-                    //i.putExtra("position_of_pet",String.valueOf(position_of_pet));
-                    intent.putExtra("view_comments_petsName", bundle.getString("petsName"));
-                    intent.putExtra("view_comments_additionalInfo", bundle.getString("additionalInfo"));
-                    intent.putExtra("view_comments_id", bundle.getLong("id_of_pet"));
-                    Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
-                    Log.d("PETSI* ", "ima ih" + bundle.getString("id_of_pet"));
-                    intent.putExtra("view_comments_image", bundle.getString("image"));
-                    startActivity(intent);
+
+                    if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                        Log.d("ima", " interneta if");
+                        Intent intent = new Intent(getApplicationContext(), ViewCommentsActivity.class);
+                        //i.putExtra("position_of_pet",String.valueOf(position_of_pet));
+                        intent.putExtra("view_comments_petsName", bundle.getString("petsName"));
+                        intent.putExtra("view_comments_additionalInfo", bundle.getString("additionalInfo"));
+                        intent.putExtra("view_comments_id", bundle.getLong("id_of_pet"));
+                        Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
+                        Log.d("PETSI* ", "ima ih" + bundle.getString("id_of_pet"));
+                        intent.putExtra("view_comments_image", bundle.getString("image"));
+                        startActivity(intent);
+                    }else{
+                        Log.d("ima", "nema interneta if");
+                        Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -127,10 +136,16 @@ public class PetDetailActivity extends AppCompatActivity {
             petsLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
-                    intent.putExtra("lon_view", lon);
-                    intent.putExtra("lat_view", lat);
-                    startActivity(intent);
+                    if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                        Log.d("ima", " interneta if");
+                        Intent intent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
+                        intent.putExtra("lon_view", lon);
+                        intent.putExtra("lat_view", lat);
+                        startActivity(intent);
+                    }else{
+                        Log.d("ima", "nema interneta if");
+                        Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

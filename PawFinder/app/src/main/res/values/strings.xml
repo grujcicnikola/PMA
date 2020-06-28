@@ -143,6 +143,7 @@
     <string name="network_disabled">There is no network, when network is available your missing report will be sent!</string>
     <string name="image_blank">Please upload pets image</string>
     <string name="sync_pet">Network is available, your missing report is visible to other users.</string>
+    <string name="search">Search address</string>
 
     <string name="galery_access_permission">You can\'t report missing without galery access permission</string>
 
@@ -154,10 +155,17 @@
     <string name="create_account_email_already_exists">Error. Account with input email already exists</string>
     <string name="login_email_error">Error. Wrong email address, please try again</string>
     <string name="login_password_error">Error. Wrong password, please try again</string>
+    <string name="network">Please turn on internet for this action.</string>
+    <string name="success_change_password">Password is successfully changed.</string>
+    <string name="same_passwords">Passwords must be the same.</string>
+    <string name="old_passwords">You didnt enter valid current password.</string>
+    <string name="map_network">Please turn on internet to load map and then you can pin where pet is lost.</string>
 
-
-
-
+    <!-- Change password -->
+    <string name="now_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="new_again_password">New password, write again</string>
+    <string name="ok">OK</string>
 
 
 </resources>

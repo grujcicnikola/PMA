@@ -5,9 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +38,8 @@ import com.example.pawfinder.model.Address;
 import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.model.PinData;
 import com.example.pawfinder.service.ServiceUtils;
+import com.example.pawfinder.tools.RangeUtils;
+import com.example.pawfinder.tools.ThemeUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -75,8 +77,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
     private ImageView gps_center;
     private Location location;
-    private Boolean isStatusChanged;
-
+    private RangeUtils rangeUtils;
 
     public static NearYouFragment newInstance() {
         return new NearYouFragment();
@@ -87,6 +88,8 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
         super.onCreate(savedInstanceState);
         //spona izmedju android apija i case app, vraca info za lokacije
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        rangeUtils = new RangeUtils(sharedPreferences, getContext());
     }
 
     @Nullable
@@ -145,13 +148,17 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates: - pokretanje procesa lociranja
-                    locationManager.requestLocationUpdates(provider, 180, 100, this);
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 100, this);
+                    }
                     //  Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
                 } else if (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     //Request location updates:
-                    locationManager.requestLocationUpdates(provider, 180, 100, this);
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 100, this);
+                    }
                     // Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -315,6 +322,7 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
                                 .target(loc).zoom(14).build();
 
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        addMarker(location);
                     }else{
                         checkAndLocate();
                     }
@@ -440,7 +448,6 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     public void onStatusChanged(String provider, int status, Bundle extras) {
         //poziva se kada se status provajdera promeni
        // Toast.makeText(getContext(), "STATUS CHANGED UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
-        isStatusChanged = true;
         checkAndLocate();
     }
 
@@ -448,7 +455,6 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     @Override
     public void onProviderEnabled(String provider) {
         //Toast.makeText(getContext(), "UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
-        isStatusChanged = true;
         checkAndLocate();
 
     }
@@ -459,12 +465,8 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
     }
 
     public void callForPets(final Location location) {
-        Integer radius = MainActivity.nearYouRange;
-        if (radius != null) {
-            Log.d("NEARRADIUS", radius.toString());
-        }else{
-            radius = 3;
-        }
+        Integer radius = rangeUtils.readRange();
+
         Call<List<Pet>> call = ServiceUtils.petService.getAllInRange(location.getLongitude(), location.getLatitude(), radius * 1.0);
 
         Log.d("PETS", "usao");

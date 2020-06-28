@@ -27,10 +27,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.dialogs.LocationDialog;
+import com.example.pawfinder.tools.NetworkTool;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -58,6 +60,9 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
     private Marker marker;
     private Marker pet;
 
+    private ImageView gps_center;
+    private Location location;
+
     public static MapsFragment newInstance() {
         MapsFragment fragment = new MapsFragment();
         return fragment;
@@ -76,6 +81,8 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.activity_maps, container, false);
+        gps_center = view.findViewById(R.id.map_center_icon);
+
         return view;
     }
 
@@ -111,32 +118,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
 
         createMapFragmentAndInflate();  //vraca nam najbolji dostupan provajder
 
-        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean wifi = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-        if (!gps && !wifi) {
-            showLocatonDialog();    //korisnik nije dopustio ni gps ni wifi i dajemo mu objasnjenje zasto nama to treba
-        } else {
-            if (checkLocationPermission()) {
-                if (ContextCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                    //Request location updates: - pokretanje procesa lociranja
-                    if (provider != null) {
-                        locationManager.requestLocationUpdates(provider, 180, 50, this);
-                    }
-                    //Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
-                } else if (ContextCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                    //Request location updates:
-                    if (provider != null) {
-                        locationManager.requestLocationUpdates(provider, 180, 50, this);
-                        //Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }
+        checkAndLocate();
 
     }
 
@@ -144,7 +126,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
     public void onPause() {
         super.onPause();
         //otkacinjemo lisener da ne bi baterija curila
-        locationManager.removeUpdates(this);
+       // locationManager.removeUpdates(this);
     }
 
     public boolean checkLocationPermission() {
@@ -240,16 +222,6 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
     public void onProviderDisabled(String provider) {
 
     }
@@ -260,7 +232,7 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         // poziva se samo jednom, a lociranje n puta
         mMap = googleMap;
 
-        Location location = null;
+        location = null;
 
         if (checkLocationPermission()) {
             if (ContextCompat.checkSelfPermission(getContext(),
@@ -285,23 +257,28 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (pet != null) {
-                    pet.remove();
+                if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+
+                    if (pet != null) {
+                        pet.remove();
+                    }
+
+                    pet = mMap.addMarker(new MarkerOptions()
+                            .title((String) getText(R.string.pet_lost_here))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            //.icon(BitmapDescriptorFactory.fromBitmap(bm))
+                            .position(latLng));
+                    pet.setFlat(true);
+                    pet.isVisible();
+                    pet.showInfoWindow();
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLng).zoom(17).build();
+
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }else{
+                    Toast.makeText(getContext(), getText(R.string.map_network), Toast.LENGTH_LONG).show();
                 }
-
-                pet = mMap.addMarker(new MarkerOptions()
-                        .title((String) getText(R.string.pet_lost_here))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        //.icon(BitmapDescriptorFactory.fromBitmap(bm))
-                        .position(latLng));
-                pet.setFlat(true);
-                pet.isVisible();
-                pet.showInfoWindow();
-
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng).zoom(14).build();
-
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
@@ -314,12 +291,66 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
             }
         });
 
+        if(gps_center!=null) {
+            gps_center.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (location!=null) {
+                        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(loc).zoom(17).build();
+
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        addMarker(location);
+                    }else{
+                        checkAndLocate();
+                    }
+                }
+            });
+        }
+
 
         if (location != null) {
             addMarker(location);
+        }else{
+            LatLng loc = new LatLng(43.821111, 21.022447);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(loc).zoom(7).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
     }
+
+    public void checkAndLocate(){
+
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean wifi = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (!gps && !wifi) {
+            showLocatonDialog();    //korisnik nije dopustio ni gps ni wifi i dajemo mu objasnjenje zasto nama to treba
+        } else {
+            if (checkLocationPermission()) {
+                if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    //Request location updates: - pokretanje procesa lociranja
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 50, this);
+                    }
+                    //Toast.makeText(getContext(), "ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                } else if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    //Request location updates:
+                    if (provider != null) {
+                        locationManager.requestLocationUpdates(provider, 180, 50, this);
+                        //Toast.makeText(getContext(), "ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
 
     private void addMarker(Location location) {
         LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
@@ -343,10 +374,32 @@ public class MapsFragment extends Fragment implements LocationListener, OnMapRea
         //marker.showInfoWindow();
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(loc).zoom(14).build();
+                .target(loc).zoom(16).build();
 
         //u pozadini ove metode se desava matematika za pomeranje pozicije kamere da gleda u nasu lokaciju
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        //poziva se kada se status provajdera promeni
+        // Toast.makeText(getContext(), "STATUS CHANGED UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
+        checkAndLocate();
+    }
+
+    //ako korisnik u toku razda ugasi odredjeni provajder ove dve se zovu
+    @Override
+    public void onProviderEnabled(String provider) {
+        //Toast.makeText(getContext(), "UPALILI STE PROVAJDER HVALA", Toast.LENGTH_SHORT).show();
+        checkAndLocate();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //otkacinjemo lisener da ne bi baterija curila
+        locationManager.removeUpdates(this);
     }
 
     public Marker getPet() {

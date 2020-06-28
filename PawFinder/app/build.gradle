@@ -62,6 +62,10 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.2'
 
+    //search box za missing report second page
+   // implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
+    //implementation 'com.google.android.libraries.places:places:2.3.0'
+
     //backgroudservie za sinhronizaciju
     implementation 'com.hossam.backgroundService:backgroundService:2.1.1'
 }

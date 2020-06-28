@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -265,7 +266,7 @@ public class MissingFragment extends Fragment{
     public void onResume() {
         super.onResume();
         //sendAndSyncData();
-
+        Log.d("ima", "pre");
         if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
             Log.d("ima", " interneta if");
             //Intent intentFilter = new Intent(SEND_DATA);
@@ -367,9 +368,13 @@ public class MissingFragment extends Fragment{
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
                 PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};
-        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
-                null);
+       /* Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
+                null);*/
+        String selection = "";
+        String[] selectionArgs = {};
 
+       Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, selection, selectionArgs,
+               "date("+PetSQLHelper.COLUMN_MISSINGSINCE+")" + " DESC");
         List<Pet> petView = new ArrayList<>();
 
         if (cursor != null) {
@@ -382,7 +387,11 @@ public class MissingFragment extends Fragment{
                 PetGender gender = PetGender.valueOf(cursor.getString(3));
                 String additional = cursor.getString(4);
                 String image = cursor.getString(5);
+
                 String missingSince = cursor.getString(6);
+                String[] parts =  missingSince.split("-");
+                String date = parts[2] + "/" + parts[1] + "/" + parts[0];
+
                 String ownersPhone = cursor.getString(7);
                 boolean isFound = Boolean.valueOf(cursor.getString(8));
 
@@ -393,10 +402,12 @@ public class MissingFragment extends Fragment{
                 Address address = new Address(Double.parseDouble(cursor.getString(10)), Double.parseDouble(cursor.getString(11)));
                 boolean isSent = Boolean.valueOf(cursor.getString(12));
 
-                Log.d("petList ", "ima ih"  +" " + type +" "+ name +" "+ missingSince);
+
+                Log.d("petList ", "ima ih"  +" " + type +" "+ name +" "+ missingSince + " " );
                // if (isSent != false) {    ovo ako ne budemo hteli da prikazujemo
-                    c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
+                    //c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
                     c.setId(id);
+                    c = new Pet(type, name, gender, additional, image, date, ownersPhone, isFound, user, address, isSent);
                     petView.add(c);
                 //}
 

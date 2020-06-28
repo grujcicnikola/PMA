@@ -11,6 +11,7 @@ public class Pet {
 
     private String markerId;
 
+    //serverski id
     @SerializedName("id")
     private Long id;
     @SerializedName("type")

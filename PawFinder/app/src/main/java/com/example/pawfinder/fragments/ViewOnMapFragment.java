@@ -139,7 +139,7 @@ public class ViewOnMapFragment extends Fragment implements OnMapReadyCallback {
         pet.showInfoWindow();
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(loc).zoom(14).build();
+                .target(loc).zoom(18).build();
 
         //u pozadini ove metode se desava matematika za pomeranje pozicije kamere da gleda u nasu lokaciju
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

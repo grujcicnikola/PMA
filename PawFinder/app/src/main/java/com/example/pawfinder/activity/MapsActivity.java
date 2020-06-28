@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.fragments.MapsFragment;
+import com.example.pawfinder.tools.NetworkTool;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,10 +24,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class MapsActivity extends AppCompatActivity {
 
     public static FragmentManager fm;
-
     public MapsFragment mapsFragment;
 
     @Override
@@ -36,6 +38,7 @@ public class MapsActivity extends AppCompatActivity {
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_maps);
+
 
         final Intent help = getIntent();
        /* Toast.makeText(this, help.getStringExtra("PET_NAME"), Toast.LENGTH_SHORT).show();
@@ -65,22 +68,26 @@ public class MapsActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                    if (mapsFragment.getPet() == null) {
+                        Toast.makeText(getApplicationContext(), getText(R.string.location_blank), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), MissingReportThirdPage.class);
+                        intent.putExtra("PET_LOST_LON", mapsFragment.getPet().getPosition().longitude);
+                        intent.putExtra("PET_LOST_LAT", mapsFragment.getPet().getPosition().latitude);
 
-                if (mapsFragment.getPet() == null) {
-                    Toast.makeText(getApplicationContext(), getText(R.string.location_blank), Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), MissingReportThirdPage.class);
-                    intent.putExtra("PET_LOST_LON", mapsFragment.getPet().getPosition().longitude);
-                    intent.putExtra("PET_LOST_LAT", mapsFragment.getPet().getPosition().latitude);
-
-                    intent.putExtra("PET_NAME", help.getStringExtra("PET_NAME"));
-                    intent.putExtra("PET_GENDER", help.getStringExtra("PET_GENDER"));
-                    intent.putExtra("PET_TYPE", help.getStringExtra("PET_TYPE"));
-                    intent.putExtra("PET_DATE_LOST", help.getStringExtra("PET_DATE_LOST"));
-                    startActivity(intent);
+                        intent.putExtra("PET_NAME", help.getStringExtra("PET_NAME"));
+                        intent.putExtra("PET_GENDER", help.getStringExtra("PET_GENDER"));
+                        intent.putExtra("PET_TYPE", help.getStringExtra("PET_TYPE"));
+                        intent.putExtra("PET_DATE_LOST", help.getStringExtra("PET_DATE_LOST"));
+                        startActivity(intent);
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
 
     }
 

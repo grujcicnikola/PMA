@@ -100,26 +100,28 @@ public class MyReportsFragment extends Fragment {
                 });
 
 
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Intent intent = new Intent(getContext(), ReportDetailActivity.class);
-                        intent.putExtra("report_pet_name", pets.get(position).getName());
-                        intent.putExtra("report_pet_type", pets.get(position).getType().toString());
-                        intent.putExtra("report_pet_date", pets.get(position).getMissingSince());
-                        intent.putExtra("report_pet_image", pets.get(position).getImage());
-                        intent.putExtra("report_pet_additionalInfo", pets.get(position).getAdditionalInfo());
-                        intent.putExtra("report_pet_of_pet", pets.get(position).getId());
-                        Log.d("PETSIMAAGE", pets.get(position).getImage());
-                        startActivity(intent);
-                    }
-                });
             }
         }else{
             fillView();
         }
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getContext(), ReportDetailActivity.class);
+                intent.putExtra("report_pet_name", pets.get(position).getName());
+                intent.putExtra("report_pet_type", pets.get(position).getType().toString());
+                intent.putExtra("report_pet_date", pets.get(position).getMissingSince());
+                intent.putExtra("report_pet_image", pets.get(position).getImage());
+                intent.putExtra("report_pet_additionalInfo", pets.get(position).getAdditionalInfo());
+                intent.putExtra("report_pet_of_pet", pets.get(position).getId());
+                Log.d("PETSIMAAGE", pets.get(position).getImage());
+                startActivity(intent);
+            }
+        });
     }
 
     public void fillView(){
@@ -128,8 +130,12 @@ public class MyReportsFragment extends Fragment {
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
                 PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};
-        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
-                null);
+        /*Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
+                null);*/
+        String selection = "user = ?";
+        String[] selectionArgs = {prefConfig.readUserEmail()};
+        Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, selection, selectionArgs,
+                "date("+PetSQLHelper.COLUMN_MISSINGSINCE+")" + " DESC");
 
         List<Pet> petView = new ArrayList<>();
 
@@ -139,7 +145,7 @@ public class MyReportsFragment extends Fragment {
             for (int i = 0; i < cursor.getCount(); i++){
                 String email =  cursor.getString(9);
                 Log.d("REP", email);
-                if (email.equals(prefConfig.readUserEmail())) {
+               // if (email.equals(prefConfig.readUserEmail())) {
                     Long id = Long.parseLong(cursor.getString(0));
                     PetType type = PetType.valueOf(cursor.getString(2));
                     String name = cursor.getString(1);
@@ -163,7 +169,7 @@ public class MyReportsFragment extends Fragment {
                     //}
 
 
-                }
+              //  }
                 cursor.moveToNext();
             }
             // always close the cursor

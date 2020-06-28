@@ -28,6 +28,17 @@
         android:layout_height="match_parent"
         tools:context=".activity.MapsActivity" />
 
+    <ImageView
+        android:layout_below="@id/toolBar"
+        android:layout_alignRight="@id/map"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/map_center_icon"
+        android:src="@drawable/ic_gps"></ImageView>
+
     <Button
         android:id="@+id/btn_missing_report_second"
         android:layout_width="match_parent"

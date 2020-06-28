@@ -10,7 +10,7 @@
             android:title="@string/nav_item_report" />
         <item
             android:id="@+id/navigation_item_change_password"
-            android:icon="@drawable/report"
+            android:icon="@drawable/change_password"
             android:title="@string/nav_item_change_password"/>
         <item
             android:id="@+id/navigation_item_qr_code"

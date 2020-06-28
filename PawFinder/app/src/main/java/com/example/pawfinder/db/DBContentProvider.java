@@ -119,7 +119,7 @@ public class DBContentProvider extends ContentProvider {
                 String idPet = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = sqlDB.delete(PetSQLHelper.TABLE_PET,
-                            PetSQLHelper.COLUMN_ID + "=" + idPet,
+                            PetSQLHelper.COLUMN_SERVER_ID + "=" + idPet,
                             null);
                 } else {
                     rowsDeleted = sqlDB.delete(PetSQLHelper.TABLE_PET,

@@ -33,8 +33,6 @@ import retrofit2.Response;
 
 public class PetSqlSync {
 
-    private static Integer brojac;
-
     //fill sqlite with server data
     public static void fillDatabase(ArrayList<Pet> listPets, Context context, int fleg) {
        /* if (fleg == 0 && listPets.size()>0) {
@@ -43,9 +41,11 @@ public class PetSqlSync {
 
            PetSQLHelper dbHelper = new PetSQLHelper(context);
            SQLiteDatabase db = dbHelper.getWritableDatabase();
+           int all = 0;
 
            {
                for (Pet p : listPets) {
+                   all++;
                    ContentValues entry = new ContentValues();
                    fillContent(p, entry);
                    if (fleg == 3) {            //MissingReport third page
@@ -54,15 +54,15 @@ public class PetSqlSync {
                        entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
                    }
 
-                   //nema id znaci nije sa servera
+                   //nema id znaci nije sa servera-nego dodat offline
                    if (p.getId() == null) {
                        Log.d("fillDatabase", p.getName() + " null");
                        context.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
                    } else {
                        Log.d("fillDatabase", p.getName() + " else");
                        if (context.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + p.getId()), entry, "", null) == 0) {
-                           Log.d("fillDatabase", p.getName() + " insert");
-                           entry.put(PetSQLHelper.COLUMN_SERVER_ID, p.getId());
+                           entry.put(PetSQLHelper.COLUMN_SERVER_ID, p.getId().toString());
+                           Log.d("fillDatabase", p.getName() + " insert " + p.getId());
                            context.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
                        }
                    }
@@ -79,6 +79,8 @@ public class PetSqlSync {
     }
 
     public static void sendUnsaved(final Activity activity){
+        //potrebno prilakoditi datume ako ovo omogucimo
+
         String[] allColumns = { PetSQLHelper.COLUMN_ID,
                 PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_TYPE, PetSQLHelper.COLUMN_GENDER,
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
@@ -126,8 +128,6 @@ public class PetSqlSync {
                             @Override
                             public void onResponse(Call<Pet> call, Response<Pet> response) {
                                 Log.d("PETADDSYNC", "ima ih" + response.code());
-                                brojac = 1;
-
                                 if (response.code() == 200) {
                                     Toast.makeText(activity, response.body().getName() + " " + activity.getText(R.string.sync_pet), Toast.LENGTH_SHORT).show();
 
@@ -149,7 +149,6 @@ public class PetSqlSync {
 
         }
 
-        Log.d("BROJAC", "brojac " + brojac);
         /*if (brojac == null) {
 
        }else if (brojac == 1 && cursor.isClosed()){*/
@@ -171,13 +170,21 @@ public class PetSqlSync {
         entry.put(PetSQLHelper.COLUMN_GENDER, p.getGender().toString());
         entry.put(PetSQLHelper.COLUMN_ADDITIONALINFO, p.getAdditionalInfo());
         entry.put(PetSQLHelper.COLUMN_IMAGE, p.getImage());
-        entry.put(PetSQLHelper.COLUMN_MISSINGSINCE, p.getMissingSince());
+        String[] parts =  p.getMissingSince().split("/");
+        String date = "";
+        if (parts.length == 1) {
+            date = p.getMissingSince();
+        }else{
+            date = parts[2] + "-" + parts[1] + "-" + parts[0];
+        }
+        entry.put(PetSQLHelper.COLUMN_MISSINGSINCE, date);
         entry.put(PetSQLHelper.COLUMN_OWNERSPHONE, p.getOwnersPhone());
         entry.put(PetSQLHelper.COLUMN_ISFOUND, p.isFound());
         entry.put(PetSQLHelper.COLUMN_USER, p.getUser().getEmail());
         entry.put(PetSQLHelper.COLUMN_LON, p.getAddress().getLon());
         entry.put(PetSQLHelper.COLUMN_LAT, p.getAddress().getLat());
         entry.put(PetSQLHelper.COLUMN_USER, p.getUser().getEmail());
+        Log.d("FILL", p.toString());
         return entry;
     }
 }

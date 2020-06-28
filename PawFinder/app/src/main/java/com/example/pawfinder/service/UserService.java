@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface UserService {
 
@@ -34,5 +35,8 @@ public interface UserService {
     })
     @PUT(ServiceUtils.PUT_TOKEN)
     Call<ResponseBody> token(@Body User user);
+
+    @PUT(ServiceUtils.CHANGE_PASSWORD)
+    Call<ResponseBody> changePassword(@Body User user);
 
 }
