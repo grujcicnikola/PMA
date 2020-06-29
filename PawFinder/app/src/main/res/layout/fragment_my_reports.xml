@@ -15,6 +15,16 @@
         android:textStyle="italic"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/reports_login_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reports_login_label"
+        android:textColor="@color/colorGrey"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        android:visibility="invisible" />
+
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@+id/reports_list"

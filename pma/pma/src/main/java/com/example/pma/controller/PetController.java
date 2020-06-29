@@ -1,6 +1,8 @@
 package com.example.pma.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Sort;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
@@ -149,13 +153,7 @@ public class PetController {
 		return new ResponseEntity<>(p,HttpStatus.OK);
 	}
 	
-//	@PostMapping(value = "/postTry")
-//	public ResponseEntity<?> postMissing(@RequestPart("newImage") MultipartFile file, @RequestBody PetDTO pet){
-//	
-//		System.out.println("Zahtev stigaoooooooooo, fajl: " + file.getName());
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	
+
 	@PostMapping(value = "/uploadPhoto")
 	public ResponseEntity<?> postMissing(@RequestPart("newImage") MultipartFile file){
 	
@@ -174,6 +172,67 @@ public class PetController {
             
         }
 		return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+	}
+	
+	@RequestMapping(value="/petFound/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> petFound(@PathVariable Long id){
+		
+		Pet pet = petService.findById(id);
+		
+		if(pet == null)
+		{
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+		pet.setFound(true);
+		petService.addNewPet(pet);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/deleteReport/{id}/{email}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteMissingReport(@PathVariable Long id, @PathVariable String email){
+		
+		Pet pet = petService.findById(id);
+		User user = userService.getByEmail(email);
+		
+		if(pet == null || user == null)
+		{
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!deleteFile(pet))
+		{
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+		petService.deleteItem(pet);
+		
+		List<Pet> petsAfterDelete = petService.findAllByOwnerId(user.getId());
+		List<PetDTO> petsDTO = converter.convertToPetDTO(petsAfterDelete);
+		
+		return new ResponseEntity<>(petsDTO, HttpStatus.OK);
+	}
+	
+	public boolean deleteFile(Pet pet) {
+		
+	
+		try {
+			
+			File file = new File(this.fileLocation + "\\" + pet.getImage());
+			if(file.delete())
+			{
+				System.out.println("Image deleted!");
+				return true;
+			}else
+			{
+				System.out.println("Failed");
+			}
+		}catch(Exception e)
+        {
+            System.out.println("Failed to Delete image !!");
+        }
+		
+	    return false;
 	}
 }
 

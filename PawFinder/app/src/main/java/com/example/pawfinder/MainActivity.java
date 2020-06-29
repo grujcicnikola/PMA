@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private RangeUtils rangeUtils;
     private SeekBar np;
     public BroadcastReceiver alarm_receiver;
+    private TextView user_drawer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         nearYouRange = 10;
 
         setContentView(R.layout.activity_main);
-//        prefConfig = new PrefConfig(this);
 
         mainActivity = this;
         setTitle(R.string.app_name);
@@ -222,6 +224,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
+                        user_drawer.setText("");
+                        try {
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
@@ -234,22 +243,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 return true;
             }
         });
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
-            //setovanje email-a ulogovanog korisnika
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                TextView user_drawer = (TextView) findViewById(R.id.drawer_user);
-                if (prefConfig.readLoginStatus()) {
-                    user_drawer.setText(prefConfig.readUserEmail());
-                }
 
-                invalidateOptionsMenu();
-            }
-
-        };
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
-        toggle.syncState();
 
     }
 
@@ -279,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         return super.onOptionsItemSelected(item);
     }
-
 
     public void setupSharedPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -361,6 +354,23 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+            //setovanje email-a ulogovanog korisnika
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                user_drawer = (TextView) findViewById(R.id.drawer_user);
+                if (prefConfig.readLoginStatus()) {
+                    user_drawer.setText(prefConfig.readUserEmail());
+                }
+
+                invalidateOptionsMenu();
+            }
+
+        };
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
 
         ReactiveNetwork
                 .observeNetworkConnectivity(getApplicationContext())
@@ -485,11 +495,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
-
-
-
+    
     public Integer getNearYouRange() {
         return nearYouRange;
     }
+
 }
 

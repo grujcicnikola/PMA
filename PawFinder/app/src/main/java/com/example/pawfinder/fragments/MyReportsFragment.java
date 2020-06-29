@@ -1,7 +1,11 @@
 package com.example.pawfinder.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +55,9 @@ public class MyReportsFragment extends Fragment {
     private List<Pet> pets = new ArrayList<Pet>();
     private static PrefConfig prefConfig;
     private MyReportsListAdapter adapter;
-    TextView text;
+    private TextView text;
+    private TextView textLogin;
+    private ProgressDialog progressDialog;
 
     public static MyReportsFragment newInstance(Bundle bundle) {
         MyReportsFragment fragment = new MyReportsFragment();
@@ -65,9 +72,11 @@ public class MyReportsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_reports, container, false);
         prefConfig = new PrefConfig(view.getContext());
-        list = (ListView) view.findViewById(R.id.reports_list);
+        progressDialog = new ProgressDialog(view.getContext());
 
+        list = (ListView) view.findViewById(R.id.reports_list);
         text = (TextView) view.findViewById(R.id.reports_message);
+        textLogin = (TextView) view.findViewById(R.id.reports_login_message);
 
         return view;
     }
@@ -87,6 +96,29 @@ public class MyReportsFragment extends Fragment {
                             if (pets.size() > 0) {
                                 adapter = new MyReportsListAdapter(getContext(), pets);
                                 list.setAdapter(adapter);
+
+                                list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                    @Override
+                                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                       new AlertDialog.Builder(getContext())
+                                               .setIcon(R.drawable.iconsdelete)
+                                               .setTitle(R.string.comment_delete_dialog_title)
+                                               .setMessage(R.string.comment_delete_dialog_text)
+                                               .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(DialogInterface dialog, int which) {
+
+                                                       //Brisanjeeeeeee
+                                                       Pet pet = (Pet) adapter.getItem(position);
+                                                       deleteReport(pet.getId(), prefConfig.readUserEmail());
+                                                   }
+                                               }).setNegativeButton(R.string.no, null)
+                                                .show();
+
+                                        return true;
+                                    }
+                                });
                             } else {
                                 text.setVisibility(View.VISIBLE);
                             }
@@ -99,29 +131,33 @@ public class MyReportsFragment extends Fragment {
                     }
                 });
 
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                        Intent intent = new Intent(getContext(), ReportDetailActivity.class);
+                        intent.putExtra("report_pet_id", pets.get(position).getId());
+                        intent.putExtra("report_pet_name", pets.get(position).getName());
+                        intent.putExtra("report_pet_type", pets.get(position).getType().toString());
+                        intent.putExtra("report_pet_date", pets.get(position).getMissingSince());
+                        intent.putExtra("report_pet_image", pets.get(position).getImage());
+                        intent.putExtra("report_pet_additionalInfo", pets.get(position).getAdditionalInfo());
+                        intent.putExtra("report_pet_of_pet", pets.get(position).getId());
+                        intent.putExtra("is_found", pets.get(position).isFound());
+                        Log.d("PETSIMAAGE", pets.get(position).getImage());
+                        startActivity(intent);
+                    }
+                });
+            }else
+            {
+                pets.clear();
+                textLogin.setVisibility(View.VISIBLE);
             }
         }else{
             fillView();
         }
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getContext(), ReportDetailActivity.class);
-                intent.putExtra("report_pet_name", pets.get(position).getName());
-                intent.putExtra("report_pet_type", pets.get(position).getType().toString());
-                intent.putExtra("report_pet_date", pets.get(position).getMissingSince());
-                intent.putExtra("report_pet_image", pets.get(position).getImage());
-                intent.putExtra("report_pet_additionalInfo", pets.get(position).getAdditionalInfo());
-                intent.putExtra("report_pet_of_pet", pets.get(position).getId());
-                Log.d("PETSIMAAGE", pets.get(position).getImage());
-                startActivity(intent);
-            }
-        });
     }
 
     public void fillView(){
@@ -179,6 +215,36 @@ public class MyReportsFragment extends Fragment {
         pets = petView;
         adapter = new MyReportsListAdapter(getContext(), pets);
         list.setAdapter(adapter);
+
+    }
+
+    public void deleteReport(Long id, String email)
+    {
+        progressDialog.setTitle(getResources().getString(R.string.comment_progress_title));
+        progressDialog.setMessage(getResources().getString(R.string.comment_progress_text));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Call<List<Pet>> call = ServiceUtils.petService.deleteReport(id, email);
+        call.enqueue(new Callback<List<Pet>>() {
+            @Override
+            public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+
+                if (response.code() == 200) {
+                    progressDialog.dismiss();
+                    //Toast.makeText(getContext(), "Vas izvestaj je uspesno obrisan", Toast.LENGTH_LONG).show();
+                    adapter.updateResults(response.body());
+                    getContext().getContentResolver().delete(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + id), "", null);
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(), "Greskaa", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pet>> call, Throwable t) {
+
+            }
+        });
 
     }
 

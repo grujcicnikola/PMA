@@ -13,8 +13,8 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
 	List<Pet> findAllByIsFound(boolean b);
 	
-	List<Pet> findAllByOwnerId(Long ownerId);
+	List<Pet> findAllByOwnerIdOrderByMissingSinceDesc(Long ownerId);
 	
-	List<Pet> findByOrderByMissingSinceDesc();
+	List<Pet> findAllByIsFoundOrderByMissingSinceDesc(boolean b);
 
 }

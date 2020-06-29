@@ -49,6 +49,7 @@ import com.example.pawfinder.sync.PetSqlSync;
 import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.PrefConfig;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -248,6 +249,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
         //(resultCode == numberOfSelected &&???
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
+            //Picasso.get().load(uri).into(imageView);
             imageBitMap = compressImage(uri);
             imageView.setImageBitmap(imageBitMap);
             imgFile = new File(getPathFromUri(uri));
@@ -298,6 +300,11 @@ public class MissingReportThirdPage extends AppCompatActivity {
                             public void onResponse(Call<Pet> call, Response<Pet> response) {
                                 progressDialog.dismiss();
                                 if (response.code() == 200) {
+                                    ContentValues entry = new ContentValues();
+                                    Pet p = response.body();
+                                    PetSqlSync.fillContent(p, entry);
+                                    entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
+                                    getApplicationContext().getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
 
                                     Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);

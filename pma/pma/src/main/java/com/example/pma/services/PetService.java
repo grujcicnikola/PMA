@@ -18,7 +18,7 @@ public class PetService {
 
 	public List<Pet> findAll() {
 		// TODO Auto-generated method stub
-		return petRepo.findByOrderByMissingSinceDesc();
+		return petRepo.findAllByIsFoundOrderByMissingSinceDesc(false);
 	}
 
 	public List<Pet> findAllByIsFound(boolean b) {
@@ -28,7 +28,7 @@ public class PetService {
 
 	public List<Pet> findAllByOwnerId(Long ownerId) {
 		// TODO Auto-generated method stub
-		return petRepo.findAllByOwnerId(ownerId);
+		return petRepo.findAllByOwnerIdOrderByMissingSinceDesc(ownerId);
 	}
 
 	public Pet addNewPet(Pet pet) {
@@ -40,5 +40,10 @@ public class PetService {
 	public Pet findById(Long id) {
 		// TODO Auto-generated method stub
 		return petRepo.findById(id).get();
+	}
+	
+	public void deleteItem(Pet pet) {
+		
+		petRepo.delete(pet);
 	}
 }

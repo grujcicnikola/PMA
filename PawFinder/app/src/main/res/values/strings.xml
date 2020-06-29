@@ -55,6 +55,9 @@
     <string name="title_missing_third">Valuable information</string>
     <string name="title_activity_view_on_map">Pet\'s location</string>
     <string name="reports_label">You don\'t have any missing report</string>
+    <string name="reports_login_label">If you want to see your reports, please login</string>
+    <string name="title_delete_action">Are you sure you want to delete this?</string>
+    <string name="message_delete_action">Delete item</string>
 
 
     <!-- Login activity -->
@@ -124,6 +127,7 @@
     <string name="near_you_message">Your Locations seems to be disabled, do you want to enable it? We need your location to show pets lost near you.</string>
     <string name="map_message">Your Locations seems to be disabled, do you want to enable it? If you allow us to locate you, you will easier pin where your pet is lost.</string>
     <string name="sure">Sure</string>
+    <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="location_alert_title">Allow user location</string>
     <string name="location_alert_message">To continue working we need your locations....Allow now?</string>

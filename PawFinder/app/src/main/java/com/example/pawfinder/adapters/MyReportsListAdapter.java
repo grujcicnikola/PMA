@@ -68,4 +68,8 @@ public class MyReportsListAdapter extends BaseAdapter {
         return view;
     }
 
+    public void updateResults(List<Pet> updatedReports){
+        missingPets = updatedReports;
+        notifyDataSetChanged();
+    }
 }

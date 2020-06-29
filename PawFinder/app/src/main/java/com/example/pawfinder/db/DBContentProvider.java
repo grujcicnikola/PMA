@@ -13,6 +13,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.pawfinder.model.Pet;
+
 public class DBContentProvider extends ContentProvider {
 
     private PetSQLHelper database;
@@ -173,5 +175,13 @@ public class DBContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
+    }
+
+    public void delete(Pet pet){
+        SQLiteDatabase sqlDB = database.getWritableDatabase();
+        String table = PetSQLHelper.TABLE_PET;
+        String whereClause = "_id=?";
+        String[] whereArgs = new String[] { String.valueOf(pet.getId()) };
+        sqlDB.delete(table, whereClause, whereArgs);
     }
 }

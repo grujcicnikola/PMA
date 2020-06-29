@@ -24,6 +24,10 @@ public class ServiceUtils {
     public static final String GET_ALL_COMMENTS_BY_PET = "comment/getAllByPet/{petId}";
     public static final String DELETE_COMMENT ="comment/delete/{id}" ;
     public static final String CHANGE_PASSWORD = "user/changePassword";
+    public static final String DELETE_REPORT = "pet/deleteReport/{id}/{email}";
+    public static final String PET_FOUND = "pet/petFound/{id}";
+    public static final String GET_PETS_BY_OWNER = "pet/getByOwner/{email}";
+    public static final String PET_IMAGE_UPLOAD= "pet/uploadPhoto";
 
 
     public static OkHttpClient test() {

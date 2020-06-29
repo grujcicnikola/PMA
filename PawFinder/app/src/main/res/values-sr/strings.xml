@@ -55,6 +55,9 @@
     <string name="title_missing_third">Važne informacije</string>
     <string name="title_activity_view_on_map">Lokacija ljubimca</string>
     <string name="reports_label">Nemate prijavljenih nestanaka</string>
+    <string name="reports_login_label">Ulogujte se da biste videli prijave nestanka</string>
+    <string name="title_delete_action">Da li ste sigurni da želite da obrisete prijavu?</string>
+    <string name="message_delete_action">Brisanje prijave</string>
 
     <!-- Login activity -->
     <string name="message_label">Zdravo, prijavite se da biste prijavili nestanak ili pronalazak ljubimca.</string>
@@ -123,6 +126,7 @@
     <string name="near_you_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Vasa lokacija nam je potrebna da bismo vam prikazali koji su ljubimci nestali u vasoj blizini.</string>
     <string name="map_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Ukoliko dopustite da vas lociramo, lakse cete oznaciti gde vam je ljubimac nestao.</string>
     <string name="sure">Naravno</string>
+    <string name="yes">Da</string>
     <string name="no">Ne</string>
     <string name="location_alert_title">Dozvolite lociranje</string>
     <string name="location_alert_message">Za koriscenje svih funkcija aplikacije potrebna je vasa lokacija.... Da li sada dopustate?</string>
