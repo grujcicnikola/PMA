@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -68,6 +69,10 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         progressDialog = new ProgressDialog(this);
         setTitle(R.string.comments);
         setContentView(R.layout.view_comments_pet);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity = this;
         prefConfig = new PrefConfig(this);
         Long petsId = null;
@@ -225,37 +230,41 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
 
     public void addComment(String message) {
         //Log.d("messageComment", message);
-        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
-        //messageEditText.clearFocus();
-        messageEditText.getText().clear();
-        //ong id, String message, Date date, User user, Pet pet
-        User user = new User();
-        if (prefConfig.readLoginStatus()) {
-            user.setEmail(prefConfig.readUserEmail());
-            //Log.i("userkkkk", user.getEmail());
-            final Comment comment = new Comment(message, null, user, petInfo);
-            Call<Comment> call = ServiceUtils.commentService.addComment(comment);
-            //Log.d("COMMENTADD", "usao");
-            call.enqueue(new Callback<Comment>() {
-                @Override
-                public void onResponse(Call<Comment> call, Response<Comment> response) {
-                    comments.add(response.body());
-                    commentAdapter.updateResults(comments);
-                    //commentAdapter.notifyDataSetChanged();
+        int status = NetworkTool.getConnectivityStatus(getApplicationContext());
+        if (status != NetworkTool.TYPE_NOT_CONNECTED) {
+            InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
+            //messageEditText.clearFocus();
+            messageEditText.getText().clear();
+            //ong id, String message, Date date, User user, Pet pet
+            User user = new User();
+            if (prefConfig.readLoginStatus()) {
+                user.setEmail(prefConfig.readUserEmail());
+                //Log.i("userkkkk", user.getEmail());
+                final Comment comment = new Comment(message, null, user, petInfo);
+                Call<Comment> call = ServiceUtils.commentService.addComment(comment);
+                //Log.d("COMMENTADD", "usao");
+                call.enqueue(new Callback<Comment>() {
+                    @Override
+                    public void onResponse(Call<Comment> call, Response<Comment> response) {
+                        comments.add(response.body());
+                        commentAdapter.updateResults(comments);
+                        //commentAdapter.notifyDataSetChanged();
 
 
-                }
+                    }
 
-                @Override
-                public void onFailure(Call<Comment> call, Throwable t) {
-                    Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
-                    // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Comment> call, Throwable t) {
+                        Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
+                        // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_LONG).show();
         }
-
 
     }
 
@@ -293,6 +302,19 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
     protected void onPause() {
         super.onPause();
         unregisterReceiver(alarm_receiver); // to stop the broadcast when the app is killed
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish(); //close this activity and return to preview activity
+                break;
+        }
+
+        return true;
     }
 
 }

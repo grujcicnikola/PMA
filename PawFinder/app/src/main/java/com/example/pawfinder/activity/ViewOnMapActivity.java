@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.pawfinder.R;
 import com.example.pawfinder.fragments.MapsFragment;
@@ -33,6 +35,10 @@ public class ViewOnMapActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_view_on_map);
         setTitle(R.string.title_activity_view_on_map);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -54,6 +60,19 @@ public class ViewOnMapActivity extends AppCompatActivity {
             ft.add(R.id.pet_location_map, viewOnMapFragment, null);
             ft.commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish(); //close this activity and return to preview activity
+                break;
+        }
+
+        return true;
     }
 
 }

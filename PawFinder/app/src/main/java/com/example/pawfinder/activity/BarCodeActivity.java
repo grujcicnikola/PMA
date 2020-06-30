@@ -1,6 +1,7 @@
 package com.example.pawfinder.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -245,21 +246,20 @@ public class BarCodeActivity extends AppCompatActivity {
         initialiseDetectorsAndSources();
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (getParentActivityIntent() == null) {
-
-                    onBackPressed();
-                } else {
-                    NavUtils.navigateUpFromSameTask(this);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+                break;
         }
-    }
 
+        return true;
+    }
 }
 

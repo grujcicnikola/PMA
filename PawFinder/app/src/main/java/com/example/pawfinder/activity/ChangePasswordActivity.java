@@ -3,33 +3,20 @@ package com.example.pawfinder.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
-import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
-import com.example.pawfinder.sync.PetSqlSync;
-import com.example.pawfinder.tools.NetworkTool;
 import com.example.pawfinder.tools.PrefConfig;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,8 +65,27 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.code() == 200) {
                         Toast.makeText(getApplicationContext(), getText(R.string.success_change_password), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        finish();
+                        /*int callingActivity = getIntent().getIntExtra("calling-activity", 0);
+                        Intent intent;
+                        switch (callingActivity) {
+                            case ActivityConstants.ACTIVITY_MAIN:
+                                intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                break;
+                            case ActivityConstants.ACTIVITY_REPORT_DETAIL:
+                                intent = new Intent(ChangePasswordActivity.this, ReportDetailActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                break;
+                            case ActivityConstants.ACTIVITY_MISSING_DETAIL:
+                                intent = new Intent(ChangePasswordActivity.this, PetDetailActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                break;
+                        }
+    */
                     }else{
                         Toast.makeText(getApplicationContext(), getText(R.string.old_passwords), Toast.LENGTH_SHORT).show();
                     }
@@ -92,5 +98,19 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 }
             });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+                break;
+        }
+
+        return true;
     }
 }

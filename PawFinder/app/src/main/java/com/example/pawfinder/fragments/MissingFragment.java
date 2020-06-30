@@ -119,6 +119,7 @@ public class MissingFragment extends Fragment{
                     adapter = new PetsListAdapter(getContext(), response.body());
                     list.setAdapter(adapter);
                     PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, getContext(), 0);
+
                     Log.d("POSLEFORA", " - " + pets);
                     if (response.code() == 200) {
                         Log.d("REZ", "Meesage recieved");

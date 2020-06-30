@@ -37,6 +37,8 @@
 
         <activity android:name=".activity.ChangePasswordActivity"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
           ></activity>
         <activity
             android:name=".activity.ReportDetailActivity"
@@ -125,6 +127,7 @@
         <activity
             android:name=".activity.PreferenceActivity"
             android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <meta-data

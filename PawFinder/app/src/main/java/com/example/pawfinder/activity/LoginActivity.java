@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     } else if (response.code() == 403) {
                         Toast.makeText(context, R.string.login_email_error, Toast.LENGTH_LONG).show();
                     } else if (response.code() == 400) {

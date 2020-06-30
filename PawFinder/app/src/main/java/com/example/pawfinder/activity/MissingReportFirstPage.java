@@ -133,7 +133,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
                         intent.putExtra("PET_GENDER", gender_value);
                         intent.putExtra("PET_TYPE", type_value);
                         intent.putExtra("PET_DATE_LOST", dateText.getText().toString());
-                        startActivity(intent);
+                        startActivityForResult(intent,2);
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
@@ -172,5 +172,13 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
             //gender.setSelection((int) savedInstanceState.getBinder("PET_GENDER_ID"));
         }
     }*/
+   @Override
+   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+       super.onActivityResult(requestCode, resultCode, data);
+       if(resultCode==2){
+           finish();
+       }
+   }
+
 
 }

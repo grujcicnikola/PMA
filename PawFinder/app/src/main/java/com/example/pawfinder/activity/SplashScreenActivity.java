@@ -46,18 +46,23 @@ public class SplashScreenActivity extends Activity {
 
         if (prefConfig.readLoginStatus()) //
         {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            SplashScreenActivity.this.finish();
-            if(getIntent()!=null){
-                Bundle bundle = getIntent().getExtras();
-                if (bundle != null) {
-                    buildABackstack(bundle);
-                    finish();
+            setContentView(R.layout.splash);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                    if(getIntent()!=null){
+                        Bundle bundle = getIntent().getExtras();
+                        if (bundle != null) {
+                            buildABackstack(bundle);
+                            finish();
 
 
+                        }
+                    }
+                    finish(); // da ne bi mogao da ode back na splash
                 }
-            }
+            }, SPLASH_TIME_OUT);
 
         } else {
             setContentView(R.layout.splash);

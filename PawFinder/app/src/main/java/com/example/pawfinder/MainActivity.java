@@ -1,25 +1,12 @@
 package com.example.pawfinder;
 
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -28,7 +15,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,33 +22,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pawfinder.activity.BarCodeActivity;
 import com.example.pawfinder.activity.ChangePasswordActivity;
 import com.example.pawfinder.activity.LoginActivity;
 import com.example.pawfinder.activity.MissingReportFirstPage;
-import com.example.pawfinder.activity.ViewCommentsActivity;
-import com.example.pawfinder.adapters.PetsListAdapter;
 import com.example.pawfinder.adapters.ViewPagerAdapter;
 import com.example.pawfinder.activity.PreferenceActivity;
-import com.example.pawfinder.db.DBContentProvider;
-import com.example.pawfinder.fragments.MissingFragment;
-import com.example.pawfinder.fragments.NearYouFragment;
-import com.example.pawfinder.model.Pet;
-import com.example.pawfinder.model.Comment;
 import com.example.pawfinder.model.User;
-import com.example.pawfinder.service.CommentService;
 import com.example.pawfinder.service.MyFirebaseInstanceService;
 import com.example.pawfinder.service.ServiceUtils;
-import com.example.pawfinder.sync.PetSqlSync;
 import com.example.pawfinder.sync.SyncReceiver;
 import com.example.pawfinder.tools.LocaleUtils;
 import com.example.pawfinder.tools.NetworkTool;
@@ -76,11 +48,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import hossamscott.com.github.backgroundservice.RunService;
 import io.reactivex.Observer;
@@ -196,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     case R.id.navigation_item_item:
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
-                            startActivity(missingReport);
+                            startActivityForResult(missingReport,2);
                         }else{
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                         }
@@ -205,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     case R.id.navigation_item_change_password:
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             i = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                            //i.putExtra("calling-activity", ActivityConstants.ACTIVITY_MAIN);
                             startActivity(i);
                         }else{
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
@@ -225,15 +193,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
                         user_drawer.setText("");
-                        try {
-                            FirebaseInstanceId.getInstance().deleteInstanceId();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
                         Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
+                        finish();
                         break;
 
                 }
@@ -327,14 +292,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             case "language": {
                 localeUtils.setLocale();
                 finish();
-                startActivity(getIntent());
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity(i);
+                //recreate();
                 break;
             }
             case "theme": {
                 themeUtils.setTheme();
                 //setTheme(R.style.darktheme);
                 finish();
-                startActivity(getIntent());
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                //recreate();
                 break;
             }
             case "notification": {

@@ -80,7 +80,7 @@ public class MapsActivity extends AppCompatActivity {
                         intent.putExtra("PET_GENDER", help.getStringExtra("PET_GENDER"));
                         intent.putExtra("PET_TYPE", help.getStringExtra("PET_TYPE"));
                         intent.putExtra("PET_DATE_LOST", help.getStringExtra("PET_DATE_LOST"));
-                        startActivity(intent);
+                        startActivityForResult(intent,2);
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
@@ -90,6 +90,15 @@ public class MapsActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2){
+            finish();
+        }
+    }
+
+
 
 
 }

@@ -258,6 +258,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
     }
 
     public void addPet(final Pet petAdd) {
+        imageBitMap = compressImage(uri);
         if (NetworkTool.getConnectivityStatus(getApplicationContext()) == NetworkTool.TYPE_NOT_CONNECTED) {
             Toast.makeText(this, R.string.network_disabled, Toast.LENGTH_SHORT).show();
             ArrayList<Pet> pets = new ArrayList<>();
@@ -307,8 +308,10 @@ public class MissingReportThirdPage extends AppCompatActivity {
                                     getApplicationContext().getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
 
                                     Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
-                                    startActivity(intent);
+                                    //Intent intent = new Intent(MissingReportThirdPage.this, PetDetailActivity.class);
+                                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    //startActivity(intent);
+                                    finish();
                                 }
                             }
 
@@ -466,5 +469,12 @@ public class MissingReportThirdPage extends AppCompatActivity {
             }
 
         return inSampleSize;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        setResult(2);
+        super.onDestroy();
     }
 }
