@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".activity.MissingReportThirdPage">
 
@@ -43,7 +44,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/phone_number"
                         android:textColor="?attr/yellow"
-                        android:textSize="30dp" />
+                        android:textSize="40dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:errorTextAppearance="@style/large_error"
+                        app:errorEnabled="true">
 
                     <EditText
                         android:id="@+id/enter_phone_number"
@@ -52,7 +60,8 @@
                         android:layout_gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="phone"
-                        android:textSize="30dp" />
+                        android:textSize="40dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/add_info"
                         android:textColor="?attr/yellow"
-                        android:textSize="30dp" />
+                        android:textSize="40dp" />
 
                     <EditText
                         android:id="@+id/enter_add_info"
@@ -79,24 +88,37 @@
                         android:layout_gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="text"
-                        android:textSize="30dp" />
+                        android:textSize="40dp" />
                 </LinearLayout>
 
 
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:errorTextAppearance="@style/xlarge_error"
+                android:layout_below="@id/linear"
+                app:errorEnabled="true"
+                >
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/choose_pet_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear"
+                android:layout_below="@id/layout_button"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/rounded_yellow_button"
                 android:text="@string/upload_image"
                 android:textColor="?attr/buttonText"
-                android:textSize="25dp" />
+                android:textSize="40dp" />
 
             <ImageView
                 android:id="@+id/upload_image_view"
@@ -121,5 +143,5 @@
         android:background="?attr/bigYellowBUtton"
         android:text="@string/finish"
         android:textColor="?attr/buttonText"
-        android:textSize="30dp" />
+        android:textSize="40dp" />
 </LinearLayout>

@@ -50,6 +50,7 @@
                         android:id="@+id/text_input_layout_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:errorTextAppearance="@style/normal_error"
                         app:errorEnabled="true">
 
                         <EditText
@@ -93,11 +94,23 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:errorTextAppearance="@style/normal_error"
+                android:layout_below="@id/linear"
+                app:errorEnabled="true"
+                >
+
+
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/choose_pet_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear"
+                android:layout_below="@id/layout_button"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"

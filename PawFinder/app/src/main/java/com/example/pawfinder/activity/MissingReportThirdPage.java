@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,6 +33,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -79,6 +81,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
     private Button finish;
     private EditText phoneNumberET;
     private TextInputLayout layoutPhone;
+    private TextInputLayout layoutImage;
     private EditText infoET;
 
     private Uri uri;
@@ -125,6 +128,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
         uploadImage = findViewById(R.id.choose_pet_image);
         phoneNumberET = findViewById(R.id.enter_phone_number);
         layoutPhone = findViewById(R.id.text_input_layout_phone);
+        layoutImage = findViewById(R.id.layout_button);
         infoET = findViewById(R.id.enter_add_info);
         finish = findViewById(R.id.btn_missing_report_third);
 
@@ -191,12 +195,13 @@ public class MissingReportThirdPage extends AppCompatActivity {
             public void onClick(View v) {
                 if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                     if (phoneNumberET.getText().toString().isEmpty() || phoneNumberET.getText().toString() == null) {
+                        keyboardDown();
                         layoutPhone.setError((getText(R.string.phone_blank)));
                     } else if (imageView.getDrawable() == null) {
-                        Toast.makeText(MissingReportThirdPage.this, R.string.image_blank, Toast.LENGTH_SHORT).show();
+                        keyboardDown();
+                        layoutImage.setError(getText(R.string.image_blank));
                     } else {
                         Address address = new Address(lon, lat);
-                        ;
                         User user = new User();
                         Geocoder geocoder;
                         List<android.location.Address> fullAddressFromMap;
@@ -257,11 +262,17 @@ public class MissingReportThirdPage extends AppCompatActivity {
             //Picasso.get().load(uri).into(imageView);
             imageBitMap = compressImage(uri);
             imageView.setImageBitmap(imageBitMap);
+            layoutImage.setError(null);
             imgFile = new File(getPathFromUri(uri));
 
         }
 
 
+    }
+
+    private void keyboardDown(){
+        ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
     public void addPet(final Pet petAdd) {

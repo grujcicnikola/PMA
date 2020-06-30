@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.CreateAccountActivity">
 
     <include layout="@layout/toolbar_layout"></include>
@@ -43,17 +44,29 @@
         android:id="@+id/c_email_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/c_email_label"
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"
+        android:layout_below="@id/c_email_label"
         android:inputType="textWebEmailAddress"
         android:textSize="25dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enter_email_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/c_image"
+        android:layout_alignRight="@id/c_image"
+        android:layout_below="@id/c_email_edit"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/large_error">
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/c_password_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/c_email_edit"
+        android:layout_below="@id/enter_email_layout"
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"
         android:text="@string/password"
@@ -71,37 +84,50 @@
         android:inputType="textPassword"
         android:textSize="25dp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enter_password_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/c_password_edit"
+        android:layout_alignLeft="@id/c_image"
+        android:layout_alignRight="@id/c_image"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/large_error">
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:id="@+id/c_lin_lay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/c_password_edit"
+        android:layout_below="@id/enter_password_layout"
         android:layout_alignLeft="@id/c_image"
         android:layout_alignRight="@id/c_image"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:buttonTint="?attr/yellow"
-            android:text="I agree to the "
-            android:textColor="@color/colorGrey"
-            android:textSize="20dp" />
+    <!-- <CheckBox
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+         android:buttonTint="?attr/yellow"
+         android:text="I agree to the "
+         android:textColor="@color/colorGrey"
+         android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/termsOfService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:text="@string/TermsOfServices"
-            android:textColorLink="?attr/yellow"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+     <TextView
+         android:id="@+id/termsOfService"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+         android:clickable="true"
+         android:text="@string/TermsOfServices"
+         android:textColorLink="?attr/yellow"
+         android:textSize="20dp"
+         android:textStyle="bold" />-->
 
-    </LinearLayout>
+ </LinearLayout>
 
     <Button
         android:id="@+id/c_signup_btn"

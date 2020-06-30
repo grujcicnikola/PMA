@@ -10,10 +10,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.example.pawfinder.R;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -39,6 +43,10 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     private Toolbar toolbar;
 
+    //za error poruke
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +60,15 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(R.string.btn_signUp);
 
+        layoutEmail = findViewById(R.id.enter_email_layout);
+        layoutPassword = findViewById(R.id.enter_password_layout);
+
         email = (EditText) findViewById(R.id.c_email_edit);
         password = (EditText) findViewById(R.id.c_password_edit);
         signUpButton = (Button) findViewById(R.id.c_signup_btn);
         signUpButton.setOnClickListener(this);
 
+        setErrorListeners();
     }
 
 
@@ -75,11 +87,14 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         String passwordText = password.getText().toString();
 
         if (TextUtils.isEmpty(emailText)) {
-            Toast.makeText(this, R.string.create_account_email_toast, Toast.LENGTH_SHORT).show();
+            keyboardDown();
+            layoutEmail.setError((getText(R.string.create_account_email_toast)));
         } else if (!this.validateEmail(emailText)) {
-            Toast.makeText(this, R.string.create_account_email_notvalid_toast, Toast.LENGTH_SHORT).show();
+            keyboardDown();
+            layoutEmail.setError((getText(R.string.create_account_email_notvalid_toast)));
         } else if (TextUtils.isEmpty(passwordText)) {
-            Toast.makeText(this, R.string.create_account_password_toast, Toast.LENGTH_SHORT).show();
+            keyboardDown();
+            layoutPassword.setError((getText(R.string.create_account_password_toast)));
         } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle(CreateAccountActivity.this.getResources().getString(R.string.create_account_dialog_title));
@@ -101,7 +116,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                         startActivity(intent);
 
                     } else if (response.code() == 400) {
-                        Toast.makeText(context, R.string.create_account_email_already_exists, Toast.LENGTH_LONG).show();
+                        keyboardDown();
+                        layoutEmail.setError((getText(R.string.create_account_email_already_exists)));
                     }
 
                 }
@@ -121,6 +137,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         return matcher.matches();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -132,5 +149,53 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         }
 
         return true;
+    }
+
+    private void keyboardDown(){
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void setErrorListeners() {
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!email.getText().toString().isEmpty()) {
+                    layoutEmail.setError(null);
+                }
+            }
+
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!password.getText().toString().isEmpty()) {
+                    layoutPassword.setError(null);
+                }
+            }
+
+        });
+
     }
 }

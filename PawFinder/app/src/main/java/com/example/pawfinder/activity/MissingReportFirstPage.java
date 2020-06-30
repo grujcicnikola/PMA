@@ -1,13 +1,18 @@
 
 package com.example.pawfinder.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -125,8 +130,11 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
             public void onClick(View v) {
                 if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                     if (name.getText().toString().isEmpty() || name.getText().toString() == null) {
+                        keyboardDown();
                         layoutName.setError((getText(R.string.name_blank)));
+
                     } else if (dateText.getText().toString().isEmpty() || dateText.getText().equals("dd/mm/yyyy") || dateText.getText().toString() == null) {
+                        keyboardDown();
                         layoutDate.setError((getText(R.string.date_blank)));
                     } else {
                         name.setError(null);
@@ -171,6 +179,25 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
     }
 
 
+    private void keyboardDown(){
+        ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+    }
+
+   /* @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            name = findViewById(R.id.enter_pet_name);
+            gender = findViewById(R.id.gender);
+            type = findViewById(R.id.type);
+            dateText = findViewById(R.id.text_view_date);
+            name.setText(savedInstanceState.getBundle("PET_NAME").toString());
+            dateText.setText(savedInstanceState.getBundle("PET_DATE_LOST").toString());
+            Toast.makeText(this, savedInstanceState.getBundle("PET_NAME").toString() + " " +savedInstanceState.getBundle("PET_DATE_LOST").toString(), Toast.LENGTH_SHORT).show();
+            //gender.setSelection((int) savedInstanceState.getBinder("PET_GENDER_ID"));
+        }
+    }*/
    @Override
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        super.onActivityResult(requestCode, resultCode, data);

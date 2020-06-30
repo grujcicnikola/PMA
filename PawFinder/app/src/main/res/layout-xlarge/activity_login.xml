@@ -56,17 +56,29 @@
         android:id="@+id/l_edit_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/l_email_label"
+        android:importantForAutofill="no"
+        android:inputType="textWebEmailAddress"
         android:layout_alignLeft="@id/l_image_view"
         android:layout_alignRight="@id/l_image_view"
-        android:inputType="textWebEmailAddress"
-        android:textSize="40dp" />
+        android:layout_below="@id/l_email_label"
+        android:textSize="40dp"  />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enter_email_login_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_below="@id/l_edit_email"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/xlarge_error">
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/l_password_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/l_edit_email"
+        android:layout_below="@id/enter_email_login_layout"
         android:layout_alignLeft="@id/l_image_view"
         android:layout_alignRight="@id/l_image_view"
         android:text="@string/password"
@@ -78,17 +90,29 @@
         android:id="@+id/l_edit_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/l_password_label"
         android:layout_alignLeft="@id/l_image_view"
         android:layout_alignRight="@id/l_image_view"
+        android:layout_below="@id/l_password_label"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        android:textSize="40dp" />
+        android:textSize="40dp"  />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enter_password_login_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/l_image_view"
+        android:layout_alignRight="@id/l_image_view"
+        android:layout_below="@id/l_edit_password"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/xlarge_error">
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/bLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/l_edit_password"
+        android:layout_below="@id/enter_password_login_layout"
         android:layout_alignLeft="@id/l_image_view"
         android:layout_alignRight="@id/l_image_view"
         android:layout_gravity="center"

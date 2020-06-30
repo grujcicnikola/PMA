@@ -37,7 +37,7 @@ public class PetSQLHelper extends SQLiteOpenHelper {
 
     private static final String DB_CREATE = "create table "
             + TABLE_PET + "("
-            + COLUMN_ID  + " integer primary key autoincrement , "
+            + COLUMN_ID  + " integer primary key  , "       //autoincrement
             + COLUMN_NAME + " text, "
             + COLUMN_TYPE + " text, "
             + COLUMN_GENDER + " text, "

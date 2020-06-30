@@ -13,7 +13,7 @@
     <string name="nav_item_settings">Podešavanja</string>
     <string name="nav_item_login">Prijava</string>
     <string name="nav_item_logout">Odjava</string>
-    <string name="nav_item_change_password">Promena šifre</string>
+    <string name="nav_item_change_password">Promena lozinke</string>
     <string name="qr_code_text">Dodaj sadržaj</string>
     <string name="createAccount">
         <a href="#">Kreiraj nalog</a>
@@ -173,6 +173,8 @@
     <string name="new_password">Nova lozinka</string>
     <string name="new_again_password">Nova lozinka, unesite jos jednom</string>
     <string name="ok">OK</string>
+    <string name="current_empty">Molimo vas unesite trenutnu lozinku.</string>
+    <string name="new_empty">Nova lozinka ne moze biti prazna.</string>
 </resources>
 
 

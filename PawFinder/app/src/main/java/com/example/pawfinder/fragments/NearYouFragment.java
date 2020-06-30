@@ -136,7 +136,6 @@ public class NearYouFragment extends Fragment implements LocationListener, OnMap
 
 
     public void checkAndLocate(){
-
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean wifi = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 

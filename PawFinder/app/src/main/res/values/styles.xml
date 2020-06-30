@@ -116,5 +116,20 @@
     <style name="BlackText">
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="normal_error" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="large_error" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="xlarge_error" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">35dp</item>
+    </style>
 </resources>
 

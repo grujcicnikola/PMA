@@ -9,10 +9,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.example.pawfinder.R;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.PrefConfig;
+import com.google.android.material.textfield.TextInputLayout;
 
 import android.content.Intent;
 import android.widget.Toast;
@@ -42,6 +46,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
 
+    //za error poruke
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +68,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
         TextView createAccountView = (TextView) findViewById(R.id.lCreateAccount);
         createAccountView.setOnClickListener(this);
+
+        layoutEmail = findViewById(R.id.enter_email_login_layout);
+        layoutPassword = findViewById(R.id.enter_password_login_layout);
+
+        setErrorListeners();
     }
 
     @Override
@@ -97,9 +110,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String passwordTxt = passwordEdit.getText().toString();
 
         if (TextUtils.isEmpty(emailTxt)) {
-            Toast.makeText(this, R.string.create_account_email_toast, Toast.LENGTH_SHORT);
+            keyboardDown();
+            layoutEmail.setError((getText(R.string.create_account_email_toast)));
         } else if(TextUtils.isEmpty(passwordTxt)){
-            Toast.makeText(this, R.string.create_account_password_toast, Toast.LENGTH_SHORT);
+            keyboardDown();
+            layoutPassword.setError((getText(R.string.create_account_password_toast)));
         }
         else {
             progressDialog = new ProgressDialog(this);
@@ -124,9 +139,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 403) {
-                        Toast.makeText(context, R.string.login_email_error, Toast.LENGTH_LONG).show();
+                        keyboardDown();
+                        layoutEmail.setError((getText(R.string.login_email_error)));
                     } else if (response.code() == 400) {
-                        Toast.makeText(context, R.string.login_password_error, Toast.LENGTH_LONG).show();
+                        keyboardDown();
+                        layoutPassword.setError((getText(R.string.login_password_error)));
                     }
                 }
 
@@ -144,5 +161,53 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    private void keyboardDown(){
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void setErrorListeners() {
+        emailEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!emailEdit.getText().toString().isEmpty()) {
+                    layoutEmail.setError(null);
+                }
+            }
+
+        });
+
+        passwordEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!passwordEdit.getText().toString().isEmpty()) {
+                    layoutPassword.setError(null);
+                }
+            }
+
+        });
+
     }
 }
