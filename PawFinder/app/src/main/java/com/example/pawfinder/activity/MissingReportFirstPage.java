@@ -26,6 +26,7 @@ import com.example.pawfinder.activity.MapsActivity;
 import com.example.pawfinder.model.PetGender;
 import com.example.pawfinder.model.PetType;
 import com.example.pawfinder.tools.NetworkTool;
+import com.example.pawfinder.tools.PrefConfig;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
@@ -47,6 +48,15 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
+
+//        if(savedInstanceState != null)
+//        {
+//            name.setText(savedInstanceState.getString("petName"));
+//        }else
+//        {
+//            Log.d("NULTAG", "NUL jeeeeeee");
+//        }
+
         setContentView(R.layout.activity_missing_report_first_page);
         setTitle(R.string.title_missing_first);
         toolbar = findViewById(R.id.toolBar);
@@ -158,20 +168,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
         dateText.setText(date);
     }
 
-   /* @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            name = findViewById(R.id.enter_pet_name);
-            gender = findViewById(R.id.gender);
-            type = findViewById(R.id.type);
-            dateText = findViewById(R.id.text_view_date);
-            name.setText(savedInstanceState.getBundle("PET_NAME").toString());
-            dateText.setText(savedInstanceState.getBundle("PET_DATE_LOST").toString());
-            Toast.makeText(this, savedInstanceState.getBundle("PET_NAME").toString() + " " +savedInstanceState.getBundle("PET_DATE_LOST").toString(), Toast.LENGTH_SHORT).show();
-            //gender.setSelection((int) savedInstanceState.getBinder("PET_GENDER_ID"));
-        }
-    }*/
+
    @Override
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        super.onActivityResult(requestCode, resultCode, data);
@@ -179,6 +176,5 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
            finish();
        }
    }
-
 
 }

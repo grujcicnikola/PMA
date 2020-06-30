@@ -82,6 +82,10 @@
     <string name="pref_user_email">com.abc.preference_user_email</string>
     <string name="pref_notification_summary">Allow notifications</string>
     <string name="pref_notification">Notification</string>
+    <string name="pref_pet_name">com.abc.preference_pet_name</string>
+    <string name="pref_pet_gender">com.abc.preference_pet_gender</string>
+    <string name="pref_pet_type">com.abc.preference_pet_type</string>
+    <string name="pref_pet_date">com.abc.preference_pet_date</string>
 
     <!--komentari-->
     <string name="label_name_comment">Name:</string>

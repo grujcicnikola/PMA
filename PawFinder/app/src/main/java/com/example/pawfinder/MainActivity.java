@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
-    
+
     public Integer getNearYouRange() {
         return nearYouRange;
     }
