@@ -1,13 +1,16 @@
 
 package com.example.pawfinder.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -25,6 +28,14 @@ import com.example.pawfinder.R;
 import com.example.pawfinder.model.User;
 import com.example.pawfinder.service.ServiceUtils;
 import com.example.pawfinder.tools.PrefConfig;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.content.Intent;
@@ -38,13 +49,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Intent intent;
     private EditText emailEdit, passwordEdit;
     private static PrefConfig prefConfig;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
+    private SignInButton googleSignInBtn;
+    private static final int SIGN_IN = 1;
+    private GoogleSignInClient googleClient;
 
     //za error poruke
     private TextInputLayout layoutEmail;
@@ -57,6 +71,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             setTheme(R.style.darktheme);
         }
         setContentView(R.layout.activity_login);
+
+        GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleClient = GoogleSignIn.getClient(this, gso);
+        googleSignInBtn=(SignInButton)findViewById(R.id.bGoogleLogin);
+        googleSignInBtn.setOnClickListener(this);
 
         prefConfig = new PrefConfig(this);
         Button loginBtn = (Button) findViewById(R.id.bLogin);
@@ -87,8 +108,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.bLogin:
                 login(v.getContext());
                 break;
+            case R.id.bGoogleLogin:
+                Intent intent = googleClient.getSignInIntent();
+                startActivityForResult(intent,SIGN_IN);
+                break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==SIGN_IN){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            googleLogin(result);
+        }
     }
 
     @Override
@@ -133,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.code() == 200) //ok
                     {
                         prefConfig.writeUserEmail(emailTxt);
+                        prefConfig.writeUserGoogleStatus( false);
                         Log.d("loggeduser",emailTxt);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
@@ -144,6 +179,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } else if (response.code() == 400) {
                         keyboardDown();
                         layoutPassword.setError((getText(R.string.login_password_error)));
+                    } else if (response.code() == 502){
+                        keyboardDown();
+                        Toast.makeText(LoginActivity.this, "Try login with google account.", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -154,6 +192,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             });
         }
 
+    }
+
+    private void googleLogin(GoogleSignInResult result){
+        if(result.isSuccess()){
+
+            String name = result.getSignInAccount().getDisplayName();
+            String email = result.getSignInAccount().getEmail();
+            String[] parts = name.split(" ");
+            String firstName = parts[0];
+            String surname = parts[1];
+//            Uri imageUri = result.getSignInAccount().getPhotoUrl();
+            User user = new User(email, null,  null, true);
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle(LoginActivity.this.getResources().getString(R.string.login_dialog_title));
+            progressDialog.setMessage(LoginActivity.this.getResources().getString(R.string.dialog_message));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            Call<ResponseBody> call = ServiceUtils.userService.googleLogin(user);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressDialog.dismiss();
+                    if (result.isSuccess())
+                    {
+                        prefConfig.writeUserEmail(email);
+                        prefConfig.writeUserGoogleStatus(true);
+                        prefConfig.writeLoginStatus(true);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+
+//            Log.d("googleRez", imageUri.toString());
+        }else{
+          //  Toast.makeText(getApplicationContext(),"Error!!!",Toast.LENGTH_LONG).show();
+        }
     }
 
     public boolean validateEmail(String email) {
@@ -210,4 +293,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
     }
+
 }

@@ -19,11 +19,15 @@ public class User {
     
 	@Column
 	private String email;
-	@Column
+	
+	@Column(nullable = true)
     private String password;
 	
 	@Column
     private String token;
+	
+	@Column
+	private boolean googleLogin;
 	
 	@OneToMany
 	private List<Pet> pets = new ArrayList<Pet>();
@@ -34,13 +38,14 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String email, String password) {
+	public User(String email, String password, boolean googleLogin) {
 		super();
 		this.email = email;
 		this.password = password;
+		this.googleLogin = googleLogin;
 	}
 	
-	public User(Long id, String email, String password) {
+	public User(Long id, String email, String password, boolean googleLogin) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -83,7 +88,14 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
+	public boolean isGoogleLogin() {
+		return googleLogin;
+	}
+
+	public void setGoogleLogin(boolean googleLogin) {
+		this.googleLogin = googleLogin;
+	}
 	
 
 }

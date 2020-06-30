@@ -80,12 +80,9 @@
     <string name="pref_file">com.abc.preference_file</string>
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_email</string>
+    <string name="pref_user_google_status">com.abc.preference_google_status</string>
     <string name="pref_notification_summary">Allow notifications</string>
     <string name="pref_notification">Notification</string>
-    <string name="pref_pet_name">com.abc.preference_pet_name</string>
-    <string name="pref_pet_gender">com.abc.preference_pet_gender</string>
-    <string name="pref_pet_type">com.abc.preference_pet_type</string>
-    <string name="pref_pet_date">com.abc.preference_pet_date</string>
 
     <!--komentari-->
     <string name="label_name_comment">Name:</string>
@@ -168,6 +165,7 @@
     <string name="same_passwords">Passwords must be the same.</string>
     <string name="old_passwords">You didnt enter valid current password.</string>
     <string name="map_network">Please turn on internet to load map and then you can pin where pet is lost.</string>
+    <string name="google_login_toast">You are registered via Google. Please try to sign in with google account.</string>
 
     <!-- Change password -->
     <string name="now_password">Current password</string>

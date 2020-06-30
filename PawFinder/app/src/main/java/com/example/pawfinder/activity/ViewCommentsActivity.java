@@ -112,6 +112,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
                     if (comment.getPet().getUser().getEmail().equals(prefConfig.readUserEmail()) ||
                             comment.getUser().getEmail().equals(prefConfig.readUserEmail())) {
                         AlertDialog.Builder adb = new AlertDialog.Builder(ViewCommentsActivity.this);
+                        adb.setIcon(R.drawable.iconsdelete);
                         adb.setTitle(getResources().getString(R.string.comment_delete_dialog_title));
                         adb.setMessage(getResources().getString(R.string.comment_delete_dialog_text));
                         adb.setNegativeButton(getResources().getString(R.string.comment_delete_dialog_cancel), null);

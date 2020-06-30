@@ -113,6 +113,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
                         Toast.makeText(context, R.string.create_account_success_message, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
                     } else if (response.code() == 400) {

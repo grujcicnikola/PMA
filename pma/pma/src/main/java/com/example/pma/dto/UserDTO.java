@@ -9,17 +9,19 @@ public class UserDTO {
     private String password;
     private String passwordNew;
     private String token;
+    private boolean googleLogin;
     
     
 	public UserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UserDTO(Long id, String email, String password) {
+	public UserDTO(Long id, String email, String password, boolean googleLogin) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
+		this.googleLogin  = googleLogin;
 	}
 	
 	public UserDTO(User user) {
@@ -58,7 +60,11 @@ public class UserDTO {
 	public void setPasswordNew(String passwordNew) {
 		this.passwordNew = passwordNew;
 	}
-    
-    
-
+	public boolean isGoogleLogin() {
+		return googleLogin;
+	}
+	public void setGoogleLogin(boolean googleLogin) {
+		this.googleLogin = googleLogin;
+	}
+	
 }

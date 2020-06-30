@@ -79,12 +79,9 @@
     <string name="pref_file">com.abc.preference_file</string>
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_email</string>
+    <string name="pref_user_google_status">com.abc.preference_google_status</string>
     <string name="pref_notification_summary">Omogući notifikacije</string>
     <string name="pref_notification">Notifikacija</string>
-    <string name="pref_pet_name">com.abc.preference_pet_name</string>
-    <string name="pref_pet_gender">com.abc.preference_pet_gender</string>
-    <string name="pref_pet_type">com.abc.preference_pet_type</string>
-    <string name="pref_pet_date">com.abc.preference_pet_date</string>
 
     <!--komentari-->
     <string name="label_name_comment">Ime:</string>
@@ -167,6 +164,7 @@
     <string name="same_passwords">Lozinke moraju biti iste.</string>
     <string name="old_passwords">Niste uneli ispravnu trenutnu lozinku.</string>
     <string name="map_network">Molim vas ukljucite internet da bi se mapa ucitala i onda cete moci da pinujete gde je ljubimac nestao.</string>
+    <string name="google_login_toast">Registovani ste preko Vašeg google naloga. Prijavite se pomoću opcije prijava preko google-a.</string>
 
     <!-- Change password -->
     <string name="now_password">Trenutna lozinka</string>

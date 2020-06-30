@@ -1,5 +1,7 @@
 package com.example.pawfinder.service;
 
+import android.app.Service;
+
 import com.example.pawfinder.model.User;
 
 import java.util.List;
@@ -19,14 +21,14 @@ public interface UserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @POST("user/register")
+    @POST(ServiceUtils.USER_REGISTER)
     Call<ResponseBody> register(@Body User user);
 
     @Headers({
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @POST("user/login")
+    @POST(ServiceUtils.USER_LOGIN)
     Call<ResponseBody> login(@Body User user);
 
     @Headers({
@@ -38,5 +40,12 @@ public interface UserService {
 
     @PUT(ServiceUtils.CHANGE_PASSWORD)
     Call<ResponseBody> changePassword(@Body User user);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @POST(ServiceUtils.USER_GOOGLE_LOGIN)
+    Call<ResponseBody> googleLogin(@Body User user);
 
 }

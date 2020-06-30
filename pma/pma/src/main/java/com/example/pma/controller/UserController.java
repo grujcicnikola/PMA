@@ -33,12 +33,16 @@ public class UserController {
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> loginUser(@RequestBody UserDTO userLogin){
 		
-		System.out.println("Pogodio login!");
 		User user = userService.getByEmail(userLogin.getEmail());
 		
 		if(user == null)
 		{
 			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+		
+		if(user.getPassword() == null)
+		{
+			return new ResponseEntity(HttpStatus.BAD_GATEWAY);
 		}
 		
 		if(!user.getPassword().equals(userLogin.getPassword()))
@@ -57,7 +61,7 @@ public class UserController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 		
-		User user =  new User(userDTO.getEmail(), userDTO.getPassword());
+		User user =  new User(userDTO.getEmail(), userDTO.getPassword(), false);
 		userService.saveUser(user);
 		
 		return new ResponseEntity(HttpStatus.OK);
@@ -101,5 +105,18 @@ public class UserController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value= "/googleLogin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> googleLogin(@RequestBody UserDTO userDTO) {
+		
+		//Nemamo nalog pod ovim email- om, nebitno kako je registrovan
+		if(userService.getByEmail(userDTO.getEmail()) == null)
+		{
+			User user =  new User(userDTO.getEmail(), null, true); //password nema jer se loguje preko google naloga
+			userService.saveUser(user);
+			
+		}
+		
+		return new ResponseEntity(HttpStatus.OK);
+	}
 	
 }

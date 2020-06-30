@@ -65,6 +65,9 @@ public class MyReportsListAdapter extends BaseAdapter {
         ImageView image = (ImageView) view.findViewById(R.id.report_image);
         Picasso.get().load(ServiceUtils.IMAGES_URL + pet.getImage()).into(image);
 
+        TextView pet_missing_date = (TextView) view.findViewById(R.id.report_dateOfLost_text);
+        pet_missing_date.setText(pet.getMissingSince());
+
         return view;
     }
 

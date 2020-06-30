@@ -13,6 +13,8 @@ public class User {
 
     private String token;
 
+    private boolean googleLogin;
+
     //public java.util.Collection<Pet> pet;
 
     public User() {
@@ -22,6 +24,13 @@ public class User {
         this.email = email;
         this.password = password;
 //        this.pet = pet;
+    }
+
+    public User(String email, String password, String passwordNew, boolean googleLogin) {
+        this.email = email;
+        this.password = password;
+        this.passwordNew = passwordNew;
+        this.googleLogin = googleLogin;
     }
 
     public User(String email, String password, String passwordNew) {
@@ -62,7 +71,15 @@ public class User {
         this.password = password;
     }
 
-//    public java.util.Collection<Pet> getPet() {
+    public boolean isGoogleLogin() {
+        return googleLogin;
+    }
+
+    public void setGoogleLogin(boolean googleLogin) {
+        this.googleLogin = googleLogin;
+    }
+
+    //    public java.util.Collection<Pet> getPet() {
 //        if (pet == null)
 //            pet = new java.util.HashSet<Pet>();
 //        return pet;

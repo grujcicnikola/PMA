@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/l_image_view"
         android:layout_width="450dp"
-        android:layout_height="300dp"
+        android:layout_height="290dp"
         android:layout_below="@+id/toolBar"
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo" />
@@ -125,11 +125,22 @@
         android:textColor="?attr/buttonText"
         android:textSize="20dp" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/bGoogleLogin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/bLogin"
+        android:layout_alignLeft="@id/bLogin"
+        android:layout_alignRight="@id/bLogin"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
+
     <TextView
         android:id="@+id/l_or_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bLogin"
+        android:layout_below="@id/bGoogleLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="@string/or_text"

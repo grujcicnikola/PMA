@@ -106,7 +106,6 @@ public class ReportDetailActivity extends AppCompatActivity {
                             if(response.code() == 200)
                             {
                                 progressDialog.dismiss();
-                                Toast.makeText(ReportDetailActivity.this, "Uspeeeh u pronalasku", Toast.LENGTH_SHORT).show();
                                 setResult(Activity.RESULT_CANCELED);
                                 finish();
                             }

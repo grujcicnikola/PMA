@@ -11,7 +11,8 @@
         <item
             android:id="@+id/navigation_item_change_password"
             android:icon="@drawable/change_password"
-            android:title="@string/nav_item_change_password"/>
+            android:title="@string/nav_item_change_password"
+            android:visible="false"/>
         <item
             android:id="@+id/navigation_item_qr_code"
             android:icon="@drawable/qr_code"

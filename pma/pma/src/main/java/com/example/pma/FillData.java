@@ -45,22 +45,22 @@ public class FillData {
     public void init() throws URISyntaxException, IOException, ParseException {
 		
 		//USERS
-		User user = new User("jova@gmail.com", "123");
+		User user = new User("jova@gmail.com", "123", false);
 		userService.saveUser(user);
 		
-		User user1 = new User("pera@gmail.com", "123");
+		User user1 = new User("pera@gmail.com", "123", false);
 		userService.saveUser(user1);
 		
-		User user2 = new User("marko@gmail.com", "123");
+		User user2 = new User("marko@gmail.com", "123", false);
 		userService.saveUser(user2);
 		
-		User user3 = new User("milica@gmail.com", "123");
+		User user3 = new User("milica@gmail.com", "123", false);
 		userService.saveUser(user3);
 		
-		User user4 = new User("jelena@gmail.com", "123");
+		User user4 = new User("jelena@gmail.com", "123", false);
 		userService.saveUser(user4);
 		
-		User user5 = new User("dragana@gmail.com", "123");
+		User user5 = new User("dragana@gmail.com", "123", false);
 		userService.saveUser(user5);
 		
 		//ADDRESS

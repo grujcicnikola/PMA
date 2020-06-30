@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -43,7 +45,12 @@ import com.example.pawfinder.tools.RangeUtils;
 import com.example.pawfinder.tools.ThemeUtils;
 import com.example.pawfinder.tools.PrefConfig;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -77,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private SeekBar np;
     public BroadcastReceiver alarm_receiver;
     private TextView user_drawer;
-
+    private GoogleSignInClient googleClient;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +97,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 Log.d("TOKEN",token);
             }
         });
+
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleClient = GoogleSignIn.getClient(this, gso);
+
         prefConfig = new PrefConfig(this);
         setupSharedPreferences();
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
@@ -142,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         /*Menu menuNav = navigationView.getMenu();
         MenuItem mi = menuNav.findItem(R.id.item_number);
         np = (SeekBar) mi.getActionView();
@@ -191,6 +206,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
+
+                        if(prefConfig.readUserGoogleStatus())
+                        {
+                            googleClient.signOut();
+                        }
+
                         sendTokenToServer("");//problem ako nema neta
                         user_drawer.setText("");
 
@@ -331,8 +352,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 user_drawer = (TextView) findViewById(R.id.drawer_user);
+
                 if (prefConfig.readLoginStatus()) {
                     user_drawer.setText(prefConfig.readUserEmail());
+
+                    boolean googleLogin = prefConfig.readUserGoogleStatus();
+                    if(!googleLogin)
+                    {
+                        Menu menuNav = navigationView.getMenu();
+                        MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
+                        item.setVisible(true);
+                    }
                 }
 
                 invalidateOptionsMenu();
