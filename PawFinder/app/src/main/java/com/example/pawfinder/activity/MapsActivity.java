@@ -98,14 +98,21 @@ public class MapsActivity extends AppCompatActivity {
 
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("ACTIVITYRESULT","secondpage"+resultCode);
         if(resultCode==2){
+            setResult(2);
             finish();
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        setResult(2);
+        Log.i("ACTIVITYRESULT","seconddpage destroy");
+        super.onDestroy();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

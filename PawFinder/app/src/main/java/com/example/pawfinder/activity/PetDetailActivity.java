@@ -183,7 +183,7 @@ public class PetDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_item:
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
-                            startActivityForResult(missingReport,0);
+                            startActivityForResult(missingReport,2);
                         }else{
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                         }
@@ -264,35 +264,6 @@ public class PetDetailActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        final Bundle bundle = getIntent().getExtras();
-        savedInstanceState.putString("petsName", bundle.getString("petsName"));
-        savedInstanceState.putString("petsType", bundle.getString("petsType"));
-        savedInstanceState.putString("petsGender", bundle.getString("petsGender"));
-        savedInstanceState.putString("ownersEmail", bundle.getString("ownersEmail"));
-        savedInstanceState.putString("ownersPhone",  bundle.getString("ownersPhone"));
-        savedInstanceState.putString("additionalInfo",  bundle.getString("additionalInfo"));
-        savedInstanceState.putString("image",  bundle.getString("image"));
-        savedInstanceState.putString("date",  bundle.getString("date"));
-        savedInstanceState.putString("id_of_pet",  bundle.getString("id_of_pet"));
-        savedInstanceState.putString("lon_pets",  bundle.getString("lon_pets"));
-        savedInstanceState.putString("lat_pets",  bundle.getString("lat_pets"));
-        // etc.
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        // Restore UI state from the savedInstanceState.
-        // This bundle has also been passed to onCreate.
-        Log.i("SAVEDDDDDDD",savedInstanceState.getString("petsName"));
-    }
 
 
     public void showNumberPickerDialog(){

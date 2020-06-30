@@ -61,6 +61,8 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
         setTitle(R.string.title_missing_first);
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         name = findViewById(R.id.enter_pet_name);
         gender = findViewById(R.id.gender);
         type = findViewById(R.id.type);
@@ -172,9 +174,16 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
    @Override
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        super.onActivityResult(requestCode, resultCode, data);
+       Log.i("ACTIVITYRESULT","firstpage"+resultCode);
        if(resultCode==2){
            finish();
        }
    }
 
+@Override
+    protected void onDestroy() {
+        setResult(2);
+        Log.i("ACTIVITYRESULT","firstpage destroy");
+        super.onDestroy();
+    }
 }

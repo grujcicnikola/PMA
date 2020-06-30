@@ -39,8 +39,10 @@ public class SyncReceiver extends BroadcastReceiver {
                     //Log.d("BROJ", "ima ih" + response.body().size());
 
                     MissingFragment.pets = response.body();
-                    MissingFragment.adapter.updateResults(MissingFragment.pets);
-                    PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, context, 0);
+                    if (MissingFragment.pets != null) {
+                        MissingFragment.adapter.updateResults(MissingFragment.pets);
+                        PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, context, 0);
+                    }
                 }
 
                 @Override

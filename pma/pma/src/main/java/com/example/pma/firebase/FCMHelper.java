@@ -32,7 +32,6 @@ public class FCMHelper {
      * Your SECRET server key
      */
     private static final String FCM_SERVER_KEY = "serverkey";
-
     
     public static FCMHelper getInstance() {
         if (instance == null) instance = new FCMHelper();

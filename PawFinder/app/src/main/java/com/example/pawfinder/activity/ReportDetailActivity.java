@@ -181,7 +181,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_item:
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
-                            startActivityForResult(missingReport,0);
+                            startActivityForResult(missingReport,2);
                         }else{
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                         }

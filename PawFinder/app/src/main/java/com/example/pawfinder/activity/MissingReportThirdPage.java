@@ -117,6 +117,8 @@ public class MissingReportThirdPage extends AppCompatActivity {
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         setTitle(R.string.title_missing_third);
         setTitle(R.string.title_missing_third);
         imageView = findViewById(R.id.upload_image_view);
@@ -258,6 +260,8 @@ public class MissingReportThirdPage extends AppCompatActivity {
             imgFile = new File(getPathFromUri(uri));
 
         }
+
+
     }
 
     public void addPet(final Pet petAdd) {
@@ -314,6 +318,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
                                     //Intent intent = new Intent(MissingReportThirdPage.this, PetDetailActivity.class);
                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     //startActivity(intent);
+                                    setResult(2);
                                     finish();
                                 }
                             }
@@ -477,6 +482,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         setResult(2);
+        Log.i("ACTIVITYRESULT","thirdpage destroy");
         super.onDestroy();
     }
 
