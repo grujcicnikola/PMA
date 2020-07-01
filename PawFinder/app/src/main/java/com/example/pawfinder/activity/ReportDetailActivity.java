@@ -135,7 +135,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             TextView date_txt = (TextView) findViewById(R.id.report_text_view_date);
             date_txt.setText(date);
 
-            Picasso.get().load(ServiceUtils.IMAGES_URL + image).into(imgView);
+            Picasso.get().load(image).into(imgView);
 
 
             commentsButton.setOnClickListener(new View.OnClickListener() {
