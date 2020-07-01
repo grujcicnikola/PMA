@@ -11,7 +11,7 @@ public class ServiceUtils {
 
     //10.0.2.2. za emulator
     //https://pmaheroku.herokuapp.com/";
-    public static final String SERVICE_API_PATH = "http://adresa:8080/";
+    public static final String SERVICE_API_PATH = "https://pmaheroku.herokuapp.com/";
 
     public static final String GET_ALL_PETS = "pet/getAll";
     public static final String IMAGES_URL = SERVICE_API_PATH + "/images/";

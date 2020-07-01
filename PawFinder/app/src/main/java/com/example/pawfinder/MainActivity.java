@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String token = instanceIdResult.getToken();
-                Log.d("TOKEN",token);
+                Log.d("TOKENMOJ",token);
             }
         });
 

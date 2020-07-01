@@ -92,8 +92,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             additionalInfo_text.setText(additionalInfo);
             //Log.d("PETSIMAAGE", petsImage);
             ImageView image = (ImageView) findViewById(R.id.imageView);
-            Picasso.get().load(ServiceUtils.IMAGES_URL + petsImage).into(image);
-
+            Picasso.get().load(petsImage).into(image);
             Button commentBtn = (Button) findViewById(R.id.comment_button);
             commentBtn.setOnClickListener(this);
 
@@ -191,7 +190,7 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         call.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
-                Log.d("VIEW_COMMENTS", "ima ih" + response.body().size());
+                //Log.d("VIEW_COMMENTS", "ima ih" + response.body().size());
 
                 if (response.code() == 200) {
                     Log.d("VIEW_COMMENTS", "Meesage recieved");

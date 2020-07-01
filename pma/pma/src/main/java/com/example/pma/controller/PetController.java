@@ -200,10 +200,6 @@ public class PetController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(!deleteFile(pet))
-		{
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
-		}
 		
 		petService.deleteItem(pet);
 		
