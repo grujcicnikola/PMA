@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "258267951000",
-    "firebase_url": "https://pawfinder-d0f6a.firebaseio.com",
-    "project_id": "pawfinder-d0f6a",
-    "storage_bucket": "pawfinder-d0f6a.appspot.com"
+    "project_number": "751031789313",
+    "firebase_url": "https://pawfinder-ddd68.firebaseio.com",
+    "project_id": "pawfinder-ddd68",
+    "storage_bucket": "pawfinder-ddd68.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:258267951000:android:41a6bd18f420ad91fc85ed",
+        "mobilesdk_app_id": "1:751031789313:android:4521671bdbfdd0a5fb9d00",
         "android_client_info": {
           "package_name": "com.example.pawfinder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "258267951000-k9imk0vomk4spdu3j06pl34vtr5c29aq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.pawfinder",
-            "certificate_hash": "fa6fb98c780cfdb1df1d954e41e812a3a0dc04b1"
-          }
-        },
-        {
-          "client_id": "258267951000-625nvjs776u6109ko9c5pcg00uv2t5jd.apps.googleusercontent.com",
+          "client_id": "751031789313-8orcu3cr07suf6csuts1tn9nqftbpk05.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADzvu2R4wUD9lwwoJxDU3EXhT9irTZLnI"
+          "current_key": "AIzaSyDnQGFJNaODXwF3wpRpOtVDU_btmUJuW5E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "258267951000-625nvjs776u6109ko9c5pcg00uv2t5jd.apps.googleusercontent.com",
+              "client_id": "751031789313-8orcu3cr07suf6csuts1tn9nqftbpk05.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
