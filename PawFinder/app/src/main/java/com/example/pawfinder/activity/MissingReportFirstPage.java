@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -153,7 +154,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
                         intent.putExtra("PET_GENDER", gender_value);
                         intent.putExtra("PET_TYPE", type_value);
                         intent.putExtra("PET_DATE_LOST", dateText.getText().toString());
-                        startActivityForResult(intent,2);
+                        startActivity(intent);
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
@@ -184,6 +185,19 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
                 .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                setResult(Activity.RESULT_CANCELED);
+                finish(); //close this activity and return to preview activity
+                break;
+        }
+
+        return true;
+    }
+
    /* @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -198,19 +212,7 @@ public class MissingReportFirstPage extends AppCompatActivity implements DatePic
             //gender.setSelection((int) savedInstanceState.getBinder("PET_GENDER_ID"));
         }
     }*/
-   @Override
-   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       super.onActivityResult(requestCode, resultCode, data);
-       Log.i("ACTIVITYRESULT","firstpage"+resultCode);
-       if(resultCode==2){
-           finish();
-       }
-   }
 
-@Override
-    protected void onDestroy() {
-        setResult(2);
-        Log.i("ACTIVITYRESULT","firstpage destroy");
-        super.onDestroy();
-    }
+
+
 }

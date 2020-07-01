@@ -152,9 +152,11 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    private void keyboardDown(){
+    private void keyboardDown() {
         InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (getCurrentFocus() != null) {
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     private void setErrorListeners() {

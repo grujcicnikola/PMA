@@ -233,38 +233,43 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
         //Log.d("messageComment", message);
         int status = NetworkTool.getConnectivityStatus(getApplicationContext());
         if (status != NetworkTool.TYPE_NOT_CONNECTED) {
-            InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
-            //messageEditText.clearFocus();
-            messageEditText.getText().clear();
-            //ong id, String message, Date date, User user, Pet pet
-            User user = new User();
-            if (prefConfig.readLoginStatus()) {
-                user.setEmail(prefConfig.readUserEmail());
-                //Log.i("userkkkk", user.getEmail());
-                final Comment comment = new Comment(message, null, user, petInfo);
-                Call<Comment> call = ServiceUtils.commentService.addComment(comment);
-                //Log.d("COMMENTADD", "usao");
-                call.enqueue(new Callback<Comment>() {
-                    @Override
-                    public void onResponse(Call<Comment> call, Response<Comment> response) {
-                        comments.add(response.body());
-                        commentAdapter.updateResults(comments);
-                        //commentAdapter.notifyDataSetChanged();
+            if(!message.equals("")) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (getCurrentFocus() != null) {
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                EditText messageEditText = (EditText) findViewById(R.id.add_comment_shop);
+                //messageEditText.clearFocus();
+                messageEditText.getText().clear();
+                //ong id, String message, Date date, User user, Pet pet
+                User user = new User();
+                if (prefConfig.readLoginStatus()) {
+                    user.setEmail(prefConfig.readUserEmail());
+                    //Log.i("userkkkk", user.getEmail());
+                    final Comment comment = new Comment(message, null, user, petInfo);
+                    Call<Comment> call = ServiceUtils.commentService.addComment(comment);
+                    //Log.d("COMMENTADD", "usao");
+                    call.enqueue(new Callback<Comment>() {
+                        @Override
+                        public void onResponse(Call<Comment> call, Response<Comment> response) {
+                            comments.add(response.body());
+                            commentAdapter.updateResults(comments);
+                            //commentAdapter.notifyDataSetChanged();
 
 
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(Call<Comment> call, Throwable t) {
-                        Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
-                        // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Comment> call, Throwable t) {
+                            Log.d("COMMENTADD", t.getMessage() != null ? t.getMessage() : "error");
+                            // Toast.makeText(getApplicationContext(), R.string.comment_problem, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         }else{
             Toast.makeText(getApplicationContext(), R.string.noInternet, Toast.LENGTH_LONG).show();
+
         }
 
     }

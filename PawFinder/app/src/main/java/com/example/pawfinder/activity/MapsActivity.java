@@ -87,7 +87,7 @@ public class MapsActivity extends AppCompatActivity {
                         intent.putExtra("PET_GENDER", help.getStringExtra("PET_GENDER"));
                         intent.putExtra("PET_TYPE", help.getStringExtra("PET_TYPE"));
                         intent.putExtra("PET_DATE_LOST", help.getStringExtra("PET_DATE_LOST"));
-                        startActivityForResult(intent,2);
+                        startActivity(intent);
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
@@ -97,22 +97,8 @@ public class MapsActivity extends AppCompatActivity {
 
 
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i("ACTIVITYRESULT","secondpage"+resultCode);
-        if(resultCode==2){
-            setResult(2);
-            finish();
-        }
-    }
 
-    @Override
-    protected void onDestroy() {
-        setResult(2);
-        Log.i("ACTIVITYRESULT","seconddpage destroy");
-        super.onDestroy();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

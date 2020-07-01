@@ -49,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent intent;
     private EditText emailEdit, passwordEdit;
@@ -72,11 +72,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         setContentView(R.layout.activity_login);
 
-        GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         googleClient = GoogleSignIn.getClient(this, gso);
-        googleSignInBtn=(SignInButton)findViewById(R.id.bGoogleLogin);
+        googleSignInBtn = (SignInButton) findViewById(R.id.bGoogleLogin);
         googleSignInBtn.setOnClickListener(this);
 
         prefConfig = new PrefConfig(this);
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.bGoogleLogin:
                 Intent intent = googleClient.getSignInIntent();
-                startActivityForResult(intent,SIGN_IN);
+                startActivityForResult(intent, SIGN_IN);
                 break;
         }
 
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SIGN_IN){
+        if (requestCode == SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             googleLogin(result);
         }
@@ -146,11 +146,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (TextUtils.isEmpty(emailTxt)) {
             keyboardDown();
             layoutEmail.setError((getText(R.string.create_account_email_toast)));
-        } else if(TextUtils.isEmpty(passwordTxt)){
+        } else if (TextUtils.isEmpty(passwordTxt)) {
             keyboardDown();
             layoutPassword.setError((getText(R.string.create_account_password_toast)));
-        }
-        else {
+        } else {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle(LoginActivity.this.getResources().getString(R.string.login_dialog_title));
             progressDialog.setMessage(LoginActivity.this.getResources().getString(R.string.dialog_message));
@@ -167,8 +166,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.code() == 200) //ok
                     {
                         prefConfig.writeUserEmail(emailTxt);
-                        prefConfig.writeUserGoogleStatus( false);
-                        Log.d("loggeduser",emailTxt);
+                        prefConfig.writeUserGoogleStatus(false);
+                        Log.d("loggeduser", emailTxt);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
@@ -179,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } else if (response.code() == 400) {
                         keyboardDown();
                         layoutPassword.setError((getText(R.string.login_password_error)));
-                    } else if (response.code() == 502){
+                    } else if (response.code() == 502) {
                         keyboardDown();
                         Toast.makeText(LoginActivity.this, "Try login with google account.", Toast.LENGTH_LONG).show();
                     }
@@ -194,8 +193,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void googleLogin(GoogleSignInResult result){
-        if(result.isSuccess()){
+    private void googleLogin(GoogleSignInResult result) {
+        if (result.isSuccess()) {
 
             String name = result.getSignInAccount().getDisplayName();
             String email = result.getSignInAccount().getEmail();
@@ -203,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String firstName = parts[0];
             String surname = parts[1];
 //            Uri imageUri = result.getSignInAccount().getPhotoUrl();
-            User user = new User(email, null,  null, true);
+            User user = new User(email, null, null, true);
 
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle(LoginActivity.this.getResources().getString(R.string.login_dialog_title));
@@ -216,8 +215,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressDialog.dismiss();
-                    if (result.isSuccess())
-                    {
+                    if (result.isSuccess()) {
                         prefConfig.writeUserEmail(email);
                         prefConfig.writeUserGoogleStatus(true);
                         prefConfig.writeLoginStatus(true);
@@ -234,8 +232,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             });
 
 //            Log.d("googleRez", imageUri.toString());
-        }else{
-          //  Toast.makeText(getApplicationContext(),"Error!!!",Toast.LENGTH_LONG).show();
+        } else {
+            //  Toast.makeText(getApplicationContext(),"Error!!!",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -246,9 +244,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return matcher.matches();
     }
 
-    private void keyboardDown(){
+    private void keyboardDown() {
         InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (getCurrentFocus() != null) {
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     private void setErrorListeners() {
