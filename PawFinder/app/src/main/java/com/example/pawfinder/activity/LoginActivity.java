@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d("loggeduser", emailTxt);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(context, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 403) {
@@ -220,8 +221,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         prefConfig.writeUserGoogleStatus(true);
                         prefConfig.writeLoginStatus(true);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
+                        finish();
                     }
                 }
 

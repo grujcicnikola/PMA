@@ -215,7 +215,7 @@ public class PetDetailActivity extends AppCompatActivity {
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
-                        finish();
+                        finishAffinity();
                         break;
 
                 }
