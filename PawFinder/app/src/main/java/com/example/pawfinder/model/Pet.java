@@ -31,6 +31,8 @@ public class Pet {
     private String ownersPhone;
     @SerializedName("found")
     private boolean isFound;
+    @SerializedName("deleted")
+    private boolean isDeleted;
 
     @SerializedName("owner")
     private User user;
@@ -39,6 +41,7 @@ public class Pet {
     private Address address;
 
     private Boolean isSent;
+
 
     public Pet() {
     }
@@ -204,6 +207,14 @@ public class Pet {
         isSent = sent;
     }
 
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -214,6 +225,7 @@ public class Pet {
                 "Last seen: " + "\n" +
                 "Owners email: " + "pera@gmail.com" + "\n" +
                 "Owners phone: " + this.getOwnersPhone() + "\n" +
-                "Additional information: " + ": " + this.getAdditionalInfo();
+                "Additional information: " + ": " + this.getAdditionalInfo() + "\n"+
+                 "deleted " + ": " + this.isDeleted();
     }
 }

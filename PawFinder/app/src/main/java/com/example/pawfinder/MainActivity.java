@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout = findViewById(R.id.tabs);
-
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(1).select();         //da selektovan bude Missing
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {

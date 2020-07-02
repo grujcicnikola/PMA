@@ -70,9 +70,9 @@ public class MissingFragment extends Fragment{
     //private NetworkMonitor sync;
     
 
-    public static MissingFragment newInstance(Bundle bundle) {
+    public static MissingFragment newInstance() {
         MissingFragment fragment = new MissingFragment();
-        fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -203,7 +203,7 @@ public class MissingFragment extends Fragment{
                 PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_TYPE, PetSQLHelper.COLUMN_GENDER,
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
-                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};
+                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS, PetSQLHelper.COLUMN_DELETED};
        /* Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
                 null);*/
         String selection = "";
@@ -237,14 +237,17 @@ public class MissingFragment extends Fragment{
 
                 Address address = new Address(Double.parseDouble(cursor.getString(10)), Double.parseDouble(cursor.getString(11)));
                 boolean isSent = Boolean.valueOf(cursor.getString(12));
+                boolean isDeleted = Boolean.valueOf(cursor.getString(13));
 
 
                 Log.d("petList ", "ima ih"  +" " + type +" "+ name +" "+ missingSince + " " );
                // if (isSent != false) {    ovo ako ne budemo hteli da prikazujemo
+                if (isDeleted == false && isFound == false ) {
                     //c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
                     c.setId(id);
                     c = new Pet(type, name, gender, additional, image, date, ownersPhone, isFound, user, address, isSent);
                     petView.add(c);
+                }
                 //}
 
                 cursor.moveToNext();

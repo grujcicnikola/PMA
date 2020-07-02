@@ -59,9 +59,9 @@ public class MyReportsFragment extends Fragment {
     private TextView textLogin;
     private ProgressDialog progressDialog;
 
-    public static MyReportsFragment newInstance(Bundle bundle) {
+    public static MyReportsFragment newInstance() {
         MyReportsFragment fragment = new MyReportsFragment();
-        fragment.setArguments(bundle);
+        //fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -165,7 +165,7 @@ public class MyReportsFragment extends Fragment {
                 PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_TYPE, PetSQLHelper.COLUMN_GENDER,
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
-                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};
+                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS, PetSQLHelper.COLUMN_DELETED};
         /*Cursor cursor = getActivity().getContentResolver().query(DBContentProvider.CONTENT_URI_PET, allColumns, null, null,
                 null);*/
         String selection = "user = ?";
@@ -197,11 +197,14 @@ public class MyReportsFragment extends Fragment {
 
                     Address address = new Address(Double.parseDouble(cursor.getString(10)), Double.parseDouble(cursor.getString(11)));
                     boolean isSent = Boolean.valueOf(cursor.getString(12));
+                    boolean isDeleted = Boolean.valueOf(cursor.getString(13));
 
                     Log.d("petList ", "ima ih" + " " + type + " " + name + " " + missingSince);
                     // if (isSent != false) {    ovo ako ne budemo hteli da prikazujemo
-                    c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
-                    petView.add(c);
+                    if (isDeleted == false) {
+                        c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
+                        petView.add(c);
+                    }
                     //}
 
 
@@ -233,7 +236,6 @@ public class MyReportsFragment extends Fragment {
                     progressDialog.dismiss();
                     //Toast.makeText(getContext(), "Vas izvestaj je uspesno obrisan", Toast.LENGTH_LONG).show();
                     adapter.updateResults(response.body());
-                    getContext().getContentResolver().delete(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + id), "", null);
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_LONG).show();

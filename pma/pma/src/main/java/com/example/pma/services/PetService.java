@@ -18,17 +18,19 @@ public class PetService {
 
 	public List<Pet> findAll() {
 		// TODO Auto-generated method stub
-		return petRepo.findAllByIsFoundOrderByMissingSinceDesc(false);
+		//return petRepo.findAllByIsFoundAndIsDeletedOrderByMissingSinceDesc(false, false);
+		//return petRepo.findAllByIsFoundOrderByMissingSinceDesc(false);
+		return petRepo.findByOrderByMissingSinceDesc();
 	}
 
-	public List<Pet> findAllByIsFound(boolean b) {
+	public List<Pet> findAllByIsFoundAndIsDeleted(boolean f, boolean d) {
 		// TODO Auto-generated method stub
-		return petRepo.findAllByIsFound(b);
+		return petRepo.findAllByIsFoundAndIsDeleted(f, d);
 	}
 
-	public List<Pet> findAllByOwnerId(Long ownerId) {
+	public List<Pet> findAllByOwnerIdAndIsDeleted(Long ownerId, boolean deleted) {
 		// TODO Auto-generated method stub
-		return petRepo.findAllByOwnerIdOrderByMissingSinceDesc(ownerId);
+		return petRepo.findAllByOwnerIdAndIsDeletedOrderByMissingSinceDesc(ownerId, deleted);
 	}
 
 	public Pet addNewPet(Pet pet) {
@@ -45,5 +47,20 @@ public class PetService {
 	public void deleteItem(Pet pet) {
 		
 		petRepo.delete(pet);
+	}
+
+	public void deletePet(Pet pet) {
+		pet.setDeleted(true);
+		petRepo.save(pet);
+	}
+
+	public List<Pet> findAllByOwnerId(Long id) {
+		// TODO Auto-generated method stub
+		return petRepo.findAllByOwnerIdOrderByMissingSinceDesc(id);
+	}
+
+	public List<Pet> findAllByIsFound(boolean b) {
+		// TODO Auto-generated method stub
+		return petRepo.findAllByIsFound(b);
 	}
 }

@@ -14,6 +14,7 @@ import com.example.pawfinder.model.Pet;
 import com.example.pawfinder.service.ServiceUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,8 +25,14 @@ public class PetsListAdapter extends BaseAdapter {
     TextView pet_name_text;
 
     public PetsListAdapter(Context mContext, List<Pet> missingPets) {
+        List<Pet> good = new ArrayList<Pet>();
+        for (Pet p :missingPets) {
+            if (p.isDeleted() == false && p.isFound() == false) {
+                good.add(p);
+            }
+        }
         this.mContext = mContext;
-        this.missingPets = missingPets;
+        this.missingPets = good;
 
     }
 
@@ -73,7 +80,15 @@ public class PetsListAdapter extends BaseAdapter {
     }
 
     public void updateResults(List<Pet> updatePets) {
-        missingPets = updatePets;
+
+        List<Pet> good = new ArrayList<Pet>();
+        for (Pet p : updatePets) {
+            if (p.isDeleted() == false && p.isFound() == false) {
+                good.add(p);
+            }
+        }
+
+        missingPets = good;
         notifyDataSetChanged();
     }
 

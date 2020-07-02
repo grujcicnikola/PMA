@@ -26,8 +26,15 @@ public class MyReportsListAdapter extends BaseAdapter {
     Pet pet;
 
     public MyReportsListAdapter(Context mContext, List<Pet> missingPets) {
+        List<Pet> good = new ArrayList<Pet>();
+        for (Pet p :missingPets) {
+            if (p.isDeleted() == false) {
+                good.add(p);
+            }
+        }
+
+        this.missingPets = good;
         this.mContext = mContext;
-        this.missingPets = missingPets;
     }
 
     @Override
@@ -72,7 +79,13 @@ public class MyReportsListAdapter extends BaseAdapter {
     }
 
     public void updateResults(List<Pet> updatedReports){
-        missingPets = updatedReports;
+        List<Pet> good = new ArrayList<Pet>();
+        for (Pet p :updatedReports) {
+            if (p.isDeleted() == false) {
+                good.add(p);
+            }
+        }
+        missingPets = good;
         notifyDataSetChanged();
     }
 }

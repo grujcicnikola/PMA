@@ -121,7 +121,7 @@ public class DBContentProvider extends ContentProvider {
                 String idPet = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = sqlDB.delete(PetSQLHelper.TABLE_PET,
-                            PetSQLHelper.COLUMN_SERVER_ID + "=" + idPet,
+                            PetSQLHelper.COLUMN_ID + "=" + idPet,
                             null);
                 } else {
                     rowsDeleted = sqlDB.delete(PetSQLHelper.TABLE_PET,
@@ -158,7 +158,7 @@ public class DBContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlDB.update(PetSQLHelper.TABLE_PET,
                             values,
-                            PetSQLHelper.COLUMN_SERVER_ID + "=" + idPet,
+                            PetSQLHelper.COLUMN_ID + "=" + idPet,
                             null);
                     Log.d("updatePETID", String.valueOf(rowsUpdated));
                 } else {

@@ -18,7 +18,8 @@ public class PetDTO {
     private String image;
     private String missingSince;
     private String ownersPhone;
-    private boolean isFound;
+    private boolean found;
+    private boolean deleted;
     
     private UserDTO owner;
     private AddressDTO address;
@@ -26,7 +27,7 @@ public class PetDTO {
     public PetDTO() {}
 
     public PetDTO(Long id, PetType type, String name, PetGender gender, String additionalInfo, String image,
-			String missingSince, String ownersPhone, boolean isFound, UserDTO owner) {
+			String missingSince, String ownersPhone, boolean isFound,  boolean isDeleted, UserDTO owner) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -36,12 +37,13 @@ public class PetDTO {
 		this.image = image;
 		this.missingSince = missingSince;
 		this.ownersPhone = ownersPhone;
-		this.isFound = isFound;
+		this.found = isFound;
 		this.owner = owner;
+		this.deleted = isDeleted;
 	}
 
     public PetDTO(PetType type, String name, PetGender gender, String additionalInfo, String image,
-			String missingSince, String ownersPhone, boolean isFound, UserDTO owner) {
+			String missingSince, String ownersPhone, boolean isFound,  boolean isDeleted, UserDTO owner) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -51,8 +53,9 @@ public class PetDTO {
 		this.image = image;
 		this.missingSince = missingSince;
 		this.ownersPhone = ownersPhone;
-		this.isFound = isFound;
+		this.found = isFound;
 		this.owner = owner;
+		this.deleted = isDeleted;
 	}
 
 
@@ -65,9 +68,10 @@ public class PetDTO {
         this.image = pet.getImage();
         this.missingSince = convertDate(pet.getMissingSince());
         this.ownersPhone = pet.getOwnersPhone();
-        this.isFound = pet.isFound();
+        this.found = pet.isFound();
         this.owner = new UserDTO(pet.getOwner());
         this.address = new AddressDTO(pet.getAddress());
+        this.deleted = pet.isDeleted();
     }
 	
     public Long getId() {
@@ -114,9 +118,6 @@ public class PetDTO {
 		this.ownersPhone = ownersPhone;
 	}
 
-	public boolean isFound() {
-        return isFound;
-    }
 
 	public void setId(Long id) {
 		this.id = id;
@@ -138,9 +139,6 @@ public class PetDTO {
 		this.image = image;
 	}
 
-	public void setFound(boolean isFound) {
-		this.isFound = isFound;
-	}
 
 	public UserDTO getOwner() {
 		return owner;
@@ -149,7 +147,6 @@ public class PetDTO {
 	public void setOwner(UserDTO owner) {
 		this.owner = owner;
 	}
-	
 	
     
 
@@ -169,4 +166,24 @@ public class PetDTO {
 		
 		return df.format(date);
 	}
+
+	public boolean isFound() {
+		return found;
+	}
+
+	public void setFound(boolean found) {
+		this.found = found;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	
+	
 }
+

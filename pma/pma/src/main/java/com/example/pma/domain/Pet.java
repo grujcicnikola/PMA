@@ -41,6 +41,9 @@ public class Pet {
 	@Column
     private boolean isFound;
 	
+	@Column
+    private boolean isDeleted;
+	
 	@ManyToOne
 	private User owner;
 	
@@ -62,6 +65,7 @@ public class Pet {
 		this.ownersPhone = ownersPhone;
 		this.isFound = isFound;
 		this.owner = owner;
+		this.isDeleted = false;
 	}
     
     public Pet(PetType type, String name, PetGender gender, String description, String image, Date dateOfLost,
@@ -76,6 +80,7 @@ public class Pet {
 		this.isFound = isFound;
 		this.owner = owner;
 		this.address = address;
+		this.isDeleted = false;
 	}
 
 
@@ -185,6 +190,18 @@ public class Pet {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	
+	
     
 }
 

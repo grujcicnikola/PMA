@@ -73,6 +73,7 @@ public class PetController {
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAll(){
 		
+		//nepronadjene i neobrisane
 		List<Pet> pets = petService.findAll();
 		
 		List<PetDTO> petsDTO = converter.convertToPetDTO(pets);
@@ -82,7 +83,7 @@ public class PetController {
 
 	@RequestMapping(value = "/getMissing", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getMissing(){
-		List<Pet> pets = petService.findAllByIsFound(false);
+		List<Pet> pets = petService.findAll();
 		List<PetDTO> petsDTO = converter.convertToPetDTO(pets);
 		
 		return new ResponseEntity<>(petsDTO,HttpStatus.OK);
@@ -179,9 +180,11 @@ public class PetController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 		
-		petService.deleteItem(pet);
+		petService.deletePet(pet);
+		//petService.deleteItem(pet);
+
 		
-		List<Pet> petsAfterDelete = petService.findAllByOwnerId(user.getId());
+		List<Pet> petsAfterDelete = petService.findAllByOwnerIdAndIsDeleted(user.getId(), false);
 		List<PetDTO> petsDTO = converter.convertToPetDTO(petsAfterDelete);
 		
 		return new ResponseEntity<>(petsDTO, HttpStatus.OK);

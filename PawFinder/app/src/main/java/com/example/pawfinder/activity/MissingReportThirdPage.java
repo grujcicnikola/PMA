@@ -327,12 +327,6 @@ public class MissingReportThirdPage extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     if (response.code() == 200) {
-                        ContentValues entry = new ContentValues();
-                        Pet p = response.body();
-                        PetSqlSync.fillContent(p, entry);
-                        entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
-                        getApplicationContext().getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
-
                         Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// | Intent.FLAG_ACTIVITY_NEW_TASK);

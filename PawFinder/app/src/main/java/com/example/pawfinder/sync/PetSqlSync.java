@@ -61,7 +61,7 @@ public class PetSqlSync {
                    } else {
                        Log.d("fillDatabase", p.getName() + " else");
                        if (context.getContentResolver().update(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + p.getId()), entry, "", null) == 0) {
-                           entry.put(PetSQLHelper.COLUMN_SERVER_ID, p.getId().toString());
+                           entry.put(PetSQLHelper.COLUMN_ID, p.getId().toString());
                            Log.d("fillDatabase", p.getName() + " insert " + p.getId());
                            context.getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
                        }
@@ -85,7 +85,7 @@ public class PetSqlSync {
                 PetSQLHelper.COLUMN_NAME, PetSQLHelper.COLUMN_TYPE, PetSQLHelper.COLUMN_GENDER,
                 PetSQLHelper.COLUMN_ADDITIONALINFO, PetSQLHelper.COLUMN_IMAGE, PetSQLHelper.COLUMN_MISSINGSINCE,
                 PetSQLHelper.COLUMN_OWNERSPHONE, PetSQLHelper.COLUMN_ISFOUND, PetSQLHelper.COLUMN_USER,
-                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS, PetSQLHelper.COLUMN_SERVER_ID};
+                PetSQLHelper.COLUMN_LON, PetSQLHelper.COLUMN_LAT, PetSQLHelper.COLUMN_SYNCSTATUS};  //PetSQLHelper.COLUMN_SERVER_ID
         String selection = "syncstatus = ?";
         String[] selectionArgs = {"false"};
 
@@ -179,11 +179,23 @@ public class PetSqlSync {
         }
         entry.put(PetSQLHelper.COLUMN_MISSINGSINCE, date);
         entry.put(PetSQLHelper.COLUMN_OWNERSPHONE, p.getOwnersPhone());
-        entry.put(PetSQLHelper.COLUMN_ISFOUND, p.isFound());
+       // entry.put(PetSQLHelper.COLUMN_ISFOUND, p.isFound());
         entry.put(PetSQLHelper.COLUMN_USER, p.getUser().getEmail());
         entry.put(PetSQLHelper.COLUMN_LON, p.getAddress().getLon());
         entry.put(PetSQLHelper.COLUMN_LAT, p.getAddress().getLat());
         entry.put(PetSQLHelper.COLUMN_USER, p.getUser().getEmail());
+        //entry.put(PetSQLHelper.COLUMN_DELETED, p.isDeleted());
+        if (p.isDeleted() == true) {
+            entry.put(PetSQLHelper.COLUMN_DELETED, "true");
+        }else{
+            entry.put(PetSQLHelper.COLUMN_DELETED, "false");
+        }
+        if (p.isFound() == true) {
+            entry.put(PetSQLHelper.COLUMN_ISFOUND, "true");
+        }else{
+            entry.put(PetSQLHelper.COLUMN_ISFOUND, "false");
+        }
+
         Log.d("FILL", p.toString());
         return entry;
     }

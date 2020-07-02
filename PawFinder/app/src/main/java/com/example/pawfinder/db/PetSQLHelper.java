@@ -19,7 +19,7 @@ public class PetSQLHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_PET = "petdb";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_SERVER_ID = "_id";
+    //public static final String COLUMN_SERVER_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_GENDER = "gender";
@@ -33,6 +33,7 @@ public class PetSQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LAT = "lat";
 
     public static final String COLUMN_SYNCSTATUS = "syncstatus"; //za sinhronizaciju kada se upali net
+    public static final String COLUMN_DELETED = "deleted"; //za logicko brisanje
 
 
     private static final String DB_CREATE = "create table "
@@ -50,8 +51,9 @@ public class PetSQLHelper extends SQLiteOpenHelper {
             + COLUMN_LAT + " text, "
             + COLUMN_LON + " text, "
             + COLUMN_SYNCSTATUS + " text, "
-            + COLUMN_SERVER_ID + "text"
-            + ")";
+           // + COLUMN_SERVER_ID + ","
+            + COLUMN_DELETED
+            +")";
 
     private static final String DB_DROP = "drop table if exists " + TABLE_PET;
 

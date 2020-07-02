@@ -40,7 +40,10 @@ public class SyncReceiver extends BroadcastReceiver {
 
                     MissingFragment.pets = response.body();
                     if (MissingFragment.pets != null) {
-                        MissingFragment.adapter.updateResults(MissingFragment.pets);
+                        if (MissingFragment.adapter != null) {
+                            MissingFragment.adapter.updateResults(MissingFragment.pets);
+                        }
+
                         PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, context, 0);
                     }
                 }

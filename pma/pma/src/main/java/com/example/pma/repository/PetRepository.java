@@ -17,4 +17,14 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 	
 	List<Pet> findAllByIsFoundOrderByMissingSinceDesc(boolean b);
 
+	List<Pet> findAllByOwnerIdAndIsDeletedOrderByMissingSinceDesc(Long ownerId, boolean deleted);
+
+	List<Pet> findAllByIsFoundAndIsDeleted(boolean f, boolean d);
+
+	List<Pet> findAllByIsFoundAndIsDeletedOrderByMissingSinceDesc(boolean f, boolean d);
+
+
+
+	List<Pet> findByOrderByMissingSinceDesc();
+
 }

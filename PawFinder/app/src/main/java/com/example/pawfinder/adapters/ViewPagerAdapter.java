@@ -2,17 +2,23 @@ package com.example.pawfinder.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.ReportFragment;
 
 import com.example.pawfinder.fragments.MissingFragment;
 import com.example.pawfinder.fragments.MyReportsFragment;
 import com.example.pawfinder.fragments.NearYouFragment;
 import com.example.pawfinder.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -27,30 +33,39 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        NearYouFragment nearYouFragment = null;
+       /* Bundle bundle = new Bundle();
+        bundle.putString("message", "Fragment :" + position);*/
+        NearYouFragment nearYouFragment= null;
         MissingFragment missingFragment = null;
         MyReportsFragment reportsFragment = null;
-
-        Bundle bundle = new Bundle();
-        bundle.putString("message", "Fragment :" + position);
 
         switch (position) {
             case 0:
                 nearYouFragment = new NearYouFragment().newInstance();
                 return nearYouFragment;
             case 1:
-                missingFragment = new MissingFragment().newInstance(bundle);
+                missingFragment = new MissingFragment().newInstance();
                 return missingFragment;
             //break;
             case 2:
-                reportsFragment = new MyReportsFragment().newInstance(bundle);
+                reportsFragment = new MyReportsFragment().newInstance();
                 return reportsFragment;
 
             default:
                 break;
         }
+        return  missingFragment;
+        /*if (position == 0) {
+            NearYouFragment nearYouFragment = new NearYouFragment().newInstance();
+            return nearYouFragment;
+        }else if (position == 2){
+            MyReportsFragment reportsFragment = new MyReportsFragment().newInstance();
+            return reportsFragment;
+        }else{ //if(position == 1){
+            MissingFragment missingFragment = new MissingFragment().newInstance();
+            return missingFragment;
+        }*/
 
-        return nearYouFragment;
     }
 
     @Override
@@ -58,6 +73,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         //koliko tabova imamo
         return 3;
     }
+
 
     @Nullable
     @Override
@@ -75,4 +91,5 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         return context.getResources().getString(R.string.tab_fragment);
     }
+
 }
