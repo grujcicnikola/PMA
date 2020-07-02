@@ -3,6 +3,8 @@ package com.example.pawfinder.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pawfinder.MainActivity;
 import com.example.pawfinder.R;
 import com.example.pawfinder.model.Comment;
 import com.example.pawfinder.model.Pet;
@@ -18,7 +21,9 @@ import com.example.pawfinder.tools.MockupComments;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Callback;
 
@@ -65,9 +70,20 @@ public class CommentAdapter extends BaseAdapter {
 
         name.setText(comment.getUser().getEmail());
         commentMessage.setText(comment.getMessage());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(comment.getDate());
-        date.setText(strDate);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
+        String localeString = sharedPreferences.getString("language", "en");
+
+        if(localeString.equals("sr")){
+            DateFormat s=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK);
+            String strDate1 = s.format(comment.getDate());
+            date.setText(strDate1);
+        }else{
+            DateFormat dateFormat =new SimpleDateFormat("yyyy-mm-dd hh:mm:ss aa");
+            String strDate = dateFormat.format(comment.getDate());
+            date.setText(strDate);
+        }
+
 
 
         return vi;
