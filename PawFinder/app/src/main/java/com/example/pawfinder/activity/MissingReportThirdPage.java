@@ -72,6 +72,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -83,6 +84,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -131,6 +133,9 @@ public class MissingReportThirdPage extends AppCompatActivity {
     private DatabaseReference mDataBaseRef;
     private String imageName;
     private String imageUrl;
+    private ProgressBar progressBar;
+
+    private Bitmap bitmap = null;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -161,7 +166,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
         layoutImage = findViewById(R.id.layout_button);
         infoET = findViewById(R.id.enter_add_info);
         finish = findViewById(R.id.btn_missing_report_third);
-
+        progressBar = (ProgressBar) findViewById(R.id.report_progress_bar);
 
 
         Intent help = getIntent();
@@ -267,7 +272,6 @@ public class MissingReportThirdPage extends AppCompatActivity {
                         Log.d("DATUM", "STRING " + date + " email " + user.getEmail());
                         pet = new Pet(type, name, gender, infoET.getText().toString(), date, phoneNumberET.getText().toString(), false, user, address);
 
-                        //addPet(pet);
                         addPet(pet);
                     }
                 }else{
@@ -283,12 +287,10 @@ public class MissingReportThirdPage extends AppCompatActivity {
         //(resultCode == numberOfSelected &&???
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
-            Picasso.get().load(uri).into(imageView);
-            //Ovde je rad sa slikom
-//            imageBitMap = compressImage(uri);
-//            imageView.setImageBitmap(imageBitMap);
-//            layoutImage.setError(null);
-            imgFile = new File(getPathFromUri(uri));
+
+            imageBitMap = compressImage(data.getData());
+            imageView.setImageBitmap(imageBitMap);
+
             uploadImage();
 
         }
@@ -348,82 +350,6 @@ public class MissingReportThirdPage extends AppCompatActivity {
             });
         }
     }
-
-//    public void addPet(final Pet petAdd) {
-//        imageBitMap = compressImage(uri);
-//        if (NetworkTool.getConnectivityStatus(getApplicationContext()) == NetworkTool.TYPE_NOT_CONNECTED) {
-//            Toast.makeText(this, R.string.network_disabled, Toast.LENGTH_SHORT).show();
-//            ArrayList<Pet> pets = new ArrayList<>();
-//            petAdd.setSent(false);      //nije otisao na back
-//            pets.add(petAdd);
-//            PetSqlSync.fillDatabase(pets, this, 3);
-//        }else {
-//            petAdd.setSent(true);       //otisao na back
-//            progressDialog = new ProgressDialog(MissingReportThirdPage.this);
-//            progressDialog.setTitle(MissingReportThirdPage.this.getResources().getString(R.string.missing_report_dialog_title));
-//            progressDialog.setMessage(MissingReportThirdPage.this.getResources().getString(R.string.dialog_message));
-//            progressDialog.setCancelable(false);
-//            progressDialog.show();
-//
-//            //pravim novi fajl zbog rotiranja i skaliranja koje sam radila
-//            File filesDir = getApplicationContext().getFilesDir();
-//            File imageFile = new File(filesDir, imgFile.getName());
-//            OutputStream os;
-//            try {
-//                os = new FileOutputStream(imageFile);
-//                imageBitMap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-//                os.flush();
-//                os.close();
-//            } catch (Exception e) {
-//                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-//            }
-//
-//            RequestBody requestBodyFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
-//            MultipartBody.Part part = MultipartBody.Part.createFormData("newImage", imgFile.getName(), requestBodyFile);
-//            petAdd.setImage(imageFile.getName());
-//            Call<ResponseBody> call = ServiceUtils.petService.uploadImage(part);
-//            call.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    if (response.code() == 200) {
-//
-//                        Call<Pet> call2 = ServiceUtils.petService.postMissing(petAdd);
-//                        call2.enqueue(new Callback<Pet>() {
-//                            @Override
-//                            public void onResponse(Call<Pet> call, Response<Pet> response) {
-//                                progressDialog.dismiss();
-//                                if (response.code() == 200) {
-//                                    ContentValues entry = new ContentValues();
-//                                    Pet p = response.body();
-//                                    PetSqlSync.fillContent(p, entry);
-//                                    entry.put(PetSQLHelper.COLUMN_SYNCSTATUS, "true");
-//                                    getApplicationContext().getContentResolver().insert(DBContentProvider.CONTENT_URI_PET, entry);
-//
-//                                    Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
-//                                    Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    startActivity(intent);
-//
-//                                    //finish();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<Pet> call, Throwable t) {
-//                                Log.d("Error", t.getMessage() != null ? t.getMessage() : "error");
-//                            }
-//                        });
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    Log.d("Error", t.getMessage() != null ? t.getMessage() : "error");
-//                }
-//            });
-//        }
-//    }
-
 
     // This function is called when user accept or decline the permission.
     // Request Code is used to check which permission called this function.
@@ -522,7 +448,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
 
         ExifInterface exif;
         try {
-            exif = new ExifInterface(filePath);
+            exif = new ExifInterface(uri.getPath());
 
             int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
             Matrix matrix = new Matrix();
@@ -565,7 +491,6 @@ public class MissingReportThirdPage extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -589,10 +514,14 @@ public class MissingReportThirdPage extends AppCompatActivity {
     private void uploadImage(){
         if(uri != null)
         {
-            //Log.d("NULL", "Nijeee null");
+
+            ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+            imageBitMap.compress(Bitmap.CompressFormat.JPEG,50, byteArray);
+            final byte[] niz = byteArray.toByteArray();
+
             imageName = System.currentTimeMillis() + "." + getFileExtension(uri);
             StorageReference fileReference = mStorageRef.child(imageName);
-            fileReference.putFile(uri)
+            fileReference.putBytes(niz)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -609,12 +538,9 @@ public class MissingReportThirdPage extends AppCompatActivity {
                             result.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-//                                    FireBaseUploadnfo uploadnfo = new FireBaseUploadnfo(imageName, result.getResult().toString());
-//                                    String uploadId = mDataBaseRef.push().getKey();
-//                                    mDataBaseRef.child(uploadId).setValue(uploadnfo);
                                     imageUrl = result.getResult().toString();
                                     Toast.makeText(MissingReportThirdPage.this, "Upload uspesaaaan", Toast.LENGTH_LONG).show();
-                                    finish.setEnabled(true);
+
                                 }
                             });
 
@@ -625,6 +551,18 @@ public class MissingReportThirdPage extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(MissingReportThirdPage.this, e.getMessage(), Toast.LENGTH_LONG).show();
                             Log.d("Puklo", "Ovde ");
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            progressBar.setProgress((int) progress);
+
+                            if((int)progress == progressBar.getMax())
+                            {
+                                finish.setEnabled(true);
+                            }
                         }
                     });
 

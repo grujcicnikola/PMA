@@ -116,19 +116,22 @@
                 android:text="@string/upload_image"
                 android:textColor="?attr/buttonText" />
 
-<!--            <ProgressBar-->
-<!--                android:id="@+id/report_progress_bar"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/choose_pet_image"-->
-<!--                style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
-<!--                />-->
+            <ProgressBar
+                android:id="@+id/report_progress_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/choose_pet_image"
+                android:layout_alignLeft="@+id/linear"
+                android:layout_alignRight="@+id/linear"
+                android:layout_marginBottom="4dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                />
 
             <ImageView
                 android:id="@+id/upload_image_view"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_below="@id/choose_pet_image"
+                android:layout_below="@id/report_progress_bar"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:adjustViewBounds="true"
@@ -144,7 +147,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?attr/bigYellowBUtton"
+        android:background="@drawable/button_setting"
         android:text="@string/finish"
         android:textColor="?attr/buttonText"
         android:textSize="20dp"

@@ -93,6 +93,8 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
             //Log.d("PETSIMAAGE", petsImage);
             ImageView image = (ImageView) findViewById(R.id.imageView);
             Picasso.get().load(petsImage).into(image);
+
+
             Button commentBtn = (Button) findViewById(R.id.comment_button);
             commentBtn.setOnClickListener(this);
 

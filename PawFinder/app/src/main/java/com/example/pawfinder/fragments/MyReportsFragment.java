@@ -236,7 +236,7 @@ public class MyReportsFragment extends Fragment {
                     getContext().getContentResolver().delete(Uri.parse(DBContentProvider.CONTENT_URI_PET + "/" + id), "", null);
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(), "Greskaa", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
