@@ -126,8 +126,8 @@
 
     <!--dijalozi-->
     <string name="oops">Ooops</string>
-    <string name="near_you_message">Your Locations seems to be disabled, do you want to enable it? We need your location to show pets lost near you.</string>
-    <string name="map_message">Your Locations seems to be disabled, do you want to enable it? If you allow us to locate you, you will easier pin where your pet is lost.</string>
+    <string name="near_you_message">Your Location seems to be disabled, do you want to enable it? We need your location to show pets lost near you.</string>
+    <string name="map_message">Your Location seems to be disabled, do you want to enable it? If you allow us to locate you, you will easier pin where your pet is lost.</string>
     <string name="sure">Sure</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

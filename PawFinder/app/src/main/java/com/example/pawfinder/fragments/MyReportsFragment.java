@@ -91,7 +91,13 @@ public class MyReportsFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
                         if (response.code() == 200) {
-                            pets = response.body();
+                            List<Pet> good = new ArrayList<Pet>();
+                            for (Pet p : response.body()) {
+                                if (p.isDeleted() == false) {
+                                    good.add(p);
+                                }
+                            }
+                            pets = good;
 
                             if (pets.size() > 0) {
                                 adapter = new MyReportsListAdapter(getContext(), pets);
@@ -188,7 +194,15 @@ public class MyReportsFragment extends Fragment {
                     PetGender gender = PetGender.valueOf(cursor.getString(3));
                     String additional = cursor.getString(4);
                     String image = cursor.getString(5);
+
                     String missingSince = cursor.getString(6);
+                    String[] parts =  missingSince.split("-");
+                    String date = "";
+                    if (parts.length == 3) {
+                        date = parts[2] + "/" + parts[1] + "/" + parts[0];
+                    }
+
+
                     String ownersPhone = cursor.getString(7);
                     boolean isFound = Boolean.valueOf(cursor.getString(8));
 
@@ -202,7 +216,7 @@ public class MyReportsFragment extends Fragment {
                     Log.d("petList ", "ima ih" + " " + type + " " + name + " " + missingSince);
                     // if (isSent != false) {    ovo ako ne budemo hteli da prikazujemo
                     if (isDeleted == false) {
-                        c = new Pet(type, name, gender, additional, image, missingSince, ownersPhone, isFound, user, address, isSent);
+                        c = new Pet(type, name, gender, additional, image, date, ownersPhone, isFound, user, address, isSent);
                         petView.add(c);
                     }
                     //}

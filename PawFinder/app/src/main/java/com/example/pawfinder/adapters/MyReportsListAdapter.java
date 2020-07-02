@@ -26,14 +26,7 @@ public class MyReportsListAdapter extends BaseAdapter {
     Pet pet;
 
     public MyReportsListAdapter(Context mContext, List<Pet> missingPets) {
-        List<Pet> good = new ArrayList<Pet>();
-        for (Pet p :missingPets) {
-            if (p.isDeleted() == false) {
-                good.add(p);
-            }
-        }
-
-        this.missingPets = good;
+        this.missingPets = missingPets;
         this.mContext = mContext;
     }
 

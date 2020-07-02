@@ -114,11 +114,16 @@ public class MissingFragment extends Fragment{
                 public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
                     // Log.d("Dobijeno", response.body().toString());
                     Log.d("BROJ", "ima ih" + response.body().size());
-
-                    pets = response.body();
-                    adapter = new PetsListAdapter(getContext(), response.body());
+                    List<Pet> good = new ArrayList<Pet>();
+                    for (Pet p :response.body()) {
+                        if (p.isDeleted() == false&& p.isFound() == false) {
+                            good.add(p);
+                        }
+                    }
+                    pets = good;
+                    adapter = new PetsListAdapter(getContext(), good);
                     list.setAdapter(adapter);
-                    PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, getContext(), 0);
+                    PetSqlSync.fillDatabase((ArrayList<Pet>) response.body(), getContext(), 0);
 
                     Log.d("POSLEFORA", " - " + pets);
                     if (response.code() == 200) {
@@ -226,7 +231,10 @@ public class MissingFragment extends Fragment{
 
                 String missingSince = cursor.getString(6);
                 String[] parts =  missingSince.split("-");
-                String date = parts[2] + "/" + parts[1] + "/" + parts[0];
+                String date = "";
+                if (parts.length == 3) {
+                    date = parts[2] + "/" + parts[1] + "/" + parts[0];
+                }
 
                 String ownersPhone = cursor.getString(7);
                 boolean isFound = Boolean.valueOf(cursor.getString(8));

@@ -129,32 +129,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(1).select();         //da selektovan bude Missing
 
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {
-            }
-
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            public void onPageSelected(int position) {
-                // Check if this is the page you want.
-                if (position == 1) {
-                    Log.i("fragment", "missing");
-                    startService();
-                } else {
-                    Log.i("fragment", "ostalo");
-                    if (alarm_receiver != null) {
-                        try {
-                            unregisterReceiver(alarm_receiver);
-                        } catch (Exception e) {
-                            Log.d("alarm", "broadcast");
-                        }
-
-                    }
-                }
-            }
-        });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -219,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
-                        finish();
+                        finishAffinity();
                         break;
 
                 }
@@ -285,23 +259,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStop()
-    {
-        try {
-            if (alarm_receiver != null) {
-                try {
-                    unregisterReceiver(alarm_receiver);
-                } catch (Exception e) {
-
-                }
-
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        super.onStop();
-    }
 
     public void setupSharedPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -450,20 +407,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     protected void onPause() {
-
-        try {
-            if (alarm_receiver != null) {
-                try {
-                    unregisterReceiver(alarm_receiver);
-                } catch (Exception e) {
-
-                }
-
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
         super.onPause();
+
+       unregisterReceiver(alarm_receiver);
+
     }
 
 
@@ -517,6 +464,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public Integer getNearYouRange() {
         return nearYouRange;
     }
+
 
 }
 

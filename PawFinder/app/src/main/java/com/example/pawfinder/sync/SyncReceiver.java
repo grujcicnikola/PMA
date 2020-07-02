@@ -37,14 +37,20 @@ public class SyncReceiver extends BroadcastReceiver {
                 public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
                     // Log.d("Dobijeno", response.body().toString());
                     //Log.d("BROJ", "ima ih" + response.body().size());
+                    List<Pet> good = new ArrayList<Pet>();
+                    for (Pet p :response.body()) {
+                        if (p.isDeleted() == false&& p.isFound() == false) {
+                            good.add(p);
+                        }
+                    }
 
-                    MissingFragment.pets = response.body();
+                    MissingFragment.pets = good;
                     if (MissingFragment.pets != null) {
                         if (MissingFragment.adapter != null) {
                             MissingFragment.adapter.updateResults(MissingFragment.pets);
                         }
 
-                        PetSqlSync.fillDatabase((ArrayList<Pet>) MissingFragment.pets, context, 0);
+                        PetSqlSync.fillDatabase((ArrayList<Pet>) response.body(), context, 0);
                     }
                 }
 

@@ -111,7 +111,6 @@ public class PetDetailActivity extends AppCompatActivity {
             gender_txt.setText(gender_entry);
             TextView missing_txt = (TextView) findViewById(R.id.pet_details_text_missing);
             missing_txt.setText(date);
-            TextView location_txt = (TextView) findViewById(R.id.pet_details_text_location);
             TextView email_txt = (TextView) findViewById(R.id.pet_details_text_o_email);
             email_txt.setText(email);
             TextView phone_txt = (TextView) findViewById(R.id.pet_details_text_o_phone);
@@ -240,23 +239,6 @@ public class PetDetailActivity extends AppCompatActivity {
             MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
             item.setVisible(true);
         }
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
-            //setovanje email-a ulogovanog korisnika
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                TextView user_drawer = (TextView) findViewById(R.id.drawer_user);
-                if (prefConfig.readLoginStatus()) {
-                    user_drawer.setText(prefConfig.readUserEmail());
-                }
-
-                invalidateOptionsMenu();
-            }
-
-        };
-        mDrawerLayout.addDrawerListener(toggle);
-        //toggle.setDrawerIndicatorEnabled(true);
-        //toggle.syncState();*/
-
     }
 
     @Override

@@ -320,7 +320,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     if (response.code() == 200) {
-                        Toast.makeText(getApplicationContext(), R.string.add_pet_success, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getText(R.string.add_pet_success), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MissingReportThirdPage.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
