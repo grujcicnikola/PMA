@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         sendTokenToServer("");//problem ako nema neta
                         user_drawer.setText("");
 
-                        Toast.makeText(MainActivity.this, "User successfully logged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -230,6 +230,31 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+            //setovanje email-a ulogovanog korisnika
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                user_drawer = (TextView) findViewById(R.id.drawer_user);
+
+                if (prefConfig.readLoginStatus()) {
+                    user_drawer.setText(prefConfig.readUserEmail());
+
+                    boolean googleLogin = prefConfig.readUserGoogleStatus();
+                    if(!googleLogin)
+                    {
+                        Menu menuNav = navigationView.getMenu();
+                        MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
+                        item.setVisible(true);
+                    }
+                }
+
+                invalidateOptionsMenu();
+            }
+
+        };
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
 
     }
 
@@ -258,6 +283,24 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        try {
+            if (alarm_receiver != null) {
+                try {
+                    unregisterReceiver(alarm_receiver);
+                } catch (Exception e) {
+
+                }
+
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        super.onStop();
     }
 
     public void setupSharedPreferences() {
@@ -347,31 +390,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // TODO Auto-generated method stub
         super.onResume();
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
-            //setovanje email-a ulogovanog korisnika
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                user_drawer = (TextView) findViewById(R.id.drawer_user);
-
-                if (prefConfig.readLoginStatus()) {
-                    user_drawer.setText(prefConfig.readUserEmail());
-
-                    boolean googleLogin = prefConfig.readUserGoogleStatus();
-                    if(!googleLogin)
-                    {
-                        Menu menuNav = navigationView.getMenu();
-                        MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
-                        item.setVisible(true);
-                    }
-                }
-
-                invalidateOptionsMenu();
-            }
-
-        };
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
-        toggle.syncState();
 
         ReactiveNetwork
                 .observeNetworkConnectivity(getApplicationContext())
@@ -432,7 +450,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     protected void onPause() {
-        super.onPause();
+
         try {
             if (alarm_receiver != null) {
                 try {
@@ -443,10 +461,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
             }
         } catch (IllegalArgumentException e) {
-
             e.printStackTrace();
         }
-
+        super.onPause();
     }
 
 
@@ -456,8 +473,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    Toast.makeText(MainActivity.this,
-                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
+                    //Toast.makeText(MainActivity.this,
+                    //        "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
                     nearYouRange = numberPicker.getValue();
                 }
             };

@@ -208,7 +208,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
-                        Toast.makeText(getApplicationContext(), "User successfully logged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -227,6 +227,13 @@ public class ReportDetailActivity extends AppCompatActivity {
         TextView navUsername = (TextView) headerView.findViewById(R.id.drawer_user);
         if (prefConfig.readLoginStatus()) {
             navUsername.setText(prefConfig.readUserEmail());
+        }
+        boolean googleLogin = prefConfig.readUserGoogleStatus();
+        if(!googleLogin)
+        {
+            Menu menuNav = navigationView.getMenu();
+            MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
+            item.setVisible(true);
         }
 
     }
@@ -287,8 +294,8 @@ public class ReportDetailActivity extends AppCompatActivity {
             new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    Toast.makeText(getApplicationContext(),
-                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
+                    //Toast.makeText(getApplicationContext(),
+                    //        "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
                     nearYouRange = numberPicker.getValue();
                 }
             };

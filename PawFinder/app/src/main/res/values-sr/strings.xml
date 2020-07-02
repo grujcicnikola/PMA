@@ -56,12 +56,13 @@
     <string name="title_activity_view_on_map">Lokacija ljubimca</string>
     <string name="reports_label">Nemate prijavljenih nestanaka</string>
     <string name="reports_login_label">Ulogujte se da biste videli prijave nestanka</string>
-    <string name="title_delete_action">Da li ste sigurni da želite da obrisete prijavu?</string>
+    <string name="title_delete_action">Da li ste sigurni da želite da obrišete prijavu?</string>
     <string name="message_delete_action">Brisanje prijave</string>
 
     <!-- Login activity -->
     <string name="message_label">Zdravo, prijavite se da biste prijavili nestanak ili pronalazak ljubimca.</string>
     <string name="or_text">ILI</string>
+    <string name="login_google">Pokušajte prijavu preko google naloga.</string>
 
     <!--podesavanja-->
 
@@ -124,13 +125,13 @@
 
     <!-- dijalozi -->
     <string name="oops">Ooops</string>
-    <string name="near_you_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Vasa lokacija nam je potrebna da bismo vam prikazali koji su ljubimci nestali u vasoj blizini.</string>
-    <string name="map_message">Lokacija vam je iskljucena, da li zelite da je ukljucite? Ukoliko dopustite da vas lociramo, lakse cete oznaciti gde vam je ljubimac nestao.</string>
+    <string name="near_you_message">Lokacija vam je isključena, da li želite da je uključite? Vaša lokacija nam je potrebna da bismo vam prikazali koji su ljubimci nestali u vašoj blizini.</string>
+    <string name="map_message">Lokacija vam je isključena, da li želite da je uključite? Ukoliko dopustite da vas lociramo, lakše ćete označiti gde vam je ljubimac nestao.</string>
     <string name="sure">Naravno</string>
     <string name="yes">Da</string>
     <string name="no">Ne</string>
     <string name="location_alert_title">Dozvolite lociranje</string>
-    <string name="location_alert_message">Za koriscenje svih funkcija aplikacije potrebna je vasa lokacija.... Da li sada dopustate?</string>
+    <string name="location_alert_message">Za korišćenje svih funkcija aplikacije potrebna je vaša lokacija.... Da li je sada dopuštate?</string>
     <string name="dialog_message">Provera podataka, molimo sačekajte.</string>
     <string name="login_dialog_title">Prijava</string>
     <string name="create_account_dialog_title">Kreiranje naloga</string>
@@ -138,16 +139,16 @@
     <string name="range_title">Izaberite domet u kilometrima</string>
 
     <!--missing pet report-->
-    <string name="add_pet_success">Ljubimac je uspesno prijavljen!</string>
+    <string name="add_pet_success">Ljubimac je uspešno prijavljen!</string>
     <string name="add_pet_failure">Prijava nestanka ljubimca nije uspela!</string>
     <string name="name_blank">Unesite ime ljubimca</string>
     <string name="date_blank">Unesite datum</string>
-    <string name="location_blank">Niste oznacili gde je ljubimac nestao</string>
-    <string name="phone_blank">Unesite vas broj telefona</string>
-    <string name="network_disabled">Internet nije dostupan, kada bude ukljucen vasa prijava nestanka ljubimca ce biti kreirana!</string>
-    <string name="sync_pet">Internet je dostupan, vasa prijava ljubimaca je vidljiva ostalim korisnicima.</string>
+    <string name="location_blank">Niste označili gde je ljubimac nestao</string>
+    <string name="phone_blank">Unesite vaš broj telefona</string>
+    <string name="network_disabled">Internet nije dostupan, kada bude uključen vaša prijava nestanka ljubimca će biti kreirana!</string>
+    <string name="sync_pet">Internet je dostupan, vaša prijava ljubimaca je vidljiva ostalim korisnicima.</string>
     <string name="image_blank">Dodajte sliku ljubimca</string>
-    <string name="search">Pretrazite adresu</string>
+    <string name="search">Pretražite adresu</string>
 
     <string name="galery_access_permission">Morate dozvoliti pristup galeriji</string>
 
@@ -160,19 +161,23 @@
     <string name="login_email_error">Uneli ste pogrešnu mejl adresu, pokušajte ponovo</string>
     <string name="login_password_error">Uneli ste pogrešnu šifru, pokušajte ponovo</string>
     <string name="network">Molimo vas upalite internet za ovu akciju.</string>
-    <string name="success_change_password">Uspesno ste izmenili lozinku.</string>
+    <string name="success_change_password">Uspešno ste izmenili lozinku.</string>
     <string name="same_passwords">Lozinke moraju biti iste.</string>
     <string name="old_passwords">Niste uneli ispravnu trenutnu lozinku.</string>
-    <string name="map_network">Molim vas ukljucite internet da bi se mapa ucitala i onda cete moci da pinujete gde je ljubimac nestao.</string>
+    <string name="map_network">Molim vas uključite internet da bi se mapa učitala i onda ćete moći da pinujete gde je ljubimac nestao.</string>
     <string name="google_login_toast">Registovani ste preko Vašeg google naloga. Prijavite se pomoću opcije prijava preko google-a.</string>
 
     <!-- Change password -->
     <string name="now_password">Trenutna lozinka</string>
     <string name="new_password">Nova lozinka</string>
-    <string name="new_again_password">Nova lozinka, unesite jos jednom</string>
+    <string name="new_again_password">Nova lozinka, unesite još jednom</string>
     <string name="ok">OK</string>
     <string name="current_empty">Molimo vas unesite trenutnu lozinku.</string>
-    <string name="new_empty">Nova lozinka ne moze biti prazna.</string>
+    <string name="new_empty">Nova lozinka ne može biti prazna.</string>
+
+    <string name="logout_success">Korisnik se uspešno izlogovao</string>
+
+    <string name="error">Greška</string>
 </resources>
 
 

@@ -63,6 +63,7 @@
     <!-- Login activity -->
     <string name="message_label">Hi, please login to report pet missing or found.</string>
     <string name="or_text">OR</string>
+    <string name="login_google">Try login with google account.</string>
 
     <!--podesavanja-->
 
@@ -175,6 +176,8 @@
     <string name="current_empty">Please enter current password.</string>
     <string name="new_empty">New password must not be empty.</string>
 
+    <string name="logout_success">User successfully logged out</string>
 
+    <string name="error">Error</string>
 </resources>
 

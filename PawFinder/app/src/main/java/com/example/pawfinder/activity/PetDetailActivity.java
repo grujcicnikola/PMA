@@ -1,5 +1,6 @@
 package com.example.pawfinder.activity;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -211,7 +213,7 @@ public class PetDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
-                        Toast.makeText(getApplicationContext(), "User successfully logged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -231,7 +233,14 @@ public class PetDetailActivity extends AppCompatActivity {
         if (prefConfig.readLoginStatus()) {
             navUsername.setText(prefConfig.readUserEmail());
         }
-        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+        boolean googleLogin = prefConfig.readUserGoogleStatus();
+        if(!googleLogin)
+        {
+            Menu menuNav = navigationView.getMenu();
+            MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
+            item.setVisible(true);
+        }
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             //setovanje email-a ulogovanog korisnika
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -303,8 +312,8 @@ public class PetDetailActivity extends AppCompatActivity {
             new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                    Toast.makeText(getApplicationContext(),
-                            "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
+                    //Toast.makeText(getApplicationContext(),
+                    //       "selected number " + numberPicker.getValue(), Toast.LENGTH_SHORT);
                     nearYouRange = numberPicker.getValue();
                 }
             };

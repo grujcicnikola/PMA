@@ -26,6 +26,7 @@
         <item name="smallYellowButton">@color/yellow</item>
         <item name="blueLight">@color/colorBlueLight</item>
         <item name="yellowCorners">@color/yellow</item>
+        <item name="disabledButton">@color/lightYellow</item>
     </style>
 
     <!-- Night / dark  Mode theme. -->
@@ -56,6 +57,7 @@
         <item name="smallYellowButton">@color/yellow200</item>
         <item name="blueLight">@color/blueDark</item>
         <item name="yellowCorners">@color/greyBlue</item>
+        <item name="disabledButton">@color/grey</item>
     </style>
 
 

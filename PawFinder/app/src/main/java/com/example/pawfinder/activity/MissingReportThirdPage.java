@@ -82,13 +82,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
-
-import id.zelory.compressor.Compressor;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -522,7 +515,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     imageUrl = result.getResult().toString();
-                                    Toast.makeText(MissingReportThirdPage.this, "Upload uspesaaaan", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(MissingReportThirdPage.this, "Upload uspesaaaan", Toast.LENGTH_LONG).show();
 
                                 }
                             });

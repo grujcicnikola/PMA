@@ -18,5 +18,6 @@
         <attr name="preferenceText" format="color"></attr>
         <attr name="blueLight" format="color"></attr>
         <attr name="yellowCorners" format="color"></attr>
+        <attr name="disabledButton" format="color"></attr>
     </declare-styleable>
 </resources>

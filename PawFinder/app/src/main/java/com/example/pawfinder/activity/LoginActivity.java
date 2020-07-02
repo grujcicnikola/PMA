@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         layoutPassword.setError((getText(R.string.login_password_error)));
                     } else if (response.code() == 502) {
                         keyboardDown();
-                        Toast.makeText(LoginActivity.this, "Try login with google account.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, getText(R.string.login_google), Toast.LENGTH_LONG).show();
                     }
                 }
 

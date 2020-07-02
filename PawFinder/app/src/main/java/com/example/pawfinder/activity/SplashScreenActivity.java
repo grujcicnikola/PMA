@@ -26,6 +26,7 @@ public class SplashScreenActivity extends Activity {
 
     private static PrefConfig prefConfig;
     private ThemeUtils themeUtils;
+    private LocaleUtils localeUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class SplashScreenActivity extends Activity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         themeUtils = new ThemeUtils(sharedPreferences, this);
         themeUtils.setTheme();
+        localeUtils = new LocaleUtils(sharedPreferences, this);
+        localeUtils.setLocale();
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.darktheme);
         }
