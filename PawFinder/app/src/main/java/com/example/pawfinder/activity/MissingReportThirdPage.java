@@ -384,7 +384,7 @@ public class MissingReportThirdPage extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
-    public Bitmap compressImage(Uri imageUri) {
+    public Bitmap compressImage(Uri imageUri){
 
         String filePath = getPathFromUri(imageUri);
         Bitmap scaledBitmap = null;
@@ -446,27 +446,16 @@ public class MissingReportThirdPage extends AppCompatActivity {
         canvas.setMatrix(scaleMatrix);
         canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
 
-        ExifInterface exif;
+        scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), scaleMatrix, true);
+
+        Bitmap newMap = null;
         try {
-            exif = new ExifInterface(uri.getPath());
-
-            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0);
-            Matrix matrix = new Matrix();
-            if (orientation == 6) {
-                matrix.postRotate(90);
-            } else if (orientation == 3) {
-                matrix.postRotate(180);
-            } else if (orientation == 8) {
-                matrix.postRotate(270);
-            }
-
-            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-
+            newMap = rotateImageIfRequired(this, scaledBitmap, uri);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return scaledBitmap;
+        return newMap;
 
     }
 
@@ -570,4 +559,34 @@ public class MissingReportThirdPage extends AppCompatActivity {
 
     }
 
+    public  Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+
+        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (Build.VERSION.SDK_INT > 23)
+            ei = new ExifInterface(input);
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    public  Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
 }
