@@ -29,6 +29,9 @@ import com.example.pawfinder.tools.PrefConfig;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
@@ -72,14 +75,23 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-
-
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(data.get("missing_since"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(date);
         // Create an Intent for the activity you want to start
         Intent resultIntent = new Intent(this, ReportDetailActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         resultIntent.putExtra("report_pet_name", data.get("name"));
         resultIntent.putExtra("report_pet_type", data.get("type"));
-        resultIntent.putExtra("report_pet_date", data.get("missing_since"));
+        if(date!=null) {
+            resultIntent.putExtra("report_pet_date", dateString);
+        }else{
+            resultIntent.putExtra("report_pet_date", data.get("missing_since"));
+        }
         resultIntent.putExtra("report_pet_image", data.get("image"));
         resultIntent.putExtra("report_pet_additionalInfo", data.get("additionalInfo"));
         resultIntent.putExtra("report_pet_of_pet", data.get("id"));
@@ -102,7 +114,7 @@ public class MyFirebaseInstanceService extends FirebaseMessagingService {
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        notificationBuilder.setSmallIcon(R.drawable.user)
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)

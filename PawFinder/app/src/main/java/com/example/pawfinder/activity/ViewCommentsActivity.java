@@ -117,7 +117,8 @@ public class ViewCommentsActivity extends AppCompatActivity implements View.OnCl
                         adb.setTitle(getResources().getString(R.string.comment_delete_dialog_title));
                         adb.setMessage(getResources().getString(R.string.comment_delete_dialog_text));
                         adb.setNegativeButton(getResources().getString(R.string.no), null);
-                        adb.setPositiveButton(getResources().getString(R.string.comment_delete_dialog_ok), new AlertDialog.OnClickListener() {
+                        adb.setPositiveButton(getResources().getString(R.string.yes), new AlertDialog.OnClickListener() {
+
                             public void onClick(DialogInterface dialog, int which) {
 
                                 deleteComment(positionToRemove);

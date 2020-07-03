@@ -19,6 +19,9 @@ import com.example.pawfinder.tools.ThemeUtils;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -84,9 +87,20 @@ public class SplashScreenActivity extends Activity {
         Intent resultIntent = new Intent(this, ReportDetailActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         if(bundle.getString("name")!=null) {
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(bundle.getString("missing_since"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String dateString = new SimpleDateFormat("dd/MM/yyyy").format(date);
             resultIntent.putExtra("report_pet_name", bundle.getString("name"));
             resultIntent.putExtra("report_pet_type", bundle.getString("type"));
-            resultIntent.putExtra("report_pet_date", bundle.getString("missing_since"));
+            if(date!=null) {
+                resultIntent.putExtra("report_pet_date", dateString);
+            }else{
+                resultIntent.putExtra("report_pet_date", bundle.getString("missing_since"));
+            }
             resultIntent.putExtra("report_pet_image", bundle.getString("image"));
             resultIntent.putExtra("report_pet_additionalInfo", bundle.getString("additionalInfo"));
             resultIntent.putExtra("report_pet_of_pet", bundle.getString("id"));
