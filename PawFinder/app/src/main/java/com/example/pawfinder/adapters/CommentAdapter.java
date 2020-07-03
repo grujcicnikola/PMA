@@ -75,11 +75,11 @@ public class CommentAdapter extends BaseAdapter {
         String localeString = sharedPreferences.getString("language", "en");
 
         if(localeString.equals("sr")){
-            DateFormat s=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.UK);
+            DateFormat s=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String strDate1 = s.format(comment.getDate());
             date.setText(strDate1);
         }else{
-            DateFormat dateFormat =new SimpleDateFormat("yyyy-mm-dd hh:mm:ss aa");
+            DateFormat dateFormat =new SimpleDateFormat("yyyy-MMMM-dd hh:mm:ss aa");
             String strDate = dateFormat.format(comment.getDate());
             date.setText(strDate);
         }
