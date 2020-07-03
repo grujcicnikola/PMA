@@ -91,7 +91,7 @@ public class PetController {
 	
 	@RequestMapping(value = "/getAllInRange/{lon}/{lat}/{range}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllInRange(@PathVariable Double lon, @PathVariable Double lat, @PathVariable Double range){
-		List<Pet> pets = petService.findAllByIsFound(false);
+		List<Pet> pets = petService.findAllByIsFoundAndIsDeleted(false,false);
 		List<Pet> petsInRange = new ArrayList<Pet>();
 		
 		for (Pet pet : pets) {

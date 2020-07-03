@@ -212,7 +212,7 @@ public class PetDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
-                        Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);

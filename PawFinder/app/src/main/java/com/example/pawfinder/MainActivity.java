@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         sendTokenToServer("");//problem ako nema neta
                         user_drawer.setText("");
 
-                        Toast.makeText(MainActivity.this, getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);

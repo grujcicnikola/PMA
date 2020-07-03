@@ -88,41 +88,43 @@ public class ReportDetailActivity extends AppCompatActivity {
             String date = bundle.getString("report_pet_date");
             String image = bundle.getString("report_pet_image");
             Boolean is_Found = bundle.getBoolean("is_found");
-            if(is_Found)
-            {
-               buttonFound.setVisibility(View.INVISIBLE);
+            if (is_Found) {
+                buttonFound.setVisibility(View.INVISIBLE);
             }
 
             buttonFound.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    progressDialog.setMessage(getResources().getString(R.string.dialog_message));
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    Call<ResponseBody> call = ServiceUtils.petService.petFound(id);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if(response.code() == 200)
-                            {
+                    if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                        progressDialog.setMessage(getResources().getString(R.string.dialog_message));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Call<ResponseBody> call = ServiceUtils.petService.petFound(id);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.code() == 200) {
+                                    progressDialog.dismiss();
+                                    setResult(Activity.RESULT_CANCELED);
+                                    finish();
+                                }
+
                                 progressDialog.dismiss();
-                                setResult(Activity.RESULT_CANCELED);
-                                finish();
                             }
 
-                            progressDialog.dismiss();
-                        }
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
             //lokalizacija tipa
-            String[] type_values= getResources().getStringArray(R.array.type_values);
+            String[] type_values = getResources().getStringArray(R.array.type_values);
             int index_type = Arrays.asList(type_values).indexOf(type);
             String[] type_entries = getResources().getStringArray(R.array.type_entries);
             String type_entry = String.valueOf(type_entries[index_type]);
@@ -149,7 +151,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         Log.d("PETSID ", "ima ih" + bundle.getLong("id_of_pet"));
                         i.putExtra("view_comments_image", bundle.getString("report_pet_image"));
                         startActivity(i);
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -181,7 +183,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             Intent missingReport = new Intent(getApplicationContext(), MissingReportFirstPage.class);
                             startActivity(missingReport);
-                        }else{
+                        } else {
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                         }
                         break;
@@ -190,7 +192,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                         if (NetworkTool.getConnectivityStatus(getApplicationContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
                             i = new Intent(getApplicationContext(), ChangePasswordActivity.class);
                             startActivity(i);
-                        }else{
+                        } else {
                             Toast.makeText(getApplicationContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
                         }
                         break;
@@ -208,7 +210,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                     case R.id.navigation_item_logout:
                         prefConfig.logout();
                         sendTokenToServer("");//problem ako nema neta
-                        Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), getText(R.string.logout_success), Toast.LENGTH_SHORT).show();
                         i = new Intent(getApplicationContext(), LoginActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
@@ -229,8 +231,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             navUsername.setText(prefConfig.readUserEmail());
         }
         boolean googleLogin = prefConfig.readUserGoogleStatus();
-        if(!googleLogin)
-        {
+        if (!googleLogin) {
             Menu menuNav = navigationView.getMenu();
             MenuItem item = menuNav.findItem(R.id.navigation_item_change_password);
             item.setVisible(true);
@@ -254,10 +255,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    public void showNumberPickerDialog(){
+    public void showNumberPickerDialog() {
         NumberPicker picker = new NumberPicker(ReportDetailActivity.this);
         picker.setMinValue(1);
         picker.setMaxValue(50);
@@ -269,7 +267,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER));
 
-        new AlertDialog.Builder( ReportDetailActivity.this)
+        new AlertDialog.Builder(ReportDetailActivity.this)
                 .setTitle(getText(R.string.range_title))
                 .setView(layout)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
@@ -306,7 +304,7 @@ public class ReportDetailActivity extends AppCompatActivity {
 
         User user = new User();
 
-        if (prefConfig.readUserEmail()!=null) {
+        if (prefConfig.readUserEmail() != null) {
             user.setEmail(prefConfig.readUserEmail());
             user.setToken(token);
             final Call<ResponseBody> call = ServiceUtils.userService.token(user);
@@ -315,16 +313,16 @@ public class ReportDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     if (response.code() == 200) {
-                        Log.i("TOKENFIREBASE","send");
+                        Log.i("TOKENFIREBASE", "send");
                     } else if (response.code() == 400) {
-                        Log.i("TOKENFIREBASE","error");
+                        Log.i("TOKENFIREBASE", "error");
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.i("TOKENFIREBASE","error");
+                    Log.i("TOKENFIREBASE", "error");
                 }
             });
 
