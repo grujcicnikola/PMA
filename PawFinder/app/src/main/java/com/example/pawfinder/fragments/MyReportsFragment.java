@@ -106,21 +106,28 @@ public class MyReportsFragment extends Fragment {
                                 list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                                     @Override
                                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                        if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
 
-                                       new AlertDialog.Builder(getContext())
-                                               .setIcon(R.drawable.iconsdelete)
-                                               .setTitle(R.string.comment_delete_dialog_title)
-                                               .setMessage(R.string.comment_delete_dialog_text)
-                                               .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                                   @Override
-                                                   public void onClick(DialogInterface dialog, int which) {
-
-                                                       //Brisanjeeeeeee
-                                                       Pet pet = (Pet) adapter.getItem(position);
-                                                       deleteReport(pet.getId(), prefConfig.readUserEmail());
-                                                   }
-                                               }).setNegativeButton(R.string.no, null)
-                                                .show();
+                                            new AlertDialog.Builder(getContext())
+                                                    .setIcon(R.drawable.iconsdelete)
+                                                    .setTitle(R.string.comment_delete_dialog_title)
+                                                    .setMessage(R.string.comment_delete_dialog_text)
+                                                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            if (NetworkTool.getConnectivityStatus(getContext()) != NetworkTool.TYPE_NOT_CONNECTED) {
+                                                                //Brisanjeeeeeee
+                                                                Pet pet = (Pet) adapter.getItem(position);
+                                                                deleteReport(pet.getId(), prefConfig.readUserEmail());
+                                                            }else{
+                                                                Toast.makeText(getContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    }).setNegativeButton(R.string.no, null)
+                                                    .show();
+                                        }else{
+                                            Toast.makeText(getContext(), getText(R.string.network), Toast.LENGTH_SHORT).show();
+                                        }
 
                                         return true;
                                     }
