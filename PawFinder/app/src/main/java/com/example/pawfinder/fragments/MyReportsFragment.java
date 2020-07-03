@@ -248,8 +248,16 @@ public class MyReportsFragment extends Fragment {
 
                 if (response.code() == 200) {
                     progressDialog.dismiss();
-                    //Toast.makeText(getContext(), "Vas izvestaj je uspesno obrisan", Toast.LENGTH_LONG).show();
-                    adapter.updateResults(response.body());
+
+                    List<Pet> newList = new ArrayList<Pet>();
+                    for (Pet p : response.body()) {
+                        if (p.isDeleted() == false) {
+                            newList.add(p);
+                        }
+                    }
+                    pets = newList;
+                    adapter.updateResults(pets);
+
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_LONG).show();
